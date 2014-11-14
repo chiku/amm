@@ -1,5 +1,5 @@
 /*
-  This file is part of mjwm.
+  This file is part of amm.
   Copyright (C) 2014  Chirantan Mitra <chirantan.mitra@gmail.com>
 
   This program is free software: you can redistribute it and/or modify
@@ -31,7 +31,7 @@ AmmOptions AmmOptions::Default(const std::string &home, const std::string &langu
     amm_options.is_iconize = false;
     amm_options.override_default_directories = false;
     amm_options.summary_type = "normal";
-    amm_options.output_file_name = StringX(home).terminateWith("/") + (".jwmrc-mjwm");
+    amm_options.output_file_name = StringX(home).terminateWith("/") + (".jwmrc-amm");
     amm_options.icon_theme_name = "hicolor";
     amm_options.language = language;
     return amm_options;

@@ -20,7 +20,7 @@ validate() {
 
 reconfigure() {
   ./autogen.sh
-  CXXFLAGS="-g -O0 --coverage" CFLAGS="-g -O0 --coverage" LDFLAGS="--coverage" ./configure --prefix /tmp/mjwm
+  CXXFLAGS="-g -O0 --coverage" CFLAGS="-g -O0 --coverage" LDFLAGS="--coverage" ./configure --prefix /tmp/amm
 }
 
 build_with_test_run() {

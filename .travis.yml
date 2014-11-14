@@ -8,6 +8,6 @@ before_install:
 script:
   - ./autogen.sh
   - ./coverage.sh
-  - make install-strip && ls -halR /tmp/mjwm
-  - time /tmp/mjwm/bin/mjwm -o automenu.default && cat automenu.default
-  - time /tmp/mjwm/bin/mjwm --iconize -o automenu.iconize && cat automenu.iconize
+  - make install-strip && ls -halR /tmp/amm
+  - time /tmp/amm/bin/amm -o automenu.default && cat automenu.default
+  - time /tmp/amm/bin/amm --iconize -o automenu.iconize && cat automenu.iconize

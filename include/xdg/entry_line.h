@@ -1,5 +1,5 @@
 /*
-  This file is part of mjwm.
+  This file is part of amm.
   Copyright (C) 2014  Chirantan Mitra <chirantan.mitra@gmail.com>
 
   This program is free software: you can redistribute it and/or modify

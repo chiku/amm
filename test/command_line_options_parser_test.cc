@@ -1,5 +1,5 @@
 /*
-  This file is part of mjwm.
+  This file is part of amm.
   Copyright (C) 2014  Chirantan Mitra <chirantan.mitra@gmail.com>
 
   This program is free software: you can redistribute it and/or modify
@@ -28,7 +28,7 @@ namespace amm {
 
 SCENARIO("Command-line arguments default parse", "[commandlineoptions]") {
     GIVEN("command line options") {
-        std::string home = "/home/mjwm";
+        std::string home = "/home/amm";
         std::string language = "hn";
         CommandLineOptionsParser parser(home, language);
 
@@ -64,8 +64,9 @@ SCENARIO("Command-line arguments default parse", "[commandlineoptions]") {
                 CHECK_FALSE(options.override_default_directories);
             }
 
-            THEN("its output file is '.jwmrc-mjwm' under $HOME") {
-                CHECK(options.output_file_name == "/home/mjwm/.jwmrc-mjwm");
+
+            THEN("its output file is '.jwmrc-amm' under $HOME") {
+                CHECK(options.output_file_name == "/home/amm/.jwmrc-amm");
             }
 
             THEN("its input directories is empty") {
@@ -89,7 +90,7 @@ SCENARIO("Command-line arguments default parse", "[commandlineoptions]") {
 
 SCENARIO("Command-line arguments parse with flags", "[commandlineoptions]") {
     GIVEN("command line options") {
-        std::string home = "/home/mjwm";
+        std::string home = "/home/amm";
         std::string language = "hn";
         CommandLineOptionsParser parser(home, language);
 
@@ -137,7 +138,7 @@ SCENARIO("Command-line arguments parse with flags", "[commandlineoptions]") {
 
 SCENARIO("Command-line arguments parse options", "[commandlineoptions]") {
     GIVEN("command line options") {
-        std::string home = "/home/mjwm";
+        std::string home = "/home/amm";
         std::string language = "hn";
         CommandLineOptionsParser parser(home, language);
 
@@ -190,20 +191,20 @@ SCENARIO("Command-line arguments parse options", "[commandlineoptions]") {
         }
 
         WHEN("parsing --category-file") {
-            char* argv[] = {strdup("amm"), strdup("--category-file"), strdup("default.mjwm"), 0};
+            char* argv[] = {strdup("amm"), strdup("--category-file"), strdup("default.amm"), 0};
             AmmOptions options = parser.parse(3, argv);
 
             THEN("its category-file is set to the given value") {
-                CHECK(options.category_file_name == "default.mjwm");
+                CHECK(options.category_file_name == "default.amm");
             }
         }
 
         WHEN("parsing -c") {
-            char* argv[] = {strdup("amm"), strdup("-c"), strdup("default.mjwm"), 0};
+            char* argv[] = {strdup("amm"), strdup("-c"), strdup("default.amm"), 0};
             AmmOptions options = parser.parse(3, argv);
 
             THEN("its category-file is set to the given value") {
-                CHECK(options.category_file_name == "default.mjwm");
+                CHECK(options.category_file_name == "default.amm");
             }
         }
 
@@ -230,12 +231,12 @@ SCENARIO("Command-line arguments parse options", "[commandlineoptions]") {
 
 SCENARIO("Command-line arguments parse failure", "[commandlineoptions]") {
     GIVEN("command line options") {
-        std::string home = "/home/mjwm";
+        std::string home = "/home/amm";
         std::string language = "hn";
         CommandLineOptionsParser parser(home, language);
 
         WHEN("parsing a bad option") {
-            char* argv[] = {strdup("amm"), strdup("--bad-option"), strdup("default.mjwm"), 0};
+            char* argv[] = {strdup("amm"), strdup("--bad-option"), strdup("default.amm"), 0};
             AmmOptions options = parser.parse(3, argv);
 
             THEN("the parsing fails") {

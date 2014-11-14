@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# This file is part of mjwm.
+# This file is part of amm.
 # Copyright (C) 2014  Chirantan Mitra <chirantan.mitra@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
@@ -16,5 +16,5 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-valgrind --tool=callgrind --cache-sim=yes --branch-sim=yes --callgrind-out-file=callgrind.out  ./mjwm --iconize=Faenza
+valgrind --tool=callgrind --cache-sim=yes --branch-sim=yes --callgrind-out-file=callgrind.out  ./amm --iconize=Faenza
 gprof2dot --format=callgrind callgrind.out | dot -Tsvg -o output.svg

@@ -4,7 +4,7 @@ AUTOMAKE_OPTIONS = subdir-objects
 # AM_CPPFLAGS=-I$(top_builddir)/include -I$(top_srcdir)/include -Wall -Wextra -fno-exceptions -fno-rtti -fno-threadsafe-statics -ffast-math -flto
 AM_CPPFLAGS=-I$(top_builddir)/include -I$(top_srcdir)/include -Wall -Wextra
 
-bin_PROGRAMS = mjwm
+bin_PROGRAMS = amm
 
 implementation_files = src/stringx.cc \
                        src/vectorx.cc \
@@ -43,14 +43,14 @@ test_files = test/stringx_test.cc \
              test/command_line_options_parser_test.cc \
              test/icon_search/caching_search_test.cc
 
-mjwm_SOURCES = $(implementation_files) src/timex.cc src/messages.cc src/amm.cc src/qualified_icon_theme.cc src/icon_search/xdg_search.cc src/main.cc
+amm_SOURCES = $(implementation_files) src/timex.cc src/messages.cc src/amm.cc src/qualified_icon_theme.cc src/icon_search/xdg_search.cc src/main.cc
 
-check_PROGRAMS = mjwm_test
+check_PROGRAMS = amm_test
 
-mjwmdir=$(datadir)/mjwm
-mjwm_DATA = data/default.mjwm data/puppy.mjwm
-man1_MANS = doc/mjwm.1
+ammdir=$(datadir)/amm
+amm_DATA = data/default.amm data/puppy.amm
+man1_MANS = doc/amm.1
 
 TESTS = $(check_PROGRAMS)
 
-mjwm_test_SOURCES = $(implementation_files) $(test_files) test/test_runner.cc
+amm_test_SOURCES = $(implementation_files) $(test_files) test/test_runner.cc

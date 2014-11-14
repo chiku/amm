@@ -7,7 +7,7 @@ set_environment() {
   export LDFLAGS="-m32 -Os -Wall -Wextra"
   install_base_dir=`mktemp -d`
   install_dir="${install_base_dir}/usr/local"
-  mjwm_binary_path="${install_dir}/bin/mjwm"
+  amm_binary_path="${install_dir}/bin/amm"
   current_dir="$(pwd)"
 }
 
@@ -33,32 +33,32 @@ crunch_binary() {
 }
 
 assign_properties() {
-  mjwm_version=$($mjwm_binary_path --version | cut -d' ' -f2)
-  mjwm_size=$(ls -lah $mjwm_binary_path | awk '{print $5}')
-  mjwm_package_base_dir="mjwm-${mjwm_version}-i686"
+  amm_version=$($amm_binary_path --version | cut -d' ' -f2)
+  amm_size=$(ls -lah $amm_binary_path | awk '{print $5}')
+  amm_package_base_dir="amm-${amm_version}-i686"
 }
 
 prepackage() {
-  mkdir -p "${install_base_dir}/${mjwm_package_base_dir}/"
-  mv "${install_base_dir}/usr" "${install_base_dir}/${mjwm_package_base_dir}/"
+  mkdir -p "${install_base_dir}/${amm_package_base_dir}/"
+  mv "${install_base_dir}/usr" "${install_base_dir}/${amm_package_base_dir}/"
 }
 
 artifact() {
   cd "$install_base_dir"
-  tar -cvzf mjwm.tar.gz "${mjwm_package_base_dir}"
+  tar -cvzf amm.tar.gz "${amm_package_base_dir}"
   cd "$current_dir"
-  cp "${install_base_dir}/mjwm.tar.gz" "mjwm-${mjwm_version}.tar.gz"
-  cp "${install_base_dir}/${mjwm_package_base_dir}/usr/local/bin/mjwm" "mjwm-${mjwm_version}"
+  cp "${install_base_dir}/amm.tar.gz" "amm-${amm_version}.tar.gz"
+  cp "${install_base_dir}/${amm_package_base_dir}/usr/local/bin/amm" "amm-${amm_version}"
 }
 
 puppytize() {
   cd "$install_base_dir"
-  echo "${mjwm_package_base_dir}|mjwm|${mjwm_version}-i686||Utility|${mjwm_size}||${mjwm_package_base_dir}.pet||Create JWM menu|Slackware|14.0||" > "${mjwm_package_base_dir}/pet.specs"
-  tar -cvzf mjwm.pet "${mjwm_package_base_dir}"
-  checksum=$(md5sum mjwm.pet | cut -d' ' -f1)
-  echo -n "$checksum" >> mjwm.pet
+  echo "${amm_package_base_dir}|amm|${amm_version}-i686||Utility|${amm_size}||${amm_package_base_dir}.pet||Create JWM menu|Slackware|14.0||" > "${amm_package_base_dir}/pet.specs"
+  tar -cvzf amm.pet "${amm_package_base_dir}"
+  checksum=$(md5sum amm.pet | cut -d' ' -f1)
+  echo -n "$checksum" >> amm.pet
   cd "$current_dir"
-  cp $install_base_dir/mjwm.pet mjwm-$mjwm_version.pet
+  cp $install_base_dir/amm.pet amm-$amm_version.pet
 }
 
 cleanup() {

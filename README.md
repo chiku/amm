@@ -1,17 +1,17 @@
-mjwm
+amm
 ====
 
-[![Build Status](https://travis-ci.org/chiku/mjwm.svg?branch=master)](https://travis-ci.org/chiku/mjwm)
-[![Build Status](https://drone.io/github.com/chiku/mjwm/status.png)](https://drone.io/github.com/chiku/mjwm/latest)
+[![Build Status](https://travis-ci.org/chiku/amm.png?branch=master)](https://travis-ci.org/chiku/amm)
+[![Build Status](https://drone.io/github.com/chiku/amm/status.png)](https://drone.io/github.com/chiku/amm/latest)
 
 Overview
 --------
 
-mjwm creates JWM's menu from (freedesktop) desktop files. Include the generated file in the rootmenu section of your ~/.jwmrc
+amm creates JWM's menu from (freedesktop) desktop files. Include the generated file in the rootmenu section of your ~/.jwmrc
 
 Read more about JWM (Joe's Window Manager) at [http://joewing.net/projects/jwm](http://joewing.net/projects/jwm)
 
-mjwm is based on mjm by insmyic <gminsm@gmail.com> [http://sourceforge.net/projects/mjm](http://sourceforge.net/projects/mjm)
+amm is based on mjm by insmyic <gminsm@gmail.com> [http://sourceforge.net/projects/mjm](http://sourceforge.net/projects/mjm)
 
 Dependencies
 ------------
@@ -37,7 +37,7 @@ Options
 -------
 
 ``` script
-Usage: mjwm [options]
+Usage: amm [options]
 
 Optional arguments:
   -o, --output-file [FILE]    Outfile file [Default: ./automenu]
@@ -48,7 +48,7 @@ Optional arguments:
                                 under $XDG_DATA_HOME & $XDG_DATA_DIRS]
   -c, --category-file [FILE]  Use an external category file. Overrides the
                                 built in categories. Please look at
-                                default.mjwm to write your own category files.
+                                default.amm to write your own category files.
       --iconize=[THEME]       Search for icon files by name in $HOME,
                                 $XDG_DATA_DIRS/icons, and /usr/share/pixmaps.
                                 Icon file names would be absolute paths to
@@ -66,10 +66,10 @@ Usage
 
 * Run the script
 ``` script
-mjwm
+amm
 ```
 
-* Edit your ```$HOME/.jwmrc file```. Add an ```<Include>$HOME/.jwmrc-mjwm</Include>``` line inside ```RootMenu```.
+* Edit your ```$HOME/.jwmrc file```. Add an ```<Include>$HOME/.jwmrc-amm</Include>``` line inside ```RootMenu```.
 ``` xml
 <JWM>
   <!-- SNIP SNIP -->
@@ -77,7 +77,7 @@ mjwm
   <RootMenu onroot="12">
       <!-- Other Menu Entries -->
 
-      <Include>$HOME/.jwmrc-mjwm</Include>
+      <Include>$HOME/.jwmrc-amm</Include>
 
       <!-- Other Menu Entries -->
   </RootMenu>
@@ -96,29 +96,29 @@ Examples
 
 Generate menu entries for files inside /usr/local/share/applications
 ``` script
-mjwm -i /usr/local/share/applications
+amm -i /usr/local/share/applications
 ```
 
 Generate menu entries for files inside multiple directories /usr/local/share/applications, /usr/share/applications
 & ~/.local/share/applications
 ``` script
-mjwm -i /usr/local/share/applications:/usr/share/applications:~/.local/share/applications
+amm -i /usr/local/share/applications:/usr/share/applications:~/.local/share/applications
 ```
 
 Create menu entries with absolute path names to icons images from Hicolor theme
 ``` script
-mjwm --iconize
+amm --iconize
 ```
 
 Create menu entries with absolute path names to icons images from Faenza theme
 ``` script
-mjwm --iconize=Faenza # the equals sign is needed
+amm --iconize=Faenza # the equals sign is needed
 ```
 
 Use categories from as an external file
-Look at data/default.mjwm to create your own category file
+Look at data/default.amm to create your own category file
 ``` script
-mjwm -c data/default.mjwm
+amm -c data/default.amm
 ```
 
 Running tests
@@ -133,7 +133,7 @@ Running tests
 VERBOSE=true make check
 ```
 
-_mjwm uses [Catch](https://github.com/philsquared/Catch) for unit tests. Catch is released under Boost Software License._
+_amm uses [Catch](https://github.com/philsquared/Catch) for unit tests. Catch is released under Boost Software License._
 
 Exit codes
 ----------

@@ -77,8 +77,8 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-bin_PROGRAMS = mjwm$(EXEEXT)
-check_PROGRAMS = mjwm_test$(EXEEXT)
+bin_PROGRAMS = amm$(EXEEXT)
+check_PROGRAMS = amm_test$(EXEEXT)
 subdir = .
 DIST_COMMON = INSTALL NEWS README AUTHORS ChangeLog \
 	$(srcdir)/Makefile.in $(srcdir)/Makefile.am \
@@ -99,7 +99,7 @@ CONFIG_HEADER = config.h
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(man1dir)" \
-	"$(DESTDIR)$(mjwmdir)"
+	"$(DESTDIR)$(ammdir)"
 PROGRAMS = $(bin_PROGRAMS)
 am__dirstamp = $(am__leading_dot)dirstamp
 am__objects_1 = src/stringx.$(OBJEXT) src/vectorx.$(OBJEXT) \
@@ -113,12 +113,12 @@ am__objects_1 = src/stringx.$(OBJEXT) src/vectorx.$(OBJEXT) \
 	src/desktop_entry_file_search.$(OBJEXT) \
 	src/amm_options.$(OBJEXT) \
 	src/command_line_options_parser.$(OBJEXT)
-am_mjwm_OBJECTS = $(am__objects_1) src/timex.$(OBJEXT) \
+am_amm_OBJECTS = $(am__objects_1) src/timex.$(OBJEXT) \
 	src/messages.$(OBJEXT) src/amm.$(OBJEXT) \
 	src/qualified_icon_theme.$(OBJEXT) \
 	src/icon_search/xdg_search.$(OBJEXT) src/main.$(OBJEXT)
-mjwm_OBJECTS = $(am_mjwm_OBJECTS)
-mjwm_LDADD = $(LDADD)
+amm_OBJECTS = $(am_amm_OBJECTS)
+amm_LDADD = $(LDADD)
 am__objects_2 = test/stringx_test.$(OBJEXT) \
 	test/vectorx_test.$(OBJEXT) test/filex_test.$(OBJEXT) \
 	test/directoryx_test.$(OBJEXT) \
@@ -134,10 +134,10 @@ am__objects_2 = test/stringx_test.$(OBJEXT) \
 	test/amm_options_test.$(OBJEXT) \
 	test/command_line_options_parser_test.$(OBJEXT) \
 	test/icon_search/caching_search_test.$(OBJEXT)
-am_mjwm_test_OBJECTS = $(am__objects_1) $(am__objects_2) \
+am_amm_test_OBJECTS = $(am__objects_1) $(am__objects_2) \
 	test/test_runner.$(OBJEXT)
-mjwm_test_OBJECTS = $(am_mjwm_test_OBJECTS)
-mjwm_test_LDADD = $(LDADD)
+amm_test_OBJECTS = $(am_amm_test_OBJECTS)
+amm_test_LDADD = $(LDADD)
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -167,8 +167,8 @@ AM_V_CXXLD = $(am__v_CXXLD_@AM_V@)
 am__v_CXXLD_ = $(am__v_CXXLD_@AM_DEFAULT_V@)
 am__v_CXXLD_0 = @echo "  CXXLD   " $@;
 am__v_CXXLD_1 = 
-SOURCES = $(mjwm_SOURCES) $(mjwm_test_SOURCES)
-DIST_SOURCES = $(mjwm_SOURCES) $(mjwm_test_SOURCES)
+SOURCES = $(amm_SOURCES) $(amm_test_SOURCES)
+DIST_SOURCES = $(amm_SOURCES) $(amm_test_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -204,7 +204,7 @@ am__uninstall_files_from_dir = { \
 man1dir = $(mandir)/man1
 NROFF = nroff
 MANS = $(man1_MANS)
-DATA = $(mjwm_DATA)
+DATA = $(amm_DATA)
 am__tagged_files = $(HEADERS) $(SOURCES) $(TAGS_FILES) \
 	$(LISP)config.h.in
 # Read a list of newline-separated strings from the standard input,
@@ -548,12 +548,12 @@ test_files = test/stringx_test.cc \
              test/command_line_options_parser_test.cc \
              test/icon_search/caching_search_test.cc
 
-mjwm_SOURCES = $(implementation_files) src/timex.cc src/messages.cc src/amm.cc src/qualified_icon_theme.cc src/icon_search/xdg_search.cc src/main.cc
-mjwmdir = $(datadir)/mjwm
-mjwm_DATA = data/default.mjwm data/puppy.mjwm
-man1_MANS = doc/mjwm.1
+amm_SOURCES = $(implementation_files) src/timex.cc src/messages.cc src/amm.cc src/qualified_icon_theme.cc src/icon_search/xdg_search.cc src/main.cc
+ammdir = $(datadir)/amm
+amm_DATA = data/default.amm data/puppy.amm
+man1_MANS = doc/amm.1
 TESTS = $(check_PROGRAMS)
-mjwm_test_SOURCES = $(implementation_files) $(test_files) test/test_runner.cc
+amm_test_SOURCES = $(implementation_files) $(test_files) test/test_runner.cc
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-am
 
@@ -718,9 +718,9 @@ src/icon_search/xdg_search.$(OBJEXT): src/icon_search/$(am__dirstamp) \
 	src/icon_search/$(DEPDIR)/$(am__dirstamp)
 src/main.$(OBJEXT): src/$(am__dirstamp) src/$(DEPDIR)/$(am__dirstamp)
 
-mjwm$(EXEEXT): $(mjwm_OBJECTS) $(mjwm_DEPENDENCIES) $(EXTRA_mjwm_DEPENDENCIES) 
-	@rm -f mjwm$(EXEEXT)
-	$(AM_V_CXXLD)$(CXXLINK) $(mjwm_OBJECTS) $(mjwm_LDADD) $(LIBS)
+amm$(EXEEXT): $(amm_OBJECTS) $(amm_DEPENDENCIES) $(EXTRA_amm_DEPENDENCIES) 
+	@rm -f amm$(EXEEXT)
+	$(AM_V_CXXLD)$(CXXLINK) $(amm_OBJECTS) $(amm_LDADD) $(LIBS)
 test/$(am__dirstamp):
 	@$(MKDIR_P) test
 	@: > test/$(am__dirstamp)
@@ -785,9 +785,9 @@ test/icon_search/caching_search_test.$(OBJEXT):  \
 test/test_runner.$(OBJEXT): test/$(am__dirstamp) \
 	test/$(DEPDIR)/$(am__dirstamp)
 
-mjwm_test$(EXEEXT): $(mjwm_test_OBJECTS) $(mjwm_test_DEPENDENCIES) $(EXTRA_mjwm_test_DEPENDENCIES) 
-	@rm -f mjwm_test$(EXEEXT)
-	$(AM_V_CXXLD)$(CXXLINK) $(mjwm_test_OBJECTS) $(mjwm_test_LDADD) $(LIBS)
+amm_test$(EXEEXT): $(amm_test_OBJECTS) $(amm_test_DEPENDENCIES) $(EXTRA_amm_test_DEPENDENCIES) 
+	@rm -f amm_test$(EXEEXT)
+	$(AM_V_CXXLD)$(CXXLINK) $(amm_test_OBJECTS) $(amm_test_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -902,27 +902,27 @@ uninstall-man1:
 	} | sed -e 's,.*/,,;h;s,.*\.,,;s,^[^1][0-9a-z]*$$,1,;x' \
 	      -e 's,\.[0-9a-z]*$$,,;$(transform);G;s,\n,.,'`; \
 	dir='$(DESTDIR)$(man1dir)'; $(am__uninstall_files_from_dir)
-install-mjwmDATA: $(mjwm_DATA)
+install-ammDATA: $(amm_DATA)
 	@$(NORMAL_INSTALL)
-	@list='$(mjwm_DATA)'; test -n "$(mjwmdir)" || list=; \
+	@list='$(amm_DATA)'; test -n "$(ammdir)" || list=; \
 	if test -n "$$list"; then \
-	  echo " $(MKDIR_P) '$(DESTDIR)$(mjwmdir)'"; \
-	  $(MKDIR_P) "$(DESTDIR)$(mjwmdir)" || exit 1; \
+	  echo " $(MKDIR_P) '$(DESTDIR)$(ammdir)'"; \
+	  $(MKDIR_P) "$(DESTDIR)$(ammdir)" || exit 1; \
 	fi; \
 	for p in $$list; do \
 	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
 	  echo "$$d$$p"; \
 	done | $(am__base_list) | \
 	while read files; do \
-	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(mjwmdir)'"; \
-	  $(INSTALL_DATA) $$files "$(DESTDIR)$(mjwmdir)" || exit $$?; \
+	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(ammdir)'"; \
+	  $(INSTALL_DATA) $$files "$(DESTDIR)$(ammdir)" || exit $$?; \
 	done
 
-uninstall-mjwmDATA:
+uninstall-ammDATA:
 	@$(NORMAL_UNINSTALL)
-	@list='$(mjwm_DATA)'; test -n "$(mjwmdir)" || list=; \
+	@list='$(amm_DATA)'; test -n "$(ammdir)" || list=; \
 	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
-	dir='$(DESTDIR)$(mjwmdir)'; $(am__uninstall_files_from_dir)
+	dir='$(DESTDIR)$(ammdir)'; $(am__uninstall_files_from_dir)
 
 ID: $(am__tagged_files)
 	$(am__define_uniq_tagged_files); mkid -fID $$unique
@@ -1124,9 +1124,9 @@ recheck: all $(check_PROGRAMS)
 	        am__force_recheck=am--force-recheck \
 	        TEST_LOGS="$$log_list"; \
 	exit $$?
-mjwm_test.log: mjwm_test$(EXEEXT)
-	@p='mjwm_test$(EXEEXT)'; \
-	b='mjwm_test'; \
+amm_test.log: amm_test$(EXEEXT)
+	@p='amm_test$(EXEEXT)'; \
+	b='amm_test'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
@@ -1315,7 +1315,7 @@ check-am: all-am
 check: check-am
 all-am: Makefile $(PROGRAMS) $(MANS) $(DATA) config.h
 installdirs:
-	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(man1dir)" "$(DESTDIR)$(mjwmdir)"; do \
+	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(man1dir)" "$(DESTDIR)$(ammdir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-am
@@ -1391,7 +1391,7 @@ info: info-am
 
 info-am:
 
-install-data-am: install-man install-mjwmDATA
+install-data-am: install-ammDATA install-man
 
 install-dvi: install-dvi-am
 
@@ -1438,7 +1438,7 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am: uninstall-binPROGRAMS uninstall-man uninstall-mjwmDATA
+uninstall-am: uninstall-ammDATA uninstall-binPROGRAMS uninstall-man
 
 uninstall-man: uninstall-man1
 
@@ -1452,16 +1452,16 @@ uninstall-man: uninstall-man1
 	distclean-compile distclean-generic distclean-hdr \
 	distclean-tags distcleancheck distdir distuninstallcheck dvi \
 	dvi-am html html-am info info-am install install-am \
-	install-binPROGRAMS install-data install-data-am install-dvi \
-	install-dvi-am install-exec install-exec-am install-html \
-	install-html-am install-info install-info-am install-man \
-	install-man1 install-mjwmDATA install-pdf install-pdf-am \
-	install-ps install-ps-am install-strip installcheck \
-	installcheck-am installdirs maintainer-clean \
+	install-ammDATA install-binPROGRAMS install-data \
+	install-data-am install-dvi install-dvi-am install-exec \
+	install-exec-am install-html install-html-am install-info \
+	install-info-am install-man install-man1 install-pdf \
+	install-pdf-am install-ps install-ps-am install-strip \
+	installcheck installcheck-am installdirs maintainer-clean \
 	maintainer-clean-generic mostlyclean mostlyclean-compile \
 	mostlyclean-generic pdf pdf-am ps ps-am recheck tags tags-am \
-	uninstall uninstall-am uninstall-binPROGRAMS uninstall-man \
-	uninstall-man1 uninstall-mjwmDATA
+	uninstall uninstall-am uninstall-ammDATA uninstall-binPROGRAMS \
+	uninstall-man uninstall-man1
 
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.

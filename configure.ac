@@ -1,7 +1,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.12])
-AC_INIT([mjwm], [4.0.0], [https://github.com/chiku/mjwm/issues])
+AC_INIT([amm], [4.0.0], [https://github.com/chiku/amm/issues])
 AC_LANG(C++)
 
 # Silent by default
@@ -20,7 +20,7 @@ AC_PROG_INSTALL
 AC_CHECK_HEADERS([dirent.h getopt.h])
 
 # Checks for library functions.
-AC_CHECK_FUNCS([mjwm])
+AC_CHECK_FUNCS([amm])
 AC_CONFIG_FILES([Makefile])
 
 AC_OUTPUT

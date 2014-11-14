@@ -1,5 +1,5 @@
 /*
-  This file is part of mjwm.
+  This file is part of amm.
   Copyright (C) 2014  Chirantan Mitra <chirantan.mitra@gmail.com>
 
   This program is free software: you can redistribute it and/or modify
@@ -49,7 +49,7 @@ std::string help()
     stream << "                                under $XDG_DATA_HOME & $XDG_DATA_DIRS]" << std::endl;
     stream << "  -c, --category-file [FILE]  Use an external category file. Overrides the" << std::endl;
     stream << "                                built in categories. Please look at" << std::endl;
-    stream << "                                default.mjwm to write your own category files." << std::endl;
+    stream << "                                default.amm to write your own category files." << std::endl;
     stream << "      --iconize=[THEME]       Search for icon files by name in $HOME," << std::endl;
     stream << "                                $XDG_DATA_DIRS/icons, and /usr/share/pixmaps." << std::endl;
     stream << "                                Icon file names would be absolute paths to" << std::endl;
@@ -64,7 +64,7 @@ std::string help()
     stream << std::endl;
 
     stream << "Include the generated file in the rootmenu section of your ~/.jwmrc" << std::endl;
-    stream << "More information at http://github.com/chiku/mjwm" << std::endl;
+    stream << "More information at http://github.com/chiku/amm" << std::endl;
 
     return stream.str();
 }

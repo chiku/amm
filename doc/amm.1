@@ -1,28 +1,28 @@
 .TH MJWM 1
 
 .SH NAME
-mjwm \- create menu for JWM
+amm \- create menu for JWM
 
 .SH SYNOPSIS
-.B mjwm
+.B amm
 [\fB\-o\fR \fIOUTPUT FILE\fR]
 [\fB\-i\fR \fIINPUT DIRECTORY\fR]
 [\fB\-c\fR \fICATEGORY FILE\fR]
 [\fB\-\-iconize\fR]
 
 .SH DESCRIPTION
-.B mjwm
+.B amm
 creates JWM menu from FreeDesktop files present in XDG application directories
 
 Include the generated file in the rootmenu section of your ~/.jwmrc.
-For more information visit http://github.com/chiku/mjwm.
+For more information visit http://github.com/chiku/amm.
 
 .B The following options are available.
 
 .TP
 .BR \-o ", " \-\-output\-file =\fIFILE\fR
 Menu output file name.
-Default is $HOME/.jwmrc-mjwm.
+Default is $HOME/.jwmrc-amm.
 .LP
 
 .TP
@@ -35,7 +35,7 @@ $HOME/.local/share is used if $XDG_DATA_HOME is not set.
 .TP
 .BR \-c ", " \-\-category\-file =\fIFILE\fR
 Use an external category file.
-This overrides the built in categories. Please look at default.mjwm to write your own category file.
+This overrides the built in categories. Please look at default.amm to write your own category file.
 
 .TP
 .BR \-\-iconize, \-\-iconize =\fITHEME\fR
@@ -73,23 +73,23 @@ Show version information.
 
 .TP
 Generate menu entries for files in /usr/local/share/applications
-.BR mjwm \ \-i\ /usr/local/share/applications
+.BR amm \ \-i\ /usr/local/share/applications
 
 .TP
 Generate menu entries from files in multiple directories /usr/local/share/applications, /usr/share/applications and ~/.local/share/applications
-.BR mjwm \ \-i\ /usr/local/share/applications:/usr/share/applications:~/.local/share/applications
+.BR amm \ \-i\ /usr/local/share/applications:/usr/share/applications:~/.local/share/applications
 
 .TP
 Use categories from an external file
-.BR mjwm \ \-c\ data/default.mjwm
+.BR amm \ \-c\ data/default.amm
 .LP
 
 .TP
 Create menu entries with absolute path names to Hicolor icons images
-.BR mjwm \ \-\-iconize
+.BR amm \ \-\-iconize
 .LP
 
 .TP
 Create menu entries with absolute path names to Faenza icons images
-.BR mjwm \ \-\-iconize=Faenza
+.BR amm \ \-\-iconize=Faenza
 .LP

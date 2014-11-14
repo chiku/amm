@@ -1,7 +1,7 @@
 #!/bin/sh
 
-ls -hal mjwm
-strip -sxXv mjwm
-ls -hal mjwm
-upx -9 --ultra-brute -v mjwm
-ls -hal mjwm
+ls -hal amm
+strip -sxXv amm
+ls -hal amm
+upx -9 --ultra-brute -v amm
+ls -hal amm

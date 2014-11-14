@@ -12,7 +12,7 @@ Makefile
 stamp-h1
 
 # Executables
-mjwm
+amm
 *_test
 
 # Test output

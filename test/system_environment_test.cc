@@ -1,5 +1,5 @@
 /*
-  This file is part of mjwm.
+  This file is part of amm.
   Copyright (C) 2014  Chirantan Mitra <chirantan.mitra@gmail.com>
 
   This program is free software: you can redistribute it and/or modify
@@ -40,7 +40,7 @@ SCENARIO("SystemEnvironment", "[systemenvironment]") {
     }
 
     GIVEN("HOME is set") {
-        setenv("HOME", "/home/mjwm", 1);
+        setenv("HOME", "/home/amm", 1);
 
         SystemEnvironment environment;
 
@@ -93,7 +93,8 @@ SCENARIO("SystemEnvironment", "[systemenvironment]") {
                 THEN("it is a list of directories pointed to by $HOME/.local/share/applications, /usr/local/share/applications and /usr/share/applications") {
                     std::vector<std::string> directories = environment.applicationDirectories();
                     REQUIRE(directories.size() == 3);
-                    CHECK(directories[0] == "/home/mjwm/.local/share/applications");
+
+                    CHECK(directories[0] == "/home/amm/.local/share/applications");
                     CHECK(directories[1] == "/usr/local/share/applications");
                     CHECK(directories[2] == "/usr/share/applications");
                 }
@@ -103,7 +104,8 @@ SCENARIO("SystemEnvironment", "[systemenvironment]") {
                 THEN("it is a list of directories pointed to by $HOME/.icons, /usr/local/share/icons, /usr/share/icons and /usr/share/pixmaps") {
                     std::vector<std::string> directories = environment.iconThemeDirectories();
                     REQUIRE(directories.size() == 4);
-                    CHECK(directories[0] == "/home/mjwm/.icons");
+
+                    CHECK(directories[0] == "/home/amm/.icons");
                     CHECK(directories[1] == "/usr/local/share/icons");
                     CHECK(directories[2] == "/usr/share/icons");
                     CHECK(directories[3] == "/usr/share/pixmaps");
