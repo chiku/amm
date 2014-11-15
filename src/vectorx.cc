@@ -37,8 +37,8 @@ std::string VectorX::join(const std::string &delimeter) const
     }
 
     if (vector_size >= 2) {
-        for (auto iterator = vector_.begin(); iterator != vector_.end()-1; ++iterator) {
-            stream << *iterator << delimeter;
+        for (auto item = vector_.begin(); item != vector_.end()-1; ++item) {
+            stream << *item << delimeter;
         }
     }
     stream << vector_.back();
@@ -50,8 +50,8 @@ std::vector<std::string> VectorX::terminateEachWith(const std::string &delimiter
 {
     std::vector<std::string> result;
 
-    for (auto i = vector_.begin(); i != vector_.end(); ++i) {
-        result.push_back(StringX(*i).terminateWith(delimiter));
+    for (const auto &item : vector_) {
+        result.push_back(StringX(item).terminateWith(delimiter));
     }
 
     return result;

@@ -72,8 +72,8 @@ std::vector<std::string> SystemEnvironment::applicationDirectories() const
     directories.push_back(home_application);
 
     auto data_dir_applications = xdgDataDirectories();
-    for (auto directory = data_dir_applications.begin(); directory != data_dir_applications.end(); ++directory) {
-        directories.push_back(StringX(*directory).terminateWith("/") + "applications");
+    for (const auto &directory : data_dir_applications) {
+        directories.push_back(StringX(directory).terminateWith("/") + "applications");
     }
     return directories;
 }
@@ -85,8 +85,8 @@ std::vector<std::string> SystemEnvironment::iconThemeDirectories() const
     directories.push_back(home_icon);
 
     auto xdg_data_dirs = xdgDataDirectories();
-    for (auto directory = xdg_data_dirs.begin(); directory != xdg_data_dirs.end(); ++directory) {
-        directories.push_back(StringX(*directory).terminateWith("/") + "icons");
+    for (const auto &directory : xdg_data_dirs) {
+        directories.push_back(StringX(directory).terminateWith("/") + "icons");
     }
     directories.push_back("/usr/share/pixmaps");
 

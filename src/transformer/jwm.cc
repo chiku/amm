@@ -32,9 +32,9 @@ static std::string removeFieldCode(const std::string &input)
     std::vector<std::string> result;
     auto tokens = StringX(input).split(" ");
 
-    for (auto iter = tokens.begin(); iter != tokens.end(); ++iter) {
-        if (!(iter->size() >= 1 && (*iter)[0] == '%')) {
-            result.push_back(*iter);
+    for (const auto &token : tokens) {
+        if (!(token.size() >= 1 && token[0] == '%')) {
+            result.push_back(token);
         }
     }
 

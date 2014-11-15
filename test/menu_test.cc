@@ -71,8 +71,8 @@ public:
 
 static void clearMemory(std::vector<representation::RepresentationInterface*> representations)
 {
-    for (auto iter = representations.begin(); iter != representations.end(); ++iter) {
-        delete *iter;
+    for (const auto &representation : representations) {
+        delete representation;
     }
 }
 

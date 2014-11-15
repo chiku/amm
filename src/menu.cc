@@ -72,9 +72,9 @@ void Menu::loadCustomCategories(const std::vector<std::string> &lines)
 {
     subcategories_.clear();
 
-    for (auto line = lines.begin(); line != lines.end(); ++line) {
-        if ((*line)[0] != '#') {
-            auto tokens = StringX(StringX(*line).trim()).split(":");
+    for (const auto &line : lines) {
+        if (line[0] != '#') {
+            auto tokens = StringX(StringX(line).trim()).split(":");
             if (tokens.size() >= 3 && tokens[0] != "" && tokens[1] != "") {
                 std::vector<std::string> classification_names;
                 for (auto token = tokens.begin()+2; token != tokens.end(); ++token) {
@@ -92,8 +92,8 @@ void Menu::loadCustomCategories(const std::vector<std::string> &lines)
 
 void Menu::populate(const std::vector<std::string> &entry_names)
 {
-    for (auto name = entry_names.begin(); name != entry_names.end(); ++name) {
-        addDesktopEntry(*name);
+    for (const auto &name : entry_names) {
+        addDesktopEntry(name);
     }
 
     subcategories_.push_back(unclassified_subcategory_);
@@ -134,10 +134,10 @@ bool Menu::classify(const xdg::DesktopEntry &entry)
 {
     bool classified = false;
 
-    for (auto subcategory = subcategories_.begin(); subcategory != subcategories_.end(); ++subcategory) {
-        if (entry.isAnyOf(subcategory->classificationNames())) {
+    for (auto &subcategory : subcategories_) {
+        if (entry.isAnyOf(subcategory.classificationNames())) {
             classified = true;
-            subcategory->addDesktopEntry(entry);
+            subcategory.addDesktopEntry(entry);
         }
     }
 
@@ -146,8 +146,8 @@ bool Menu::classify(const xdg::DesktopEntry &entry)
 
 void Menu::sort()
 {
-    for (auto group = subcategories_.begin(); group != subcategories_.end(); ++group) {
-        group->sortDesktopEntries();
+    for (auto &group : subcategories_) {
+        group.sortDesktopEntries();
     }
 }
 
@@ -157,20 +157,20 @@ std::vector<representation::RepresentationInterface*> Menu::representations() co
     auto *menu_start = new representation::MenuStart;
     representations.push_back(menu_start);
 
-    for (auto subcategory = subcategories_.begin(); subcategory != subcategories_.end(); ++subcategory) {
-        if (subcategory->hasEntries()) {
-            auto icon_name = icon_searcher_->resolvedName(subcategory->iconName());
-            representation::SubcategoryStart *start = new representation::SubcategoryStart(subcategory->displayName(), icon_name);
+    for (const auto &subcategory : subcategories_) {
+        if (subcategory.hasEntries()) {
+            auto icon_name = icon_searcher_->resolvedName(subcategory.iconName());
+            auto *start = new representation::SubcategoryStart(subcategory.displayName(), icon_name);
             representations.push_back(start);
 
-            auto entries = subcategory->desktopEntries();
-            for (auto entry = entries.begin(); entry != entries.end(); ++entry) {
-                auto icon_name = icon_searcher_->resolvedName(entry->icon());
-                representation::Program *program = new representation::Program(entry->name(), icon_name, entry->executable(), entry->comment());
+            auto entries = subcategory.desktopEntries();
+            for (const auto &entry : entries) {
+                auto icon_name = icon_searcher_->resolvedName(entry.icon());
+                auto *program = new representation::Program(entry.name(), icon_name, entry.executable(), entry.comment());
                 representations.push_back(program);
             }
 
-            auto *end = new representation::SubcategoryEnd(subcategory->displayName());
+            auto *end = new representation::SubcategoryEnd(subcategory.displayName());
             representations.push_back(end);
         }
     }

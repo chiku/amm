@@ -33,9 +33,9 @@ static std::vector<std::string> defaultDirectories()
 {
     std::vector<std::string> existing_directories;
     auto directories = SystemEnvironment().applicationDirectories();
-    for (auto directory = directories.begin(); directory != directories.end(); ++directory) {
-        if (DirectoryX(*directory).isValid()) {
-            existing_directories.push_back(*directory);
+    for (const auto &directory : directories) {
+        if (DirectoryX(directory).isValid()) {
+            existing_directories.push_back(directory);
         }
     }
     return existing_directories;
@@ -55,8 +55,8 @@ void DesktopEntryFileSearch::resolve()
     auto terminated_names = VectorX(directory_names_).terminateEachWith("/");
     auto unique_names = VectorX(terminated_names).unique();
 
-    for (auto name = unique_names.begin(); name != unique_names.end(); ++name) {
-        populate(*name);
+    for (const auto &name : unique_names) {
+        populate(name);
     }
 }
 
@@ -67,15 +67,15 @@ void DesktopEntryFileSearch::populate(const std::string &directory_name)
     if (directory.isValid()) {
         auto entries = directory.allEntries();
 
-        for (auto entry = entries.begin(); entry != entries.end(); ++entry) {
-            auto entry_name = entry->name();
+        for (const auto &entry : entries) {
+            auto entry_name = entry.name();
             auto full_path = StringX(directory_name).terminateWith("/") + entry_name;
 
             if (StringX(entry_name).endsWith(".desktop")) {
                 desktop_file_names_.push_back(full_path);
             }
 
-            if (entry->isDirectory() && entry_name != ".." && entry_name != ".") {
+            if (entry.isDirectory() && entry_name != ".." && entry_name != ".") {
                 populate(full_path);
             }
         }

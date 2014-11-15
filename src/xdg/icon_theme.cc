@@ -45,14 +45,14 @@ IconTheme::IconTheme(const std::vector<std::string> &lines) : internal_name_("")
     }
 
     auto directory_names = StringX(xdg_entry.under("Icon Theme", "Directories")).split(",");
-    for (auto name = directory_names.begin(); name != directory_names.end(); ++name) {
-        auto type = xdg_entry.under(*name, "Type");
-        auto size = xdg_entry.under(*name, "Size");
-        auto maxsize = xdg_entry.under(*name, "MaxSize");
-        auto minsize = xdg_entry.under(*name, "MinSize");
-        auto threshold = xdg_entry.under(*name, "Threshold");
+    for (const auto &name : directory_names) {
+        auto type = xdg_entry.under(name, "Type");
+        auto size = xdg_entry.under(name, "Size");
+        auto maxsize = xdg_entry.under(name, "MaxSize");
+        auto minsize = xdg_entry.under(name, "MinSize");
+        auto threshold = xdg_entry.under(name, "Threshold");
 
-        auto icon_subdirectory = IconSubdirectory(*name, size)
+        auto icon_subdirectory = IconSubdirectory(name, size)
             .type(type)
             .maxSize(maxsize)
             .minSize(minsize)

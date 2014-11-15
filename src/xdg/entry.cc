@@ -32,8 +32,8 @@ void Entry::parse()
     std::map< std::string, std::string > entry;
     std::string current_section = "";
 
-    for (auto iter = lines_.begin(); iter != lines_.end(); ++iter) {
-        EntryLine line(*iter);
+    for (const auto &raw_line : lines_) {
+        EntryLine line(raw_line);
         if (line.isDeclaration()) {
             result_[current_section] = entry;
             entry.clear();

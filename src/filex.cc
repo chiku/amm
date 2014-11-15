@@ -71,8 +71,8 @@ bool FileX::writeLines(const std::vector<std::string> &lines) const
         return false;
     }
 
-    for (auto line = lines.begin(); line != lines.end(); ++line) {
-        file << *line << '\n';
+    for (const auto &line : lines) {
+        file << line << '\n';
     }
 
     return true;

@@ -32,28 +32,28 @@ QualifiedIconTheme::QualifiedIconTheme(const SystemEnvironment &environment, con
 {
     auto theme_directories = environment.iconThemeDirectories();
 
-    for (auto dir = theme_directories.begin(); dir != theme_directories.end(); ++dir) {
-        if (FileX(*dir).exists()) {
-            theme_search_paths_.push_back(*dir);
+    for (const auto &dir : theme_directories) {
+        if (FileX(dir).exists()) {
+            theme_search_paths_.push_back(dir);
         }
     }
 }
 
 xdg::IconTheme QualifiedIconTheme::iconThemeFromName(const std::string &theme_name)
 {
-    for (auto path = theme_search_paths_.begin(); path != theme_search_paths_.end(); ++path) {
-        DirectoryX directory(*path);
+    for (const auto &path : theme_search_paths_) {
+        DirectoryX directory(path);
 
         if (directory.isValid()) {
             auto entries = directory.allEntries();
-            for (auto entry = entries.begin(); entry != entries.end(); ++entry) {
-                std::string name = entry->name();
-                if (entry->isDirectory() && name != "." && name != "..") {
-                    auto full_path = StringX(*path).terminateWith("/") + StringX(entry->name()).terminateWith("/") + "index.theme";
+            for (const auto &entry : entries) {
+                auto name = entry.name();
+                if (entry.isDirectory() && name != "." && name != "..") {
+                    auto full_path = StringX(path).terminateWith("/") + StringX(entry.name()).terminateWith("/") + "index.theme";
                     std::vector<std::string> lines;
 
                     if (FileX(full_path).readLines(&lines)) {
-                        auto xdg_theme = xdg::IconTheme(lines).internalNameIs(entry->name());
+                        auto xdg_theme = xdg::IconTheme(lines).internalNameIs(entry.name());
                         if (xdg_theme.isNamed(theme_name)) {
                             return xdg_theme;
                         }
@@ -79,8 +79,8 @@ std::vector<xdg::IconTheme> QualifiedIconTheme::themeWithParent()
     icon_themes.push_back(icon_theme);
 
     auto parent_themes = icon_theme.parents();
-    for (auto iter = parent_themes.begin(); iter != parent_themes.end(); ++iter) {
-        icon_themes.push_back(iconThemeFromName(*iter));
+    for (const auto &theme : parent_themes) {
+        icon_themes.push_back(iconThemeFromName(theme));
     }
     return icon_themes;
 }
