@@ -33,19 +33,19 @@ namespace amm {
 SystemEnvironment::SystemEnvironment()
 {
     auto *home = std::getenv("HOME");
-    if (home != NULL) {
+    if (home != nullptr) {
         home_ = home;
     }
 
     auto *xdg_data_home = std::getenv("XDG_DATA_HOME");
-    if (xdg_data_home != NULL) {
+    if (xdg_data_home != nullptr) {
         xdg_data_home_ = xdg_data_home;
     } else {
         xdg_data_home_ = home_ + "/.local/share";
     }
 
     auto *xdg_data_dirs = std::getenv("XDG_DATA_DIRS");
-    if (xdg_data_dirs != NULL) {
+    if (xdg_data_dirs != nullptr) {
         xdg_data_dirs_ = xdg_data_dirs;
     } else {
         xdg_data_dirs_ = "/usr/local/share:/usr/share";
@@ -95,7 +95,7 @@ std::vector<std::string> SystemEnvironment::iconThemeDirectories() const
 
 std::string SystemEnvironment::getLanguageWith(const char *raw)
 {
-    if (raw == NULL) {
+    if (raw == nullptr) {
         return "";
     }
 

@@ -43,7 +43,7 @@ DirectoryX::Entries::Entries(const std::string &path) : path_(path)
 
 DirectoryX::Entries::~Entries()
 {
-    if (directory_ != NULL) {
+    if (directory_ != nullptr) {
         closedir(directory_);
     }
 }
@@ -51,7 +51,7 @@ DirectoryX::Entries::~Entries()
 DirectoryX::Entries::SearchResult DirectoryX::Entries::nextName()
 {
     dirent *entry_;
-    while((entry_ = readdir(directory_)) != NULL) {
+    while((entry_ = readdir(directory_)) != nullptr) {
         auto full_path = StringX(path_).terminateWith("/") + entry_->d_name;
         current_result_ = SearchResult::Success(entry_->d_name, FileX(full_path).existsAsDirectory());
         return current_result_;
@@ -64,7 +64,7 @@ DirectoryX::Entries::iterator DirectoryX::Entries::iterator::operator ++()
 {
     DirectoryX::Entries::iterator output = *this;
     if (!subdirs_->nextName().success) {
-        subdirs_ = NULL;
+        subdirs_ = nullptr;
     }
     return output;
 }
@@ -72,7 +72,7 @@ DirectoryX::Entries::iterator DirectoryX::Entries::iterator::operator ++()
 DirectoryX::Entries::iterator DirectoryX::Entries::iterator::operator ++(int)
 {
     if (!subdirs_->nextName().success) {
-        subdirs_ = NULL;
+        subdirs_ = nullptr;
     }
     return *this;
 }

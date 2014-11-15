@@ -65,7 +65,7 @@ public:
         };
 
         iterator begin() { nextName(); return iterator(this); }
-        iterator end() { return iterator(NULL); }
+        iterator end() { return iterator(nullptr); }
 
         std::string name() const { return current_result_.name; }
         bool isDirectory() const { return current_result_.isDirectory; }
