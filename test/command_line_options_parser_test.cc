@@ -28,8 +28,8 @@ namespace amm {
 
 SCENARIO("Command-line arguments default parse", "[commandlineoptions]") {
     GIVEN("command line options") {
-        auto home = static_cast<std::string>("/home/amm");
-        auto language = static_cast<std::string>("hn");
+        auto home = std::string { "/home/amm" };
+        auto language = std::string { "hn" };
         CommandLineOptionsParser parser(home, language);
 
         WHEN("parsing default") {
@@ -90,8 +90,8 @@ SCENARIO("Command-line arguments default parse", "[commandlineoptions]") {
 
 SCENARIO("Command-line arguments parse with flags", "[commandlineoptions]") {
     GIVEN("command line options") {
-        auto home = static_cast<std::string>("/home/amm");
-        auto language = static_cast<std::string>("hn");
+        auto home = std::string { "/home/amm" };
+        auto language = std::string { "hn" };
         CommandLineOptionsParser parser(home, language);
 
         WHEN("parsing --help") {
@@ -138,8 +138,8 @@ SCENARIO("Command-line arguments parse with flags", "[commandlineoptions]") {
 
 SCENARIO("Command-line arguments parse options", "[commandlineoptions]") {
     GIVEN("command line options") {
-        auto home = static_cast<std::string>("/home/amm");
-        auto language = static_cast<std::string>("hn");
+        auto home = std::string { "/home/amm" };
+        auto language = std::string { "hn" };
         CommandLineOptionsParser parser(home, language);
 
         WHEN("parsing --output-file") {
@@ -231,8 +231,8 @@ SCENARIO("Command-line arguments parse options", "[commandlineoptions]") {
 
 SCENARIO("Command-line arguments parse failure", "[commandlineoptions]") {
     GIVEN("command line options") {
-        auto home = static_cast<std::string>("/home/amm");
-        auto language = static_cast<std::string>("hn");
+        auto home = std::string { "/home/amm" };
+        auto language = std::string { "hn" };
         CommandLineOptionsParser parser(home, language);
 
         WHEN("parsing a bad option") {

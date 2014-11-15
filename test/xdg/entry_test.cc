@@ -24,99 +24,99 @@ namespace xdg {
 
 std::vector<std::string> singleSectionEntryLines()
 {
-    std::vector<std::string> lines;
-    lines.push_back("[Desktop Entry]");
-    lines.push_back("Version=1.0");
-    lines.push_back("Name=VLC media player");
-    lines.push_back("GenericName=Media player");
-    lines.push_back("Comment=Read, capture, broadcast your multimedia streams");
-    lines.push_back("Exec=/usr/bin/vlc --started-from-file %U");
-    lines.push_back("TryExec=/usr/bin/vlc");
-    lines.push_back("Icon=vlc");
-    lines.push_back("Terminal=false");
-    lines.push_back("Type=Application");
-    lines.push_back("Categories=AudioVideo;Player;Recorder;");
-    return lines;
+    return std::vector<std::string> {
+        "[Desktop Entry]",
+        "Version=1.0",
+        "Name=VLC media player",
+        "GenericName=Media player",
+        "Comment=Read, capture, broadcast your multimedia streams",
+        "Exec=/usr/bin/vlc --started-from-file %U",
+        "TryExec=/usr/bin/vlc",
+        "Icon=vlc",
+        "Terminal=false",
+        "Type=Application",
+        "Categories=AudioVideo;Player;Recorder;",
+    };
 }
 
 std::vector<std::string> singleSectionEntryLinesWithLanguages()
 {
-    std::vector<std::string> lines;
-    lines.push_back("[Desktop Entry]");
-    lines.push_back("Version=1.0");
-    lines.push_back("Name=VLC media player");
-    lines.push_back("GenericName=Media player");
-    lines.push_back("Comment=Read, capture, broadcast your multimedia streams");
-    lines.push_back("Name[bn]=VLC মিডিয়া প্লেয়ার");
-    lines.push_back("Comment[bn]=আপনার মাল্টিমিডিয়া স্ট্রীম পড়ুন, ধরে রাখুন এবং ছড়িয়ে দিন");
-    lines.push_back("Name[br]=VLC lenner mediaoù");
-    lines.push_back("GenericName[br]=Lenner mediaoù");
-    lines.push_back("Comment[br]=Lenn, enrollañ, skignañ ho lanvioù liesvedia");
-    lines.push_back("Exec=/usr/bin/vlc --started-from-file %U");
-    lines.push_back("TryExec=/usr/bin/vlc");
-    lines.push_back("Icon=vlc");
-    lines.push_back("Terminal=false");
-    lines.push_back("Type=Application");
-    lines.push_back("Categories=AudioVideo;Player;Recorder;");
-    return lines;
+    return std::vector<std::string> {
+        "[Desktop Entry]",
+        "Version=1.0",
+        "Name=VLC media player",
+        "GenericName=Media player",
+        "Comment=Read, capture, broadcast your multimedia streams",
+        "Name[bn]=VLC মিডিয়া প্লেয়ার",
+        "Comment[bn]=আপনার মাল্টিমিডিয়া স্ট্রীম পড়ুন, ধরে রাখুন এবং ছড়িয়ে দিন",
+        "Name[br]=VLC lenner mediaoù",
+        "GenericName[br]=Lenner mediaoù",
+        "Comment[br]=Lenn, enrollañ, skignañ ho lanvioù liesvedia",
+        "Exec=/usr/bin/vlc --started-from-file %U",
+        "TryExec=/usr/bin/vlc",
+        "Icon=vlc",
+        "Terminal=false",
+        "Type=Application",
+        "Categories=AudioVideo;Player;Recorder;",
+    };
 }
 
 std::vector<std::string> multipleSectionsEntry()
 {
-    std::vector<std::string> lines;
-    lines.push_back("[Desktop Entry]");
-    lines.push_back("Version=1.0");
-    lines.push_back("Type=Application");
-    lines.push_back("Name=Xfburn");
-    lines.push_back("Comment=CD and DVD burning application");
-    lines.push_back("");
-    lines.push_back("Exec=xfburn");
-    lines.push_back("TryExec=xfburn");
-    lines.push_back("Icon=media-cdrom");
-    lines.push_back("MimeType=application/x-cd-image;");
-    lines.push_back("Terminal=false");
-    lines.push_back("Categories=X-XFCE;GTK;DiscBurning;Archiving;AudioVideo;Utility;");
-    lines.push_back("StartupNotify=true");
-    lines.push_back("");
-    lines.push_back("Actions=BurnImage;");
-    lines.push_back("");
-    lines.push_back("[Desktop Action BurnImage]");
-    lines.push_back("Icon=media-cdrom");
-    lines.push_back("Exec=xfburn -i %f");
-    lines.push_back("Name=Burn Image (xfburn)");
-    return lines;
+    return std::vector<std::string> {
+        "[Desktop Entry]",
+        "Version=1.0",
+        "Type=Application",
+        "Name=Xfburn",
+        "Comment=CD and DVD burning application",
+        "",
+        "Exec=xfburn",
+        "TryExec=xfburn",
+        "Icon=media-cdrom",
+        "MimeType=application/x-cd-image;",
+        "Terminal=false",
+        "Categories=X-XFCE;GTK;DiscBurning;Archiving;AudioVideo;Utility;",
+        "StartupNotify=true",
+        "",
+        "Actions=BurnImage;",
+        "",
+        "[Desktop Action BurnImage]",
+        "Icon=media-cdrom",
+        "Exec=xfburn -i %f",
+        "Name=Burn Image (xfburn)",
+    };
 }
 
 std::vector<std::string> noDeclarationLines()
 {
-    std::vector<std::string> lines;
-    lines.push_back("Name=VLC media player");
-    lines.push_back("Exec=/usr/bin/vlc --started-from-file %U");
-    lines.push_back("Icon=vlc");
-    lines.push_back("Categories=AudioVideo;Player;Recorder;");
-    return lines;
+    return std::vector<std::string> {
+        "Name=VLC media player",
+        "Exec=/usr/bin/vlc --started-from-file %U",
+        "Icon=vlc",
+        "Categories=AudioVideo;Player;Recorder;",
+    };
 }
 
 std::vector<std::string> singleSectionWithWhiteSpacesLines()
 {
-    std::vector<std::string> lines;
-    lines.push_back(" [Desktop Entry] ");
-    lines.push_back(" Name = VLC media player ");
-    lines.push_back("Exec=/usr/bin/vlc --started-from-file %U\n\n");
-    lines.push_back(" Icon=vlc");
-    lines.push_back("Categories =AudioVideo;Player;Recorder;\n");
-    return lines;
+    return std::vector<std::string> {
+        " [Desktop Entry] ",
+        " Name = VLC media player ",
+        "Exec=/usr/bin/vlc --started-from-file %U\n\n",
+        " Icon=vlc",
+        "Categories =AudioVideo;Player;Recorder;\n",
+    };
 }
 
 std::vector<std::string> singleSectionWithMissingAssignmentLines()
 {
-    std::vector<std::string> lines;
-    lines.push_back("[Desktop Entry]");
-    lines.push_back("Name=VLC media player");
-    lines.push_back("Exec=");
-    lines.push_back("=vlc");
-    lines.push_back("Categories=");
-    return lines;
+    return std::vector<std::string> {
+        "[Desktop Entry]",
+        "Name=VLC media player",
+        "Exec=",
+        "=vlc",
+        "Categories=",
+    };
 }
 
 SCENARIO("xdg::Entry", "[XDGentry]") {

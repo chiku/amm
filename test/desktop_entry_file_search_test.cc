@@ -46,8 +46,7 @@ static void assertFilesArePresentInList(std::vector<std::string> file_names) {
 
 SCENARIO("DesktopEntryFileSearch custom directories", "[filesearch]") {
     GIVEN("A file search service with one directory") {
-        std::vector<std::string> directory_names;
-        directory_names.push_back("test/fixtures/applications/");
+        auto directory_names = std::vector<std::string> { "test/fixtures/applications/" };
         DesktopEntryFileSearch searcher;
         searcher.registerDirectories(directory_names);
 
@@ -61,9 +60,7 @@ SCENARIO("DesktopEntryFileSearch custom directories", "[filesearch]") {
     }
 
     GIVEN("A file search service with repeated directory") {
-        std::vector<std::string> directory_names;
-        directory_names.push_back("test/fixtures/applications/");
-        directory_names.push_back("test/fixtures/applications");
+        auto directory_names = std::vector<std::string> { "test/fixtures/applications/", "test/fixtures/applications" };
         DesktopEntryFileSearch searcher;
         searcher.registerDirectories(directory_names);
 
@@ -77,9 +74,7 @@ SCENARIO("DesktopEntryFileSearch custom directories", "[filesearch]") {
     }
 
     GIVEN("A file search service with one existing directory and one missing directory") {
-        std::vector<std::string> directory_names;
-        directory_names.push_back("test/fixtures/applications");
-        directory_names.push_back("test/does-not-exist/applications");
+        auto directory_names = std::vector<std::string> { "test/fixtures/applications", "test/does-not-exist/applications" };
         DesktopEntryFileSearch searcher;
         searcher.registerDirectories(directory_names);
 

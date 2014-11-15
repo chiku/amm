@@ -28,23 +28,24 @@ namespace xdg {
 
 std::vector<std::string> hicolorThemeLines()
 {
-    std::vector<std::string> lines;
-    lines.push_back("[Icon Theme]");
-    lines.push_back("Name=Hicolor");
-    lines.push_back("Directories=48x48/apps,48x48/mimetypes,32x32/apps,scalable/apps,scalable/mimetypes");
-    return lines;
+    return std::vector<std::string> {
+        "[Icon Theme]",
+        "Name=Hicolor",
+        "Directories=48x48/apps,48x48/mimetypes,32x32/apps,scalable/apps,scalable/mimetypes",
+    };
 }
 
 std::vector<std::string> birchIconThemeLinesWithoutParent()
 {
-    std::vector<std::string> lines;
-    lines.push_back("[Icon Theme]");
-    lines.push_back("Name=Birch");
-    lines.push_back("Name[sv]=Björk");
-    lines.push_back("Comment=Icon theme with a wooden look");
-    lines.push_back("Comment[sv]=Träinspirerat ikontema");
-    lines.push_back("Directories=48x48/apps,48x48/mimetypes,32x32/apps,scalable/apps,scalable/mimetypes");
-    return lines;
+    return std::vector<std::string> {
+        "[Icon Theme]",
+        "Name=Birch",
+        "Directories=48x48/apps,48x48/mimetypes,32x32/apps,scalable/apps,scalable/mimetypes",
+        "Name[sv]=Björk",
+        "Comment=Icon theme with a wooden look",
+        "Comment[sv]=Träinspirerat ikontema",
+        "Directories=48x48/apps,48x48/mimetypes,32x32/apps,scalable/apps,scalable/mimetypes",
+    };
 }
 
 std::vector<std::string> birchIconThemeLines()
@@ -56,16 +57,16 @@ std::vector<std::string> birchIconThemeLines()
 
 std::vector<std::string> subdirectoryLinesForScalableApps()
 {
-    std::vector<std::string> lines;
-    lines.push_back("[scalable/apps]");
-    lines.push_back("Size=48");
-    lines.push_back("Type=Scalable");
-    lines.push_back("MinSize=1");
-    lines.push_back("MaxSize=256");
-    lines.push_back("Threshold=208");
-    lines.push_back("Context=Applications");
-    lines.push_back("");
-    return lines;
+    return std::vector<std::string> {
+        "[scalable/apps]",
+        "Size=48",
+        "Type=Scalable",
+        "MinSize=1",
+        "MaxSize=256",
+        "Threshold=208",
+        "Context=Applications",
+        "",
+    };
 }
 
 std::vector<std::string> joinLists(std::vector<std::string> first, std::vector<std::string> second)

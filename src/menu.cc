@@ -53,19 +53,19 @@ void Menu::registerIconService(icon_search::IconSearchInterface &icon_searcher)
 
 void Menu::createDefaultCategories()
 {
-    subcategories_.clear();
-
-    subcategories_.push_back(Subcategory::Settings());
-    subcategories_.push_back(Subcategory::Accessories());
-    subcategories_.push_back(Subcategory::Development());
-    subcategories_.push_back(Subcategory::Education());
-    subcategories_.push_back(Subcategory::Games());
-    subcategories_.push_back(Subcategory::Graphics());
-    subcategories_.push_back(Subcategory::Internet());
-    subcategories_.push_back(Subcategory::Multimedia());
-    subcategories_.push_back(Subcategory::Office());
-    subcategories_.push_back(Subcategory::Science());
-    subcategories_.push_back(Subcategory::System());
+    subcategories_ = {
+        Subcategory::Settings(),
+        Subcategory::Accessories(),
+        Subcategory::Development(),
+        Subcategory::Education(),
+        Subcategory::Games(),
+        Subcategory::Graphics(),
+        Subcategory::Internet(),
+        Subcategory::Multimedia(),
+        Subcategory::Office(),
+        Subcategory::Science(),
+        Subcategory::System(),
+    };
 }
 
 void Menu::loadCustomCategories(const std::vector<std::string> &lines)

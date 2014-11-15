@@ -27,24 +27,26 @@
 namespace amm {
 
 static xdg::DesktopEntry mousepadDesktopEntry() {
-    std::vector<std::string> lines;
-    lines.push_back("[Desktop Entry]");
-    lines.push_back("Name=Mousepad");
-    lines.push_back("Icon=accessories-text-editor");
-    lines.push_back("Exec=mousepad %F");
-    lines.push_back("Categories=Application;Utility;TextEditor;GTK;");
+    auto lines = std::vector<std::string> {
+        "[Desktop Entry]",
+        "Name=Mousepad",
+        "Icon=accessories-text-editor",
+        "Exec=mousepad %F",
+        "Categories=Application;Utility;TextEditor;GTK;",
+    };
     xdg::DesktopEntry entry;
     entry.parse(lines);
     return entry;
 }
 
 static xdg::DesktopEntry sakuraDesktopEntry() {
-    std::vector<std::string> lines;
-    lines.push_back("[Desktop Entry]");
-    lines.push_back("Name=Sakura");
-    lines.push_back("Icon=terminal-tango");
-    lines.push_back("Exec=sakura");
-    lines.push_back("Categories=GTK;Utility;TerminalEmulator;System;");
+    auto lines = std::vector<std::string> {
+        "[Desktop Entry]",
+        "Name=Sakura",
+        "Icon=terminal-tango",
+        "Exec=sakura",
+        "Categories=GTK;Utility;TerminalEmulator;System;",
+    };
     xdg::DesktopEntry entry;
     entry.parse(lines);
     return entry;

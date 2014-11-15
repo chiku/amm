@@ -59,7 +59,7 @@ AmmOptions CommandLineOptionsParser::parse(int argc, char* const* argv)
             if (version_flag == 1) {
                 amm_options.is_version = true;
             }
-            auto long_option_name = static_cast<std::string>(long_options[option_index].name);
+            auto long_option_name = std::string { long_options[option_index].name };
             if (long_option_name == "iconize") {
                 amm_options.is_iconize = true;
                 if (optarg) {

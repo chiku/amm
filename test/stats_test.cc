@@ -38,20 +38,11 @@ static Stats populatedStats() {
 }
 
 static std::vector<std::string> unhandledClassificationFirstSet() {
-    std::vector<std::string> classifications;
-    classifications.push_back("Calculator");
-    classifications.push_back("Player");
-    classifications.push_back("Archiving");
-    return classifications;
+    return std::vector<std::string> { "Calculator", "Player", "Archiving" };
 }
 
 static std::vector<std::string> unhandledClassificationSecondSet() {
-    std::vector<std::string> classifications;
-    classifications.push_back("Browser");
-    classifications.push_back("Player");
-    classifications.push_back("WordProcessor");
-    classifications.push_back("Archiving");
-    return classifications;
+    return std::vector<std::string> { "Browser", "Player", "WordProcessor", "Archiving" };
 }
 
 static std::string expectedEmptydetails() {

@@ -69,22 +69,18 @@ SCENARIO("FileX", "[filex]") {
             }
 
             THEN("it doesn't write lines to the file") {
-                std::vector<std::string> lines;
-                lines.push_back("first");
-                lines.push_back("second");
+                auto lines = std::vector<std::string> { "first", "second" };
                 CHECK_FALSE(filex.writeLines(lines));
             }
 
             THEN("it can move the file to an existing directory") {
-                auto file_name = static_cast<std::string>("test/fixtures/new-file");
-                auto renamed_file_name = static_cast<std::string>("test/fixtures/renamed-file");
+                auto file_name = std::string { "test/fixtures/new-file" };
+                auto renamed_file_name = std::string { "test/fixtures/renamed-file" };
 
                 remove(file_name.c_str());
                 remove(renamed_file_name.c_str());
 
-                std::vector<std::string> lines;
-                lines.push_back("first");
-                lines.push_back("second");
+                auto lines = std::vector<std::string> { "first", "second" };
                 CHECK(FileX(file_name).writeLines(lines));
 
                 CHECK(FileX(file_name).moveTo(renamed_file_name));
@@ -102,15 +98,13 @@ SCENARIO("FileX", "[filex]") {
             }
 
             THEN("it can't move the file to a non-existing directory") {
-                auto file_name = static_cast<std::string>("test/fixtures/new-file");
-                auto renamed_file_name = static_cast<std::string>("test/does-not-exist-fixtures/renamed-file");
+                auto file_name = std::string { "test/fixtures/new-file" };
+                auto renamed_file_name = std::string { "test/does-not-exist-fixtures/renamed-file"};
 
                 remove(file_name.c_str());
                 remove(renamed_file_name.c_str());
 
-                std::vector<std::string> lines;
-                lines.push_back("first");
-                lines.push_back("second");
+                auto lines = std::vector<std::string> { "first", "second" };
                 CHECK(FileX(file_name).writeLines(lines));
 
                 CHECK_FALSE(FileX(file_name).moveTo(renamed_file_name));
@@ -136,7 +130,7 @@ SCENARIO("FileX", "[filex]") {
         }
 
         WHEN("pointing to a file that doesn't exist") {
-            auto file_name = static_cast<std::string>("test/fixtures/applications/does-not-exist.desktop");
+            auto file_name = std::string { "test/fixtures/applications/does-not-exist.desktop" };
             FileX filex(file_name);
             remove(file_name.c_str());
             remove((file_name + ".backup_extension").c_str());
@@ -161,17 +155,14 @@ SCENARIO("FileX", "[filex]") {
             }
 
             THEN("it doesn't over-write the older contents") {
-                std::vector<std::string> lines;
-                lines.push_back("existing line");
+                auto lines = std::vector<std::string> { "existing line" };
                 filex.readLines(&lines);
                 REQUIRE(lines.size() == 1);
                 CHECK(lines[0] == "existing line");
             }
 
             THEN("it writes lines to the file") {
-                std::vector<std::string> lines;
-                lines.push_back("first");
-                lines.push_back("second");
+                auto lines = std::vector<std::string> { "first", "second" };
                 CHECK(filex.writeLines(lines));
 
                 FileX read_file(file_name);

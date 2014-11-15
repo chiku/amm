@@ -31,13 +31,14 @@ SCENARIO("Populate DesktopEntry", "[desktopfile]") {
         DesktopEntry entry;
 
         WHEN("created") {
-            std::vector<std::string> lines;
-            lines.push_back("[Desktop Entry]\n");
-            lines.push_back("Name=Mousepad\n");
-            lines.push_back("Icon=accessories-text-editor\n");
-            lines.push_back("Exec=mousepad %F\n");
-            lines.push_back("Categories=Application;Utility;TextEditor;GTK;\n");
-            lines.push_back("Comment=Simple Text Editor\n");
+            auto lines = std::vector<std::string> {
+                "[Desktop Entry]\n",
+                "Name=Mousepad\n",
+                "Icon=accessories-text-editor\n",
+                "Exec=mousepad %F\n",
+                "Categories=Application;Utility;TextEditor;GTK;\n",
+                "Comment=Simple Text Editor\n",
+            };
             entry.parse(lines);
 
             THEN("it has a name") {
@@ -53,7 +54,7 @@ SCENARIO("Populate DesktopEntry", "[desktopfile]") {
             }
 
             THEN("it has categories") {
-                std::vector<std::string> categories = entry.categories();
+                auto categories = entry.categories();
                 REQUIRE(categories.size() == 4);
                 CHECK(categories[0] == "Application");
                 CHECK(categories[1] == "GTK");
@@ -70,9 +71,10 @@ SCENARIO("Populate DesktopEntry", "[desktopfile]") {
             }
 
             WHEN("NoDisplay is set to true") {
-                std::vector<std::string> lines;
-                lines.push_back("[Desktop Entry]\n");
-                lines.push_back("NoDisplay=true\n");
+                auto lines = std::vector<std::string> {
+                    "[Desktop Entry]\n",
+                    "NoDisplay=true\n",
+                };
                 entry.parse(lines);
                 THEN("it is not marked as displayed") {
                     CHECK_FALSE(entry.display());
@@ -80,9 +82,10 @@ SCENARIO("Populate DesktopEntry", "[desktopfile]") {
             }
 
             WHEN("NoDisplay is set to 1") {
-                std::vector<std::string> lines;
-                lines.push_back("[Desktop Entry]\n");
-                lines.push_back("NoDisplay=1\n");
+                auto lines = std::vector<std::string> {
+                    "[Desktop Entry]\n",
+                    "NoDisplay=1\n",
+                };
                 entry.parse(lines);
                 THEN("it is not marked as displayed") {
                     CHECK_FALSE(entry.display());
@@ -98,15 +101,16 @@ SCENARIO("Language-aware DesktopEntry", "[focus]") {
         entry.hasLanguage("sr");
 
         WHEN("created") {
-            std::vector<std::string> lines;
-            lines.push_back("[Desktop Entry]\n");
-            lines.push_back("Name=Mousepad\n");
-            lines.push_back("Name[sr]=Мишоловка\n");
-            lines.push_back("Icon=accessories-text-editor\n");
-            lines.push_back("Exec=mousepad %F\n");
-            lines.push_back("Categories=Application;Utility;TextEditor;GTK;\n");
-            lines.push_back("Comment=Simple Text Editor\n");
-            lines.push_back("Comment[sr]=Једноставан уређивач текста\n");
+            auto lines = std::vector<std::string> {
+                "[Desktop Entry]\n",
+                "Name=Mousepad\n",
+                "Name[sr]=Мишоловка\n",
+                "Icon=accessories-text-editor\n",
+                "Exec=mousepad %F\n",
+                "Categories=Application;Utility;TextEditor;GTK;\n",
+                "Comment=Simple Text Editor\n",
+                "Comment[sr]=Једноставан уређивач текста\n",
+            };
             entry.parse(lines);
 
             THEN("it picks the name with matching language") {
@@ -126,17 +130,19 @@ SCENARIO("DesktopEntry comparisons", "[desktopfile]") {
     DesktopEntry other_entry;
 
     GIVEN("A desktop-file") {
-        std::vector<std::string> lines;
-        lines.push_back("[Desktop Entry]\n");
-        lines.push_back("Name=Mousepad");
-        lines.push_back("Exec=mousepad");
+        auto lines = std::vector<std::string> {
+            "[Desktop Entry]\n",
+            "Name=Mousepad",
+            "Exec=mousepad",
+        };
         entry.parse(lines);
 
         WHEN("compared to another desktop-file") {
             WHEN("the other desktop-file has an alphabetically greater name") {
-                std::vector<std::string> other_lines;
-                other_lines.push_back("[Desktop Entry]\n");
-                other_lines.push_back("Name=VLC");
+                auto other_lines = std::vector<std::string> {
+                    "[Desktop Entry]\n",
+                    "Name=VLC",
+                };
                 other_entry.parse(other_lines);
 
                 THEN("the desktop file is lesser than the other desktop file") {
@@ -146,9 +152,10 @@ SCENARIO("DesktopEntry comparisons", "[desktopfile]") {
             }
 
             WHEN("the other desktop-file has an alphabetically lesser name") {
-                std::vector<std::string> other_lines;
-                other_lines.push_back("[Desktop Entry]\n");
-                other_lines.push_back("Name=GParted");
+                auto other_lines = std::vector<std::string> {
+                    "[Desktop Entry]\n",
+                    "Name=GParted",
+                };
                 other_entry.parse(other_lines);
 
                 THEN("the desktop file is greater than the other desktop file") {
@@ -158,10 +165,11 @@ SCENARIO("DesktopEntry comparisons", "[desktopfile]") {
             }
 
             WHEN("the other desktop-file has same name and executable") {
-                std::vector<std::string> other_lines;
-                other_lines.push_back("[Desktop Entry]\n");
-                other_lines.push_back("Name=Mousepad");
-                other_lines.push_back("Exec=mousepad");
+                auto other_lines = std::vector<std::string> {
+                    "[Desktop Entry]\n",
+                    "Name=Mousepad",
+                    "Exec=mousepad",
+                };
                 other_entry.parse(other_lines);
 
                 THEN("the desktop file is equal to the other desktop file") {
@@ -171,10 +179,11 @@ SCENARIO("DesktopEntry comparisons", "[desktopfile]") {
             }
 
             WHEN("the other desktop-file has a different name") {
-                std::vector<std::string> other_lines;
-                other_lines.push_back("[Desktop Entry]\n");
-                other_lines.push_back("Name=VLC Server");
-                other_lines.push_back("Exec=vlc");
+                auto other_lines = std::vector<std::string> {
+                    "[Desktop Entry]\n",
+                    "Name=VLC Server",
+                    "Exec=vlc",
+                };
                 other_entry.parse(other_lines);
 
                 THEN("the desktop file is not equal to the other desktop file") {
@@ -184,10 +193,11 @@ SCENARIO("DesktopEntry comparisons", "[desktopfile]") {
             }
 
             WHEN("the other desktop-file has a different executable") {
-                std::vector<std::string> other_lines;
-                other_lines.push_back("[Desktop Entry]\n");
-                other_lines.push_back("Name=VLC");
-                other_lines.push_back("Exec=svlc");
+                auto other_lines = std::vector<std::string> {
+                    "[Desktop Entry]\n",
+                    "Name=VLC",
+                    "Exec=svlc",
+                };
                 other_entry.parse(other_lines);
 
                 THEN("the desktop file is not equal to the other desktop file") {
@@ -205,11 +215,12 @@ SCENARIO("DesktopEntry validity", "[desktopfile]") {
 
     GIVEN("A desktop-file") {
         WHEN("it has a name, an icon and an executable") {
-            std::vector<std::string> lines;
-            lines.push_back("[Desktop Entry]\n");
-            lines.push_back("Name=Mousepad\n");
-            lines.push_back("Icon=accessories-text-editor\n");
-            lines.push_back("Exec=mousepad %F\n");
+            auto lines = std::vector<std::string> {
+                "[Desktop Entry]\n",
+                "Name=Mousepad\n",
+                "Icon=accessories-text-editor\n",
+                "Exec=mousepad %F\n",
+            };
             entry.parse(lines);
             THEN("it is valid") {
                 CHECK(entry.isValid());
@@ -217,10 +228,11 @@ SCENARIO("DesktopEntry validity", "[desktopfile]") {
         }
 
         WHEN("it has a no name") {
-            std::vector<std::string> lines;
-            lines.push_back("[Desktop Entry]\n");
-            lines.push_back("Icon=accessories-text-editor\n");
-            lines.push_back("Exec=mousepad %F\n");
+            auto lines = std::vector<std::string> {
+                "[Desktop Entry]\n",
+                "Icon=accessories-text-editor\n",
+                "Exec=mousepad %F\n",
+            };
             entry.parse(lines);
             THEN("it is not valid") {
                 CHECK_FALSE(entry.isValid());
@@ -228,10 +240,11 @@ SCENARIO("DesktopEntry validity", "[desktopfile]") {
         }
 
         WHEN("it has no icon") {
-            std::vector<std::string> lines;
-            lines.push_back("[Desktop Entry]\n");
-            lines.push_back("Name=Mousepad\n");
-            lines.push_back("Exec=mousepad %F\n");
+            auto lines = std::vector<std::string> {
+                "[Desktop Entry]\n",
+                "Name=Mousepad\n",
+                "Exec=mousepad %F\n",
+            };
             entry.parse(lines);
             THEN("it is not valid") {
                 CHECK_FALSE(entry.isValid());
@@ -239,10 +252,11 @@ SCENARIO("DesktopEntry validity", "[desktopfile]") {
         }
 
         WHEN("it has no executable") {
-            std::vector<std::string> lines;
-            lines.push_back("[Desktop Entry]\n");
-            lines.push_back("Name=Mousepad\n");
-            lines.push_back("Icon=accessories-text-editor\n");
+            auto lines = std::vector<std::string> {
+                "[Desktop Entry]\n",
+                "Name=Mousepad\n",
+                "Icon=accessories-text-editor\n",
+            };
             entry.parse(lines);
             THEN("it is not valid") {
                 CHECK_FALSE(entry.isValid());
@@ -256,35 +270,33 @@ SCENARIO("DesktopEntry classifications", "[desktopfile]") {
 
     GIVEN("A desktop-file") {
         WHEN("it has one of the categories as AudioVideo") {
-            std::vector<std::string> lines;
-            lines.push_back("[Desktop Entry]\n");
-            lines.push_back("Categories=AudioVideo;Audio;Player;GTK;\n");
+            auto lines = std::vector<std::string> {
+                "[Desktop Entry]\n",
+                "Categories=AudioVideo;Audio;Player;GTK;\n",
+            };
             entry.parse(lines);
             THEN("it is an AudioVideo") {
                 CHECK(entry.isA("AudioVideo"));
             }
 
             THEN("it is either of AudioVideo and Multimedia") {
-                std::vector<std::string> classifications;
-                classifications.push_back("AudioVideo");
-                classifications.push_back("Multimedia");
+                auto classifications = std::vector<std::string> { "AudioVideo", "Multimedia" };
                 CHECK(entry.isAnyOf(classifications));
             }
         }
 
         WHEN("it has none of the categories as AudioVideo") {
-            std::vector<std::string> lines;
-            lines.push_back("[Desktop Entry]\n");
-            lines.push_back("Categories=Audio;Video;Player;GTK;\n");
+            auto lines = std::vector<std::string> {
+                "[Desktop Entry]\n",
+                "Categories=Audio;Video;Player;GTK;\n",
+            };
             entry.parse(lines);
             THEN("it is not an AudioVideo") {
                 CHECK_FALSE(entry.isA("AudioVideo"));
             }
 
             THEN("it is not either of AudioVideo or Multimedia") {
-                std::vector<std::string> classifications;
-                classifications.push_back("AudioVideo");
-                classifications.push_back("Multimedia");
+                auto classifications = std::vector<std::string> { "AudioVideo", "Multimedia" };
                 CHECK_FALSE(entry.isAnyOf(classifications));
             }
         }

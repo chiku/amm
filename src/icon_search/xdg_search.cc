@@ -43,9 +43,7 @@ private:
 
 XdgSearch::XdgSearch(int size, QualifiedIconTheme qualified_icon_theme) : size_(size)
 {
-    registered_extensions_.push_back(".png");
-    registered_extensions_.push_back(".svg");
-    registered_extensions_.push_back(".xpm");
+    registered_extensions_ = { ".png", ".svg", ".xpm" };
     theme_search_paths_ = qualified_icon_theme.themeSearchPaths();
     icon_themes_ = qualified_icon_theme.themeWithParent();
 }

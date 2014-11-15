@@ -82,9 +82,7 @@ SCENARIO("Menu custom categories", "[menu]") {
         Menu menu;
 
         WHEN("loaded with custom categories") {
-            std::vector<std::string> lines;
-            lines.push_back("Accessories:accessories:Utility");
-            lines.push_back("Games:games:Game");
+            auto lines = std::vector<std::string> { "Accessories:accessories:Utility", "Games:games:Game" };
             menu.loadCustomCategories(lines);
 
             THEN("it stores them in its subcategories") {
@@ -97,8 +95,7 @@ SCENARIO("Menu custom categories", "[menu]") {
         }
 
         WHEN("loaded with custom categories with trailing whitespaces") {
-            std::vector<std::string> lines;
-            lines.push_back("Accessories:accessories:Utility ");
+            auto lines = std::vector<std::string> { "Accessories:accessories:Utility" };
             menu.loadCustomCategories(lines);
 
             THEN("it ignores the whitepaces in subcategories") {
@@ -112,9 +109,7 @@ SCENARIO("Menu custom categories", "[menu]") {
         }
 
         WHEN("given a line that begins with '#'") {
-            std::vector<std::string> lines;
-            lines.push_back("# Comments");
-            lines.push_back("#More:comment:here");
+            auto lines = std::vector<std::string> { "# Comments", "#More:comment:here" };
             menu.loadCustomCategories(lines);
 
             THEN("it ignores the lines beginning with '#'") {
@@ -125,9 +120,7 @@ SCENARIO("Menu custom categories", "[menu]") {
         }
 
         WHEN("given a line with less than three tokens") {
-            std::vector<std::string> lines;
-            lines.push_back("Accessories::Accessories");
-            lines.push_back("Game:Games");
+            auto lines = std::vector<std::string> { "Accessories::Accessories", "Game:Games" };
             menu.loadCustomCategories(lines);
 
             THEN("it ignores the line") {
@@ -139,8 +132,7 @@ SCENARIO("Menu custom categories", "[menu]") {
 
 
         WHEN("loaded with custom categories with more than three tokens") {
-            std::vector<std::string> lines;
-            lines.push_back("Games:games:Game:Fun");
+            auto lines = std::vector<std::string> { "Games:games:Game:Fun" };
             menu.loadCustomCategories(lines);
 
             THEN("its subcategories have multiple classifications") {
@@ -157,8 +149,7 @@ SCENARIO("Menu custom categories", "[menu]") {
         }
 
         WHEN("given a line with more than three tokens but with some classification names as empty") {
-            std::vector<std::string> lines;
-            lines.push_back("Games:games:Game::Fun::Frolic");
+            auto lines = std::vector<std::string> { "Games:games:Game::Fun::Frolic" };
             menu.loadCustomCategories(lines);
 
             THEN("it ignores the missing classifications") {
@@ -175,8 +166,7 @@ SCENARIO("Menu custom categories", "[menu]") {
         }
 
         WHEN("given a line without a single classification name") {
-            std::vector<std::string> lines;
-            lines.push_back("Games:games:::");
+            auto lines = std::vector<std::string>  { "Games:games:::" };
             menu.loadCustomCategories(lines);
 
             THEN("it ignores the line with missing classification names") {
@@ -193,9 +183,7 @@ SCENARIO("Menu statistics", "[menu]") {
         Menu menu;
 
         WHEN("successfully parsed") {
-            std::vector<std::string> files;
-            files.push_back(kapplicationFixturesDirectory + "vlc.desktop");
-            files.push_back(kapplicationFixturesDirectory + "mousepad.desktop");
+            auto files = std::vector<std::string> { kapplicationFixturesDirectory + "vlc.desktop", kapplicationFixturesDirectory + "mousepad.desktop" };
             menu.populate(files);
             Stats summary = menu.summary();
 
@@ -205,9 +193,7 @@ SCENARIO("Menu statistics", "[menu]") {
         }
 
         WHEN("parsing an unclassified desktop file") {
-            std::vector<std::string> files;
-            files.push_back(kapplicationFixturesDirectory + "unclassified.desktop");
-            files.push_back(kapplicationFixturesDirectory + "mousepad.desktop");
+            auto files = std::vector<std::string> { kapplicationFixturesDirectory + "unclassified.desktop", kapplicationFixturesDirectory + "mousepad.desktop" };
             menu.populate(files);
             Stats summary = menu.summary();
 
@@ -224,9 +210,7 @@ SCENARIO("Menu statistics", "[menu]") {
         }
 
         WHEN("parsing a file suppressed with 'NoDisplay=true'") {
-            std::vector<std::string> files;
-            files.push_back(kapplicationFixturesDirectory + "mousepad.desktop");
-            files.push_back(kapplicationFixturesDirectory + "suppressed.desktop");
+            auto files = std::vector<std::string> { kapplicationFixturesDirectory + "mousepad.desktop", kapplicationFixturesDirectory + "suppressed.desktop" };
             menu.populate(files);
             Stats summary = menu.summary();
 
@@ -236,9 +220,7 @@ SCENARIO("Menu statistics", "[menu]") {
         }
 
         WHEN("parsing a file with missing entries") {
-            std::vector<std::string> files;
-            files.push_back(kapplicationFixturesDirectory + "vlc.desktop");
-            files.push_back(kapplicationFixturesDirectory + "missing.desktop");
+            auto files = std::vector<std::string> { kapplicationFixturesDirectory + "vlc.desktop", kapplicationFixturesDirectory + "missing.desktop" };
             menu.populate(files);
             Stats summary = menu.summary();
 
@@ -251,10 +233,11 @@ SCENARIO("Menu statistics", "[menu]") {
         }
 
         WHEN("parsing a file with missing and suppressed entries") {
-            std::vector<std::string> files;
-            files.push_back(kapplicationFixturesDirectory + "suppressed.desktop");
-            files.push_back(kapplicationFixturesDirectory + "suppressedinvalid.desktop");
-            files.push_back(kapplicationFixturesDirectory + "missing.desktop");
+            auto files = std::vector<std::string> {
+                kapplicationFixturesDirectory + "suppressed.desktop",
+                kapplicationFixturesDirectory + "suppressedinvalid.desktop",
+                kapplicationFixturesDirectory + "missing.desktop",
+            };
             menu.populate(files);
             Stats summary = menu.summary();
 
@@ -270,15 +253,14 @@ SCENARIO("Menu statistics", "[menu]") {
 
 SCENARIO("Menu sort", "[menu]") {
     GIVEN("A menu") {
-        std::vector<std::string> lines;
-        lines.push_back("Multimedia:multimedia:AudioVideo");
-        lines.push_back("Utilities:utilities:Utility");
+        auto lines = std::vector<std::string> { "Multimedia:multimedia:AudioVideo", "Utilities:utilities:Utility" };
 
-        std::vector<std::string> files;
-        files.push_back(kapplicationFixturesDirectory + "vlc.desktop");
-        files.push_back(kapplicationFixturesDirectory + "nested/xfburn.desktop");
-        files.push_back(kapplicationFixturesDirectory + "nested/deepnested/whaawmp.desktop");
-        files.push_back(kapplicationFixturesDirectory + "mousepad.desktop");
+        auto files = std::vector<std::string> {
+            kapplicationFixturesDirectory + "vlc.desktop",
+            kapplicationFixturesDirectory + "nested/xfburn.desktop",
+            kapplicationFixturesDirectory + "nested/deepnested/whaawmp.desktop",
+            kapplicationFixturesDirectory + "mousepad.desktop",
+        };
 
         Menu menu;
         menu.loadCustomCategories(lines);
@@ -318,9 +300,7 @@ SCENARIO("Menu representations", "[menu]") {
         Menu menu;
 
         WHEN("transformed to representations") {
-            std::vector<std::string> files;
-            files.push_back(kapplicationFixturesDirectory + "vlc.desktop");
-            files.push_back(kapplicationFixturesDirectory + "mousepad.desktop");
+            auto files = std::vector<std::string> { kapplicationFixturesDirectory + "vlc.desktop", kapplicationFixturesDirectory + "mousepad.desktop" };
 
             menu.populate(files);
             auto representations = menu.representations();
@@ -342,9 +322,7 @@ SCENARIO("Menu representations", "[menu]") {
         }
 
         WHEN("transformed to a representations with icon service") {
-            std::vector<std::string> files;
-            files.push_back(kapplicationFixturesDirectory + "vlc.desktop");
-            files.push_back(kapplicationFixturesDirectory + "mousepad.desktop");
+            auto files = std::vector<std::string> { kapplicationFixturesDirectory + "vlc.desktop", kapplicationFixturesDirectory + "mousepad.desktop" };
 
             auto *icon_searcher = new TestIconSearch;
             menu.registerIconService(*icon_searcher);
@@ -369,9 +347,7 @@ SCENARIO("Menu representations", "[menu]") {
         }
 
         WHEN("transformed to a representations with a custom language") {
-            std::vector<std::string> files;
-            files.push_back(kapplicationFixturesDirectory + "vlc.desktop");
-            files.push_back(kapplicationFixturesDirectory + "mousepad.desktop");
+            auto files = std::vector<std::string> { kapplicationFixturesDirectory + "vlc.desktop", kapplicationFixturesDirectory + "mousepad.desktop" };
 
             menu.registerLanguage("sr");
 

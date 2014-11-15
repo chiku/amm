@@ -27,10 +27,7 @@ namespace amm {
 
 SCENARIO("VectorX", "[vectorx]") {
     GIVEN("A VectorX with more than one item") {
-        std::vector<std::string> vector;
-        vector.push_back("foo");
-        vector.push_back("bar");
-        vector.push_back("baz");
+        auto vector = std::vector<std::string> { "foo", "bar", "baz" };
         VectorX vectorx(vector);
 
         WHEN("joined with a delimeter") {
@@ -42,8 +39,7 @@ SCENARIO("VectorX", "[vectorx]") {
     }
 
     GIVEN("A vectorx with one item") {
-        std::vector<std::string> vector;
-        vector.push_back("foo");
+        auto vector = std::vector<std::string> { "foo" };
         VectorX vectorx(vector);
 
         WHEN("joined with a delimeter") {
@@ -55,7 +51,7 @@ SCENARIO("VectorX", "[vectorx]") {
     }
 
     GIVEN("A vectorx with no items") {
-        std::vector<std::string> vector;
+        auto vector = std::vector<std::string> {};
         VectorX vectorx(vector);
 
         WHEN("joined with a delimeter") {
@@ -67,10 +63,7 @@ SCENARIO("VectorX", "[vectorx]") {
     }
 
     GIVEN("A vectorx with some items ending in a delimeter") {
-        std::vector<std::string> vector;
-        vector.push_back("foo/");
-        vector.push_back("bar");
-        vector.push_back("baz/");
+        auto vector = std::vector<std::string> { "foo/", "bar/", "baz/" };
         VectorX vectorx(vector);
 
         WHEN("terminated with a delimeter") {
@@ -85,12 +78,7 @@ SCENARIO("VectorX", "[vectorx]") {
     }
 
     GIVEN("A vectorx with duplicates") {
-        std::vector<std::string> vector;
-        vector.push_back("foo");
-        vector.push_back("bar");
-        vector.push_back("foo");
-        vector.push_back("bar");
-        vector.push_back("bar");
+        auto vector = std::vector<std::string> { "foo", "bar", "foo", "bar", "bar" };
         VectorX vectorx(vector);
 
         WHEN("unique") {
