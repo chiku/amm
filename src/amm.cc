@@ -19,6 +19,7 @@
 #include "amm.h"
 
 #include <cstdlib>
+#include <memory>
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -41,19 +42,6 @@
 #include "transformer/jwm.h"
 
 namespace amm {
-
-Amm::Amm()
-{
-    actual_searcher_ = NULL;
-}
-
-Amm::~Amm()
-{
-    if (actual_searcher_ != NULL) {
-        delete actual_searcher_;
-        actual_searcher_ = NULL;
-    }
-}
 
 void Amm::validateEnvironment() const
 {
@@ -107,9 +95,8 @@ void Amm::registerIconService()
 {
     if (options_.is_iconize) {
         QualifiedIconTheme theme(environment_, options_.icon_theme_name);
-        actual_searcher_ = new icon_search::XdgSearch(48, theme);
-        icon_search::IconSearchInterface *icon_searcher = new icon_search::CachingSearch(*actual_searcher_);
-        menu_.registerIconService(*icon_searcher);
+        auto caching_xdg_searcher = new icon_search::CachingSearch(new icon_search::XdgSearch(48, theme));
+        menu_.registerIconService(caching_xdg_searcher);
     }
 }
 
@@ -153,7 +140,6 @@ void Amm::writeOutputFile()
 
     for (const auto &representation : representations) {
         output.push_back(representation->visit(jwm_transformer));
-        delete representation;
     }
 
     auto output_file_name = options_.output_file_name;

@@ -18,6 +18,7 @@
 
 #include "icon_search/caching_search.h"
 
+#include <memory>
 #include <string>
 #include "../catch.hpp"
 #include "icon_search/icon_search_interface.h"
@@ -36,10 +37,10 @@ private:
 };
 
 SCENARIO("icon_search::CachingSearch", "[cachingsearch]") {
-    auto *actual_searcher = new TestSearch;
+    auto actual_searcher = new TestSearch;
 
     GIVEN("An icon search that caches results") {
-        CachingSearch caching_searcher(*actual_searcher);
+        CachingSearch caching_searcher(actual_searcher);
 
         WHEN("retrieving an unsearched item") {
             THEN("the item is absent from the cache") {

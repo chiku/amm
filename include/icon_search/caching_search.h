@@ -19,6 +19,7 @@
 #ifndef AMM_ICON_SEARCH_CACHING_SEARCH_H_
 #define AMM_ICON_SEARCH_CACHING_SEARCH_H_
 
+#include <memory>
 #include <string>
 #include <map>
 
@@ -30,14 +31,14 @@ namespace icon_search {
 class CachingSearch : public IconSearchInterface
 {
 public:
-    explicit CachingSearch(IconSearchInterface &actual_searcher) : actual_searcher_(actual_searcher) { }
+    explicit CachingSearch(IconSearchInterface *actual_searcher) : actual_searcher_(std::unique_ptr<icon_search::IconSearchInterface>{actual_searcher}) { }
     std::string resolvedName(const std::string &icon_name) const
     {
         auto it = IteratorTo(icon_name);
         if (it != cache.end()) {
             return it->second;
         }
-        auto result = actual_searcher_.resolvedName(icon_name);
+        auto result = actual_searcher_->resolvedName(icon_name);
         cache.insert(std::pair<std::string, std::string>(icon_name, result));
         return result;
     }
@@ -45,7 +46,7 @@ public:
     bool isCached(const std::string &icon_name) const { return IteratorTo(icon_name) != cache.end(); }
 
 private:
-    IconSearchInterface& actual_searcher_;
+    std::unique_ptr<icon_search::IconSearchInterface> actual_searcher_;
     mutable std::map<std::string, std::string> cache;
     std::map<std::string, std::string>::const_iterator IteratorTo(const std::string &icon_name) const { return cache.find(icon_name); }
 };

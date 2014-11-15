@@ -19,6 +19,7 @@
 #ifndef AMM_MENU_H_
 #define AMM_MENU_H_
 
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -34,9 +35,8 @@ class Menu
 {
 public:
     Menu();
-    ~Menu();
 
-    void registerIconService(icon_search::IconSearchInterface &icon_searcher);
+    void registerIconService(icon_search::IconSearchInterface *icon_searcher);
     void registerLanguage(const std::string &language) { language_ = language; }
     std::vector<Subcategory> subcategories() const { return subcategories_; }
     Stats summary() const { return summary_; }
@@ -44,7 +44,7 @@ public:
     void loadCustomCategories(const std::vector<std::string> &lines);
     void populate(const std::vector<std::string> &desktop_file_names);
     void sort();
-    std::vector<representation::RepresentationInterface*> representations() const;
+    std::vector<std::unique_ptr<representation::RepresentationInterface>> representations() const;
 
 private:
     void addDesktopEntry(const std::string &desktop_entry_name);
@@ -52,7 +52,7 @@ private:
     void createDefaultCategories();
 
     std::string language_;
-    icon_search::IconSearchInterface *icon_searcher_;
+    std::unique_ptr<icon_search::IconSearchInterface> icon_searcher_;
     Subcategory unclassified_subcategory_;
     std::vector<Subcategory> subcategories_;
     std::vector<std::string> desktop_file_names_;

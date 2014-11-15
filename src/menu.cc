@@ -18,6 +18,7 @@
 
 #include "menu.h"
 
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -35,20 +36,14 @@
 
 namespace amm {
 
-Menu::Menu() : icon_searcher_(new icon_search::MirrorSearch), unclassified_subcategory_(Subcategory::Others())
+Menu::Menu() : icon_searcher_(std::unique_ptr<icon_search::IconSearchInterface>{new icon_search::MirrorSearch}), unclassified_subcategory_(Subcategory::Others())
 {
     createDefaultCategories();
 }
 
-Menu::~Menu()
+void Menu::registerIconService(icon_search::IconSearchInterface *icon_searcher)
 {
-    delete icon_searcher_;
-}
-
-void Menu::registerIconService(icon_search::IconSearchInterface &icon_searcher)
-{
-    delete icon_searcher_;
-    icon_searcher_ = &icon_searcher;
+    icon_searcher_.reset(icon_searcher);
 }
 
 void Menu::createDefaultCategories()
@@ -151,32 +146,32 @@ void Menu::sort()
     }
 }
 
-std::vector<representation::RepresentationInterface*> Menu::representations() const
+std::vector<std::unique_ptr<representation::RepresentationInterface>> Menu::representations() const
 {
-    std::vector<representation::RepresentationInterface*> representations;
-    auto *menu_start = new representation::MenuStart;
-    representations.push_back(menu_start);
+    std::vector<std::unique_ptr<representation::RepresentationInterface>> representations;
+    auto menu_start = std::unique_ptr<representation::RepresentationInterface> { new representation::MenuStart };
+    representations.push_back(std::move(menu_start));
 
     for (const auto &subcategory : subcategories_) {
         if (subcategory.hasEntries()) {
             auto icon_name = icon_searcher_->resolvedName(subcategory.iconName());
-            auto *start = new representation::SubcategoryStart(subcategory.displayName(), icon_name);
-            representations.push_back(start);
+            auto start = std::unique_ptr<representation::RepresentationInterface> { new representation::SubcategoryStart(subcategory.displayName(), icon_name) };
+            representations.push_back(std::move(start));
 
             auto entries = subcategory.desktopEntries();
             for (const auto &entry : entries) {
                 auto icon_name = icon_searcher_->resolvedName(entry.icon());
-                auto *program = new representation::Program(entry.name(), icon_name, entry.executable(), entry.comment());
-                representations.push_back(program);
+                auto program = std::unique_ptr<representation::RepresentationInterface> { new representation::Program(entry.name(), icon_name, entry.executable(), entry.comment()) };
+                representations.push_back(std::move(program));
             }
 
-            auto *end = new representation::SubcategoryEnd(subcategory.displayName());
-            representations.push_back(end);
+            auto end = std::unique_ptr<representation::RepresentationInterface> { new representation::SubcategoryEnd(subcategory.displayName()) };
+            representations.push_back(std::move(end));
         }
     }
 
-    auto *menu_end = new representation::MenuEnd;
-    representations.push_back(menu_end);
+    auto menu_end = std::unique_ptr<representation::RepresentationInterface> { new representation::MenuEnd };
+    representations.push_back(std::move(menu_end));
     return representations;
 }
 

@@ -31,8 +31,6 @@ namespace amm {
 class Amm
 {
 public:
-    Amm();
-    ~Amm();
     void validateEnvironment() const;
     void loadCommandLineOption(int argc, char **argv);
     void registerIconService();
@@ -47,7 +45,6 @@ private:
     AmmOptions options_;
     Menu menu_;
     std::vector<std::string> desktop_entry_file_names_;
-    icon_search::IconSearchInterface *actual_searcher_;
 };
 } // namespace amm
 

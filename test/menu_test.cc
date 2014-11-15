@@ -18,6 +18,7 @@
 
 #include "menu.h"
 
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -68,13 +69,6 @@ class TestIconSearch : public icon_search::IconSearchInterface
 public:
     std::string resolvedName(const std::string &name) const { return name + ".always"; }
 };
-
-static void clearMemory(std::vector<representation::RepresentationInterface*> representations)
-{
-    for (const auto &representation : representations) {
-        delete representation;
-    }
-}
 
 
 SCENARIO("Menu custom categories", "[menu]") {
@@ -308,6 +302,7 @@ SCENARIO("Menu representations", "[menu]") {
 
             THEN("it stores menu start, subcategory start, menu entry, subcategory end and menu end") {
                 REQUIRE(representations.size() == 8);
+
                 CHECK(representations[0]->visit(test_transformer) == "Menu start--> name: Menu start");
                 CHECK(representations[1]->visit(test_transformer) == "Subsection start--> name: Accessories icon: applications-accessories");
                 CHECK(representations[2]->visit(test_transformer) == "Program--> name: Mousepad icon: accessories-text-editor executable: mousepad %F comment: Simple Text Editor");
@@ -316,8 +311,6 @@ SCENARIO("Menu representations", "[menu]") {
                 CHECK(representations[5]->visit(test_transformer) == "Program--> name: VLC media player icon: vlc executable: /usr/bin/vlc --started-from-file %U comment: Read, capture, broadcast your multimedia streams");
                 CHECK(representations[6]->visit(test_transformer) == "Subsection end--> name: Multimedia end");
                 CHECK(representations[7]->visit(test_transformer) == "Menu end--> name: Menu end");
-
-                clearMemory(representations);
             }
         }
 
@@ -325,7 +318,7 @@ SCENARIO("Menu representations", "[menu]") {
             auto files = std::vector<std::string> { kapplicationFixturesDirectory + "vlc.desktop", kapplicationFixturesDirectory + "mousepad.desktop" };
 
             auto *icon_searcher = new TestIconSearch;
-            menu.registerIconService(*icon_searcher);
+            menu.registerIconService(new TestIconSearch);
 
             menu.populate(files);
             auto representations = menu.representations();
@@ -333,6 +326,7 @@ SCENARIO("Menu representations", "[menu]") {
 
             THEN("it adds the icon name to icons for subcategory and menu-entry") {
                 REQUIRE(representations.size() == 8);
+
                 CHECK(representations[0]->visit(test_transformer) == "Menu start--> name: Menu start");
                 CHECK(representations[1]->visit(test_transformer) == "Subsection start--> name: Accessories icon: applications-accessories.always");
                 CHECK(representations[2]->visit(test_transformer) == "Program--> name: Mousepad icon: accessories-text-editor.always executable: mousepad %F comment: Simple Text Editor");
@@ -341,8 +335,6 @@ SCENARIO("Menu representations", "[menu]") {
                 CHECK(representations[5]->visit(test_transformer) == "Program--> name: VLC media player icon: vlc.always executable: /usr/bin/vlc --started-from-file %U comment: Read, capture, broadcast your multimedia streams");
                 CHECK(representations[6]->visit(test_transformer) == "Subsection end--> name: Multimedia end");
                 CHECK(representations[7]->visit(test_transformer) == "Menu end--> name: Menu end");
-
-                clearMemory(representations);
             }
         }
 
@@ -357,6 +349,7 @@ SCENARIO("Menu representations", "[menu]") {
 
             THEN("it uses names in the given language when available") {
                 REQUIRE(representations.size() == 8);
+
                 CHECK(representations[0]->visit(test_transformer) == "Menu start--> name: Menu start");
                 CHECK(representations[1]->visit(test_transformer) == "Subsection start--> name: Accessories icon: applications-accessories");
                 CHECK(representations[2]->visit(test_transformer) == "Program--> name: Мишоловка icon: accessories-text-editor executable: mousepad %F comment: Једноставан уређивач текста");
@@ -365,8 +358,6 @@ SCENARIO("Menu representations", "[menu]") {
                 CHECK(representations[5]->visit(test_transformer) == "Program--> name: VLC media player icon: vlc executable: /usr/bin/vlc --started-from-file %U comment: Read, capture, broadcast your multimedia streams");
                 CHECK(representations[6]->visit(test_transformer) == "Subsection end--> name: Multimedia end");
                 CHECK(representations[7]->visit(test_transformer) == "Menu end--> name: Menu end");
-
-                clearMemory(representations);
             }
         }
     }
