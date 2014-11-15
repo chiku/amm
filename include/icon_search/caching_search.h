@@ -33,11 +33,11 @@ public:
     explicit CachingSearch(IconSearchInterface &actual_searcher) : actual_searcher_(actual_searcher) { }
     std::string resolvedName(const std::string &icon_name) const
     {
-        std::map<std::string, std::string>::const_iterator it = IteratorTo(icon_name);
+        auto it = IteratorTo(icon_name);
         if (it != cache.end()) {
             return it->second;
         }
-        std::string result = actual_searcher_.resolvedName(icon_name);
+        auto result = actual_searcher_.resolvedName(icon_name);
         cache.insert(std::pair<std::string, std::string>(icon_name, result));
         return result;
     }

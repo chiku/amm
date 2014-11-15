@@ -30,9 +30,9 @@ namespace transformer {
 static std::string removeFieldCode(const std::string &input)
 {
     std::vector<std::string> result;
-    std::vector<std::string> tokens = StringX(input).split(" ");
+    auto tokens = StringX(input).split(" ");
 
-    for (std::vector<std::string>::const_iterator iter = tokens.begin(); iter != tokens.end(); ++iter) {
+    for (auto iter = tokens.begin(); iter != tokens.end(); ++iter) {
         if (!(iter->size() >= 1 && (*iter)[0] == '%')) {
             result.push_back(*iter);
         }

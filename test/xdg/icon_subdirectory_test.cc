@@ -30,7 +30,7 @@ SCENARIO("xdg::IconSubdirectory", "[iconsubdir]") {
     GIVEN("A subdirectory") {
 
         WHEN("without optional values") {
-            IconSubdirectory subdir = IconSubdirectory("subdirectory", "24");
+            auto subdir = IconSubdirectory("subdirectory", "24");
 
             THEN("its type is Threshold") {
                 CHECK(subdir.type() == THRESHOLD);
@@ -50,7 +50,7 @@ SCENARIO("xdg::IconSubdirectory", "[iconsubdir]") {
         }
 
         WHEN("when optional values are empty") {
-            IconSubdirectory subdir = IconSubdirectory("subdirectory", "24").type("").maxSize("").minSize("").threshold("");
+            auto subdir = IconSubdirectory("subdirectory", "24").type("").maxSize("").minSize("").threshold("");
 
             THEN("its type is retained") {
                 CHECK(subdir.type() == THRESHOLD);
@@ -70,8 +70,8 @@ SCENARIO("xdg::IconSubdirectory", "[iconsubdir]") {
         }
 
         WHEN("when assigned a location") {
-            IconSubdirectory subdir = IconSubdirectory("subdirectory", "24");
-            std::string firefox = "/usr/share/icons/hicolor/256x256/apps/firefox.png";
+            auto subdir = IconSubdirectory("subdirectory", "24");
+            auto firefox = "/usr/share/icons/hicolor/256x256/apps/firefox.png";
             subdir.location(firefox);
 
             THEN("its location can be retrieved") {
@@ -86,10 +86,10 @@ SCENARIO("xdg::IconSubdirectory", "[iconsubdir]") {
     }
 
     GIVEN("A fixed subdirectory") {
-        IconSubdirectory fixed = IconSubdirectory("fixed", "24").type("Fixed");
+        auto fixed = IconSubdirectory("fixed", "24").type("Fixed");
 
         WHEN("required size equals the size") {
-            int size = 24;
+            auto size = 24;
             THEN("its type is fixed") {
                 CHECK(fixed.type() == FIXED);
             }
@@ -104,7 +104,7 @@ SCENARIO("xdg::IconSubdirectory", "[iconsubdir]") {
         }
 
         WHEN("required size is lesser than the size") {
-            int size = 22;
+            auto size = 22;
             THEN("it doesn't match the required size") {
                 CHECK_FALSE(fixed.matches(size));
             }
@@ -115,7 +115,7 @@ SCENARIO("xdg::IconSubdirectory", "[iconsubdir]") {
         }
 
         WHEN("required size is greater than the size") {
-            int size = 26;
+            auto size = 26;
             THEN("it doesn't match the required size") {
                 CHECK_FALSE(fixed.matches(size));
             }
@@ -127,7 +127,7 @@ SCENARIO("xdg::IconSubdirectory", "[iconsubdir]") {
     }
 
     GIVEN("A scalable subdirectory") {
-        IconSubdirectory scalable = IconSubdirectory("scaled", "24").type("Scalable").maxSize("256").minSize("2");
+        auto scalable = IconSubdirectory("scaled", "24").type("Scalable").maxSize("256").minSize("2");
 
         WHEN("required size is between the minimum size and size") {
             THEN("its type is scalable") {
@@ -148,7 +148,7 @@ SCENARIO("xdg::IconSubdirectory", "[iconsubdir]") {
         }
 
         WHEN("required size is lesser than the minimum size") {
-            int size = 1;
+            auto size = 1;
             THEN("it doesn't match the required size") {
                 CHECK_FALSE(scalable.matches(size));
             }
@@ -159,7 +159,7 @@ SCENARIO("xdg::IconSubdirectory", "[iconsubdir]") {
         }
 
         WHEN("required size is greater than the maximum size") {
-            int size = 257;
+            auto size = 257;
             THEN("it doesn't match the required size") {
                 CHECK_FALSE(scalable.matches(size));
             }
@@ -171,7 +171,7 @@ SCENARIO("xdg::IconSubdirectory", "[iconsubdir]") {
     }
 
     GIVEN("A threshold subdirectory") {
-        IconSubdirectory threshold = IconSubdirectory("threshold", "24").type("Threshold").threshold("10").maxSize("34").minSize("14");
+        auto threshold = IconSubdirectory("threshold", "24").type("Threshold").threshold("10").maxSize("34").minSize("14");
 
         WHEN("it is between threshold around the size") {
             THEN("its type is threshold") {
@@ -192,7 +192,7 @@ SCENARIO("xdg::IconSubdirectory", "[iconsubdir]") {
         }
 
         WHEN("required size is lesser than the inner threshold size") {
-            int size = 13;
+            auto size = 13;
             THEN("it doesn't match the required size") {
                 CHECK_FALSE(threshold.matches(13));
             }
@@ -203,7 +203,7 @@ SCENARIO("xdg::IconSubdirectory", "[iconsubdir]") {
         }
 
         WHEN("required size is greater than the outer threshold size") {
-            int size = 35;
+            auto size = 35;
             THEN("it doesn't match the required size") {
                 CHECK_FALSE(threshold.matches(size));
             }
@@ -215,7 +215,7 @@ SCENARIO("xdg::IconSubdirectory", "[iconsubdir]") {
     }
 
     GIVEN("An subdirectory with type in mixed case") {
-        IconSubdirectory mixed_type = IconSubdirectory("fixed", "24").type("fIXeD");
+        auto mixed_type = IconSubdirectory("fixed", "24").type("fIXeD");
 
         WHEN("asked its type") {
             THEN("it is converted to camel-case") {
@@ -225,7 +225,7 @@ SCENARIO("xdg::IconSubdirectory", "[iconsubdir]") {
     }
 
     GIVEN("An invalid subdirectory") {
-        IconSubdirectory invalid = IconSubdirectory();
+        auto invalid = IconSubdirectory();
 
         WHEN("matched for a size") {
             THEN("its type is invalid") {

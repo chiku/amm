@@ -66,7 +66,7 @@ std::vector<std::string> Stats::unhandledClassifications()
 {
     if (unhandled_classifications_.size() > 1) {
         std::sort(unhandled_classifications_.begin(), unhandled_classifications_.end());
-        std::vector<std::string>::iterator it = std::unique(unhandled_classifications_.begin(), unhandled_classifications_.end());
+        auto it = std::unique(unhandled_classifications_.begin(), unhandled_classifications_.end());
         unhandled_classifications_.resize(std::distance(unhandled_classifications_.begin(), it));
     }
 

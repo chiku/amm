@@ -76,8 +76,8 @@ SCENARIO("FileX", "[filex]") {
             }
 
             THEN("it can move the file to an existing directory") {
-                std::string file_name = "test/fixtures/new-file";
-                std::string renamed_file_name = "test/fixtures/renamed-file";
+                auto file_name = static_cast<std::string>("test/fixtures/new-file");
+                auto renamed_file_name = static_cast<std::string>("test/fixtures/renamed-file");
 
                 remove(file_name.c_str());
                 remove(renamed_file_name.c_str());
@@ -102,8 +102,8 @@ SCENARIO("FileX", "[filex]") {
             }
 
             THEN("it can't move the file to a non-existing directory") {
-                std::string file_name = "test/fixtures/new-file";
-                std::string renamed_file_name = "test/does-not-exist-fixtures/renamed-file";
+                auto file_name = static_cast<std::string>("test/fixtures/new-file");
+                auto renamed_file_name = static_cast<std::string>("test/does-not-exist-fixtures/renamed-file");
 
                 remove(file_name.c_str());
                 remove(renamed_file_name.c_str());
@@ -136,7 +136,7 @@ SCENARIO("FileX", "[filex]") {
         }
 
         WHEN("pointing to a file that doesn't exist") {
-            std::string file_name = "test/fixtures/applications/does-not-exist.desktop";
+            auto file_name = static_cast<std::string>("test/fixtures/applications/does-not-exist.desktop");
             FileX filex(file_name);
             remove(file_name.c_str());
             remove((file_name + ".backup_extension").c_str());

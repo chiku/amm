@@ -48,14 +48,14 @@ SCENARIO("StringX", "[stringx]") {
         StringX stringx("AudioVideo;GTK");
 
         WHEN("terminated with a delimeter") {
-            std::string result = stringx.terminateWith(";");
+            auto result = stringx.terminateWith(";");
             THEN("it appends the delimeter to itself") {
                 CHECK(result == "AudioVideo;GTK;");
             }
         }
 
         WHEN("split by the delimeter") {
-            std::vector<std::string> result = stringx.split(";");
+            auto result = stringx.split(";");
             THEN("the last token is included") {
                 REQUIRE(result.size() == 2);
                 CHECK(result[0] == "AudioVideo");
@@ -68,14 +68,14 @@ SCENARIO("StringX", "[stringx]") {
         StringX stringx("AudioVideo;GTK;");
 
         WHEN("terminated with the delimeter") {
-            std::string result = stringx.terminateWith(";");
+            auto result = stringx.terminateWith(";");
             THEN("it doesn't duplicate the delimeter") {
                 CHECK(result == "AudioVideo;GTK;");
             }
         }
 
         WHEN("split by the delimeter") {
-            std::vector<std::string> result = stringx.split(";");
+            auto result = stringx.split(";");
             THEN("the original string becomes a list of tokens") {
                 REQUIRE(result.size() == 2);
                 CHECK(result[0] == "AudioVideo");
@@ -88,14 +88,14 @@ SCENARIO("StringX", "[stringx]") {
         StringX stringx("");
 
         WHEN("terminated with a delimeter") {
-            std::string result = stringx.terminateWith(";");
+            auto result = stringx.terminateWith(";");
             THEN("it appends the delimeter to itself") {
                 CHECK(result == ";");
             }
         }
 
         WHEN("split") {
-            std::vector<std::string> result = stringx.split(";");
+            auto result = stringx.split(";");
             THEN("it is empty") {
                 CHECK(result.empty());
             }
@@ -106,7 +106,7 @@ SCENARIO("StringX", "[stringx]") {
         StringX stringx("Icon=<\'foo\' & \"bar\">");
 
         WHEN("XML encoded") {
-            std::string result = stringx.encode();
+            auto result = stringx.encode();
             THEN("the XML tags are replaced by corresponding XML escpace sequences") {
                 CHECK(result == "Icon=&lt;&apos;foo&apos; &amp; &quot;bar&quot;&gt;");
             }
@@ -117,7 +117,7 @@ SCENARIO("StringX", "[stringx]") {
         StringX stringx(" \taccessories-text-editor \t\n");
 
         WHEN("trimmed") {
-            std::string result = stringx.trim();
+            auto result = stringx.trim();
             THEN("all whitespaces at the beginning and in the end are removed") {
                 CHECK(result == "accessories-text-editor");
             }

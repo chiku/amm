@@ -64,7 +64,7 @@ SCENARIO("SystemEnvironment", "[systemenvironment]") {
 
             WHEN("XDG data directories is asked") {
                 THEN("it is a list of directories pointed to by XDG_DATA_DIRS") {
-                    std::vector<std::string> directories = environment.xdgDataDirectories();
+                    auto directories = environment.xdgDataDirectories();
                     REQUIRE(directories.size() == 2);
                     CHECK(directories[0] == "/data/dir1");
                     CHECK(directories[1] == "/data/dir2/");
@@ -73,7 +73,7 @@ SCENARIO("SystemEnvironment", "[systemenvironment]") {
 
             WHEN("directories for 'applications' subdirectories is asked") {
                 THEN("it is a list of directories pointed to by XDG_DATA_HOME/applications, XDG_DATA_DIRS/applications") {
-                    std::vector<std::string> directories = environment.applicationDirectories();
+                    auto directories = environment.applicationDirectories();
                     REQUIRE(directories.size() == 3);
                     CHECK(directories[0] == "/data/home/applications");
                     CHECK(directories[1] == "/data/dir1/applications");
@@ -91,7 +91,7 @@ SCENARIO("SystemEnvironment", "[systemenvironment]") {
             WHEN("directories for 'applications' subdirectories is asked") {
 
                 THEN("it is a list of directories pointed to by $HOME/.local/share/applications, /usr/local/share/applications and /usr/share/applications") {
-                    std::vector<std::string> directories = environment.applicationDirectories();
+                    auto directories = environment.applicationDirectories();
                     REQUIRE(directories.size() == 3);
 
                     CHECK(directories[0] == "/home/amm/.local/share/applications");
@@ -102,7 +102,7 @@ SCENARIO("SystemEnvironment", "[systemenvironment]") {
 
             WHEN("directories for icon themes is asked") {
                 THEN("it is a list of directories pointed to by $HOME/.icons, /usr/local/share/icons, /usr/share/icons and /usr/share/pixmaps") {
-                    std::vector<std::string> directories = environment.iconThemeDirectories();
+                    auto directories = environment.iconThemeDirectories();
                     REQUIRE(directories.size() == 4);
 
                     CHECK(directories[0] == "/home/amm/.icons");

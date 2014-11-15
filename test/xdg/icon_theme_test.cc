@@ -49,7 +49,7 @@ std::vector<std::string> birchIconThemeLinesWithoutParent()
 
 std::vector<std::string> birchIconThemeLines()
 {
-    std::vector<std::string> lines = birchIconThemeLinesWithoutParent();
+    auto lines = birchIconThemeLinesWithoutParent();
     lines.push_back("Inherits=wood,default");
     return lines;
 }
@@ -84,14 +84,14 @@ SCENARIO("xdg::IconTheme", "[icontheme]") {
             }
 
             THEN("it has a list of parents") {
-                std::vector<std::string> parents = icon_theme.parents();
+                auto parents = icon_theme.parents();
                 REQUIRE(parents.size() == 2);
                 CHECK(parents[0] == "wood");
                 CHECK(parents[1] == "default");
             }
 
             THEN("it has a list of directories") {
-                std::vector<IconSubdirectory> directories = icon_theme.directories();
+                auto directories = icon_theme.directories();
                 REQUIRE(directories.size() == 5);
                 CHECK(directories[0].name() == "48x48/apps");
                 CHECK(directories[1].name() == "48x48/mimetypes");
@@ -140,7 +140,7 @@ SCENARIO("xdg::IconTheme", "[icontheme]") {
 
     GIVEN("An Icon Theme with sub-directories") {
         IconTheme icon_theme(joinLists(birchIconThemeLines(), subdirectoryLinesForScalableApps()));
-        std::vector<IconSubdirectory> directories = icon_theme.directories();
+        auto directories = icon_theme.directories();
 
         WHEN("the sub-directory has all properties") {
             IconSubdirectory scalable_apps = directories[3];

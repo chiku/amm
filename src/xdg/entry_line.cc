@@ -46,8 +46,8 @@ std::string EntryLine::declaration() const
         return "";
     }
 
-    std::string::size_type start = content_.find("[") + 1;
-    std::string::size_type end = content_.find("]");
+    auto start = content_.find("[") + 1;
+    auto end = content_.find("]");
     return content_.substr(start, end - start);
 }
 

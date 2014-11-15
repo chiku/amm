@@ -52,7 +52,7 @@ XdgSearch::XdgSearch(int size, QualifiedIconTheme qualified_icon_theme) : size_(
 
 std::string XdgSearch::resolvedName(const std::string &icon_name) const
 {
-    std::string file_name = nameInTheme(icon_name);
+    auto file_name = nameInTheme(icon_name);
     if (file_name != "") {
         return file_name;
     }
@@ -67,8 +67,8 @@ std::string XdgSearch::resolvedName(const std::string &icon_name) const
 
 std::string XdgSearch::nameInTheme(const std::string &icon_name) const
 {
-    std::vector<xdg::IconSubdirectory> search_locations = findSearchLocations(icon_name);
-    std::string file_name = lookupBySize(search_locations);
+    auto search_locations = findSearchLocations(icon_name);
+    auto file_name = lookupBySize(search_locations);
 
     return file_name;
 }
@@ -77,17 +77,17 @@ std::vector<xdg::IconSubdirectory> XdgSearch::findSearchLocations(const std::str
 {
     std::vector<xdg::IconSubdirectory> search_locations;
 
-    for (std::vector<xdg::IconTheme>::const_iterator icon_theme = icon_themes_.begin(); icon_theme != icon_themes_.end(); ++icon_theme) {
-        std::vector<xdg::IconSubdirectory> theme_subdirs = icon_theme->directories();
+    for (auto icon_theme = icon_themes_.begin(); icon_theme != icon_themes_.end(); ++icon_theme) {
+        auto theme_subdirs = icon_theme->directories();
 
-        for (std::vector<xdg::IconSubdirectory>::iterator subdir = theme_subdirs.begin(); subdir != theme_subdirs.end(); ++subdir) {
-            for (std::vector<std::string>::const_iterator search_path = theme_search_paths_.begin(); search_path != theme_search_paths_.end(); ++search_path) {
-                for (std::vector<std::string>::const_iterator extension = registered_extensions_.begin(); extension != registered_extensions_.end(); ++extension) {
+        for (auto subdir = theme_subdirs.begin(); subdir != theme_subdirs.end(); ++subdir) {
+            for (auto search_path = theme_search_paths_.begin(); search_path != theme_search_paths_.end(); ++search_path) {
+                for (auto extension = registered_extensions_.begin(); extension != registered_extensions_.end(); ++extension) {
                     Path path(*search_path);
                     path.join(icon_theme->internalName());
                     path.join(subdir->name());
                     path.join(icon_name);
-                    std::string file_name = StringX(path.result()).terminateWith(*extension);
+                    auto file_name = StringX(path.result()).terminateWith(*extension);
                     if (FileX(file_name).exists()) {
                         search_locations.push_back(xdg::IconSubdirectory(subdir->location(file_name)));
                     }
@@ -101,16 +101,16 @@ std::vector<xdg::IconSubdirectory> XdgSearch::findSearchLocations(const std::str
 
 std::string XdgSearch::lookupBySize(const std::vector<xdg::IconSubdirectory> &search_locations) const
 {
-    for (std::vector<xdg::IconSubdirectory>::const_iterator subdir = search_locations.begin(); subdir != search_locations.end(); ++subdir) {
+    for (auto subdir = search_locations.begin(); subdir != search_locations.end(); ++subdir) {
         if (subdir->matches(size_)) {
             return subdir->location();
         }
     }
 
-    int minimal_size = INT_MAX;
+    auto minimal_size = INT_MAX;
     std::string closest_file_name = "";
-    for (std::vector<xdg::IconSubdirectory>::const_iterator subdir = search_locations.begin(); subdir != search_locations.end(); ++subdir) {
-        int distance = subdir->distance(size_);
+    for (auto subdir = search_locations.begin(); subdir != search_locations.end(); ++subdir) {
+        auto distance = subdir->distance(size_);
         if (distance < minimal_size) {
             closest_file_name = subdir->location();
             minimal_size = distance;
@@ -122,8 +122,8 @@ std::string XdgSearch::lookupBySize(const std::vector<xdg::IconSubdirectory> &se
 
 std::string XdgSearch::fallbackName(const std::string &icon_name) const
 {
-    for (std::vector<std::string>::const_iterator directory = theme_search_paths_.begin(); directory != theme_search_paths_.end(); ++directory) {
-        for (std::vector<std::string>::const_iterator extension = registered_extensions_.begin(); extension != registered_extensions_.end(); ++extension) {
+    for (auto directory = theme_search_paths_.begin(); directory != theme_search_paths_.end(); ++directory) {
+        for (auto extension = registered_extensions_.begin(); extension != registered_extensions_.end(); ++extension) {
             Path path(*directory);
             path.join(icon_name);
             std::string file_name = StringX(path.result()).terminateWith(*extension);

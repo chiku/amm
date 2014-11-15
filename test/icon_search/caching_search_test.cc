@@ -36,7 +36,7 @@ private:
 };
 
 SCENARIO("icon_search::CachingSearch", "[cachingsearch]") {
-    TestSearch *actual_searcher = new TestSearch;
+    auto *actual_searcher = new TestSearch;
 
     GIVEN("An icon search that caches results") {
         CachingSearch caching_searcher(*actual_searcher);

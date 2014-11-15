@@ -32,19 +32,19 @@ namespace amm {
 
 SystemEnvironment::SystemEnvironment()
 {
-    char *home = std::getenv("HOME");
+    auto *home = std::getenv("HOME");
     if (home != NULL) {
         home_ = home;
     }
 
-    char *xdg_data_home = std::getenv("XDG_DATA_HOME");
+    auto *xdg_data_home = std::getenv("XDG_DATA_HOME");
     if (xdg_data_home != NULL) {
         xdg_data_home_ = xdg_data_home;
     } else {
         xdg_data_home_ = home_ + "/.local/share";
     }
 
-    char *xdg_data_dirs = std::getenv("XDG_DATA_DIRS");
+    auto *xdg_data_dirs = std::getenv("XDG_DATA_DIRS");
     if (xdg_data_dirs != NULL) {
         xdg_data_dirs_ = xdg_data_dirs;
     } else {
@@ -68,11 +68,11 @@ std::vector<std::string> SystemEnvironment::xdgDataDirectories() const
 std::vector<std::string> SystemEnvironment::applicationDirectories() const
 {
     std::vector<std::string> directories;
-    std::string home_application = StringX(xdgDataHome()).terminateWith("/") + "applications";
+    auto home_application = StringX(xdgDataHome()).terminateWith("/") + "applications";
     directories.push_back(home_application);
 
-    std::vector<std::string> data_dir_applications = xdgDataDirectories();
-    for (std::vector<std::string>::const_iterator directory = data_dir_applications.begin(); directory != data_dir_applications.end(); ++directory) {
+    auto data_dir_applications = xdgDataDirectories();
+    for (auto directory = data_dir_applications.begin(); directory != data_dir_applications.end(); ++directory) {
         directories.push_back(StringX(*directory).terminateWith("/") + "applications");
     }
     return directories;
@@ -81,11 +81,11 @@ std::vector<std::string> SystemEnvironment::applicationDirectories() const
 std::vector<std::string> SystemEnvironment::iconThemeDirectories() const
 {
     std::vector<std::string> directories;
-    std::string home_icon = StringX(home()).terminateWith("/") + ".icons";
+    auto home_icon = StringX(home()).terminateWith("/") + ".icons";
     directories.push_back(home_icon);
 
-    std::vector<std::string> xdg_data_dirs = xdgDataDirectories();
-    for (std::vector<std::string>::const_iterator directory = xdg_data_dirs.begin(); directory != xdg_data_dirs.end(); ++directory) {
+    auto xdg_data_dirs = xdgDataDirectories();
+    for (auto directory = xdg_data_dirs.begin(); directory != xdg_data_dirs.end(); ++directory) {
         directories.push_back(StringX(*directory).terminateWith("/") + "icons");
     }
     directories.push_back("/usr/share/pixmaps");
@@ -99,7 +99,7 @@ std::string SystemEnvironment::getLanguageWith(const char *raw)
         return "";
     }
 
-    std::string without_encoding = StringX(raw).split(".")[0];
+    auto without_encoding = StringX(raw).split(".")[0];
     return StringX(without_encoding).split("_")[0];
 }
 

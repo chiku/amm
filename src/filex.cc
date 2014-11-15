@@ -71,7 +71,7 @@ bool FileX::writeLines(const std::vector<std::string> &lines) const
         return false;
     }
 
-    for (std::vector<std::string>::const_iterator line = lines.begin(); line != lines.end(); ++line) {
+    for (auto line = lines.begin(); line != lines.end(); ++line) {
         file << *line << '\n';
     }
 

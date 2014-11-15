@@ -33,7 +33,7 @@ SCENARIO("transformer::Jwm", "[transformerjwm]") {
 
         WHEN("transforming a menu-start representation") {
             representation::MenuStart menu_start;
-            std::string result = jwm_transformer.transform(menu_start);
+            auto result = jwm_transformer.transform(menu_start);
 
             THEN("it is a static message") {
                 CHECK(result == "<JWM>\n    <!--Menu start-->");
@@ -42,7 +42,7 @@ SCENARIO("transformer::Jwm", "[transformerjwm]") {
 
         WHEN("transforming a menu-end representation") {
             representation::MenuEnd menu_end;
-            std::string result = jwm_transformer.transform(menu_end);
+            auto result = jwm_transformer.transform(menu_end);
 
             THEN("it is a static message") {
                 CHECK(result == "    <!--Menu end-->\n</JWM>");
@@ -51,7 +51,7 @@ SCENARIO("transformer::Jwm", "[transformerjwm]") {
 
         WHEN("transforming a subcategory-start representation") {
             representation::SubcategoryStart subcategory_start("Application", "application.png");
-            std::string result = jwm_transformer.transform(subcategory_start);
+            auto result = jwm_transformer.transform(subcategory_start);
 
             THEN("it includes the subcategory name and icon") {
                 CHECK(result == "    <Menu label=\"Application\" icon=\"application.png\">");
@@ -66,7 +66,7 @@ SCENARIO("transformer::Jwm", "[transformerjwm]") {
 
         WHEN("transforming a subcategory-end representation") {
             representation::SubcategoryEnd subcategory_end("Application");
-            std::string result = jwm_transformer.transform(subcategory_end);
+            auto result = jwm_transformer.transform(subcategory_end);
 
             THEN("it includes the subcategory names in XML comments") {
                 CHECK(result == "        <!--Application end-->\n    </Menu>");
@@ -75,7 +75,7 @@ SCENARIO("transformer::Jwm", "[transformerjwm]") {
 
         WHEN("transforming a menu-entry representation") {
             representation::Program program("Application", "application.png", "/usr/bin/application", "Application uses");
-            std::string result = jwm_transformer.transform(program);
+            auto result = jwm_transformer.transform(program);
 
             THEN("it is a static message") {
                 CHECK(result == "        <Program label=\"Application\" icon=\"application.png\">/usr/bin/application</Program>");

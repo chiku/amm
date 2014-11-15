@@ -72,12 +72,12 @@ void Menu::loadCustomCategories(const std::vector<std::string> &lines)
 {
     subcategories_.clear();
 
-    for (std::vector<std::string>::const_iterator line = lines.begin(); line != lines.end(); ++line) {
+    for (auto line = lines.begin(); line != lines.end(); ++line) {
         if ((*line)[0] != '#') {
-            std::vector<std::string> tokens = StringX(StringX(*line).trim()).split(":");
+            auto tokens = StringX(StringX(*line).trim()).split(":");
             if (tokens.size() >= 3 && tokens[0] != "" && tokens[1] != "") {
                 std::vector<std::string> classification_names;
-                for (std::vector<std::string>::const_iterator token = tokens.begin()+2; token != tokens.end(); ++token) {
+                for (auto token = tokens.begin()+2; token != tokens.end(); ++token) {
                     if (*token != "") {
                         classification_names.push_back(*token);
                     }
@@ -92,7 +92,7 @@ void Menu::loadCustomCategories(const std::vector<std::string> &lines)
 
 void Menu::populate(const std::vector<std::string> &entry_names)
 {
-    for (std::vector<std::string>::const_iterator name = entry_names.begin(); name != entry_names.end(); ++name) {
+    for (auto name = entry_names.begin(); name != entry_names.end(); ++name) {
         addDesktopEntry(*name);
     }
 
@@ -134,8 +134,7 @@ bool Menu::classify(const xdg::DesktopEntry &entry)
 {
     bool classified = false;
 
-    std::vector<Subcategory>::iterator subcategory;
-    for (subcategory = subcategories_.begin(); subcategory != subcategories_.end(); ++subcategory) {
+    for (auto subcategory = subcategories_.begin(); subcategory != subcategories_.end(); ++subcategory) {
         if (entry.isAnyOf(subcategory->classificationNames())) {
             classified = true;
             subcategory->addDesktopEntry(entry);
@@ -147,8 +146,7 @@ bool Menu::classify(const xdg::DesktopEntry &entry)
 
 void Menu::sort()
 {
-    std::vector<Subcategory>::iterator group;
-    for (group = subcategories_.begin(); group != subcategories_.end(); ++group) {
+    for (auto group = subcategories_.begin(); group != subcategories_.end(); ++group) {
         group->sortDesktopEntries();
     }
 }
@@ -156,29 +154,28 @@ void Menu::sort()
 std::vector<representation::RepresentationInterface*> Menu::representations() const
 {
     std::vector<representation::RepresentationInterface*> representations;
-    representation::MenuStart *menu_start = new representation::MenuStart;
+    auto *menu_start = new representation::MenuStart;
     representations.push_back(menu_start);
 
-    std::vector<Subcategory>::const_iterator subcategory;
-    for (subcategory = subcategories_.begin(); subcategory != subcategories_.end(); ++subcategory) {
+    for (auto subcategory = subcategories_.begin(); subcategory != subcategories_.end(); ++subcategory) {
         if (subcategory->hasEntries()) {
-            std::string icon_name = icon_searcher_->resolvedName(subcategory->iconName());
+            auto icon_name = icon_searcher_->resolvedName(subcategory->iconName());
             representation::SubcategoryStart *start = new representation::SubcategoryStart(subcategory->displayName(), icon_name);
             representations.push_back(start);
 
-            std::vector<xdg::DesktopEntry> entries = subcategory->desktopEntries();
-            for (std::vector<xdg::DesktopEntry>::const_iterator entry = entries.begin(); entry != entries.end(); ++entry) {
-                std::string icon_name = icon_searcher_->resolvedName(entry->icon());
+            auto entries = subcategory->desktopEntries();
+            for (auto entry = entries.begin(); entry != entries.end(); ++entry) {
+                auto icon_name = icon_searcher_->resolvedName(entry->icon());
                 representation::Program *program = new representation::Program(entry->name(), icon_name, entry->executable(), entry->comment());
                 representations.push_back(program);
             }
 
-            representation::SubcategoryEnd *end = new representation::SubcategoryEnd(subcategory->displayName());
+            auto *end = new representation::SubcategoryEnd(subcategory->displayName());
             representations.push_back(end);
         }
     }
 
-    representation::MenuEnd *menu_end = new representation::MenuEnd;
+    auto *menu_end = new representation::MenuEnd;
     representations.push_back(menu_end);
     return representations;
 }

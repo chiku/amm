@@ -71,7 +71,7 @@ public:
 
 static void clearMemory(std::vector<representation::RepresentationInterface*> representations)
 {
-    for (std::vector<representation::RepresentationInterface*>::iterator iter = representations.begin(); iter != representations.end(); ++iter) {
+    for (auto iter = representations.begin(); iter != representations.end(); ++iter) {
         delete *iter;
     }
 }
@@ -88,7 +88,7 @@ SCENARIO("Menu custom categories", "[menu]") {
             menu.loadCustomCategories(lines);
 
             THEN("it stores them in its subcategories") {
-                std::vector<Subcategory> subcategories = menu.subcategories();
+                auto subcategories = menu.subcategories();
 
                 REQUIRE(subcategories.size() == 2);
                 CHECK(subcategories[0].displayName() == "Accessories");
@@ -102,10 +102,10 @@ SCENARIO("Menu custom categories", "[menu]") {
             menu.loadCustomCategories(lines);
 
             THEN("it ignores the whitepaces in subcategories") {
-                std::vector<Subcategory> subcategories = menu.subcategories();
+                auto subcategories = menu.subcategories();
 
                 REQUIRE(subcategories.size() == 1);
-                std::vector<std::string> classification_names = subcategories[0].classificationNames();
+                auto classification_names = subcategories[0].classificationNames();
                 REQUIRE(classification_names.size() == 1);
                 CHECK(classification_names[0] == "Utility");
             }
@@ -118,7 +118,7 @@ SCENARIO("Menu custom categories", "[menu]") {
             menu.loadCustomCategories(lines);
 
             THEN("it ignores the lines beginning with '#'") {
-                std::vector<Subcategory> subcategories = menu.subcategories();
+                auto subcategories = menu.subcategories();
 
                 CHECK(subcategories.empty());
             }
@@ -131,7 +131,7 @@ SCENARIO("Menu custom categories", "[menu]") {
             menu.loadCustomCategories(lines);
 
             THEN("it ignores the line") {
-                std::vector<Subcategory> subcategories = menu.subcategories();
+                auto subcategories = menu.subcategories();
 
                 CHECK(subcategories.empty());
             }
@@ -144,12 +144,12 @@ SCENARIO("Menu custom categories", "[menu]") {
             menu.loadCustomCategories(lines);
 
             THEN("its subcategories have multiple classifications") {
-                std::vector<Subcategory> subcategories = menu.subcategories();
+                auto subcategories = menu.subcategories();
 
                 REQUIRE(subcategories.size() == 1);
                 CHECK(subcategories[0].displayName() == "Games");
 
-                std::vector<std::string> classification_names = subcategories[0].classificationNames();
+                auto classification_names = subcategories[0].classificationNames();
                 REQUIRE(classification_names.size() == 2);
                 CHECK(classification_names[0] == "Game");
                 CHECK(classification_names[1] == "Fun");
@@ -162,11 +162,11 @@ SCENARIO("Menu custom categories", "[menu]") {
             menu.loadCustomCategories(lines);
 
             THEN("it ignores the missing classifications") {
-                std::vector<Subcategory> subcategories = menu.subcategories();
+                auto subcategories = menu.subcategories();
 
                 REQUIRE(subcategories.size() == 1);
 
-                std::vector<std::string> classification_names = subcategories[0].classificationNames();
+                auto classification_names = subcategories[0].classificationNames();
                 REQUIRE(classification_names.size() == 3);
                 CHECK(classification_names[0] == "Game");
                 CHECK(classification_names[1] == "Fun");
@@ -180,7 +180,7 @@ SCENARIO("Menu custom categories", "[menu]") {
             menu.loadCustomCategories(lines);
 
             THEN("it ignores the line with missing classification names") {
-                std::vector<Subcategory> subcategories = menu.subcategories();
+                auto subcategories = menu.subcategories();
 
                 CHECK(subcategories.empty());
             }
@@ -288,24 +288,25 @@ SCENARIO("Menu sort", "[menu]") {
             menu.sort();
 
             THEN("the individual entries inside subcategories are sorted alphabetically") {
-                std::vector<Subcategory> subcategories = menu.subcategories();
+                auto subcategories = menu.subcategories();
                 REQUIRE(subcategories.size() == 3);
 
                 CHECK(subcategories[0].displayName() == "Multimedia");
-                std::vector<xdg::DesktopEntry> multimedia_files = subcategories[0].desktopEntries();
+                auto multimedia_files = subcategories[0].desktopEntries();
                 REQUIRE(multimedia_files.size() == 3);
                 CHECK(multimedia_files[0].name() == "VLC media player");
                 CHECK(multimedia_files[1].name() == "Whaaw! Media Player");
                 CHECK(multimedia_files[2].name() == "Xfburn");
 
                 CHECK(subcategories[1].displayName() == "Utilities");
-                std::vector<xdg::DesktopEntry> utility_files = subcategories[1].desktopEntries();
+                auto utility_files = subcategories[1].desktopEntries();
                 REQUIRE(utility_files.size() == 2);
                 CHECK(utility_files[0].name() == "Mousepad");
                 CHECK(utility_files[1].name() == "Xfburn");
 
-                CHECK(subcategories[2].displayName() == "Others");
-                std::vector<xdg::DesktopEntry> other_files = subcategories[2].desktopEntries();
+
+                REQUIRE(subcategories[2].displayName() == "Others");
+                auto other_files = subcategories[2].desktopEntries();
                 CHECK(other_files.empty());
             }
         }
@@ -322,7 +323,7 @@ SCENARIO("Menu representations", "[menu]") {
             files.push_back(kapplicationFixturesDirectory + "mousepad.desktop");
 
             menu.populate(files);
-            std::vector<representation::RepresentationInterface*> representations = menu.representations();
+            auto representations = menu.representations();
             TestTransformer test_transformer;
 
             THEN("it stores menu start, subcategory start, menu entry, subcategory end and menu end") {
@@ -345,11 +346,11 @@ SCENARIO("Menu representations", "[menu]") {
             files.push_back(kapplicationFixturesDirectory + "vlc.desktop");
             files.push_back(kapplicationFixturesDirectory + "mousepad.desktop");
 
-            TestIconSearch *icon_searcher = new TestIconSearch;
+            auto *icon_searcher = new TestIconSearch;
             menu.registerIconService(*icon_searcher);
 
             menu.populate(files);
-            std::vector<representation::RepresentationInterface*> representations = menu.representations();
+            auto representations = menu.representations();
             TestTransformer test_transformer;
 
             THEN("it adds the icon name to icons for subcategory and menu-entry") {
@@ -375,7 +376,7 @@ SCENARIO("Menu representations", "[menu]") {
             menu.registerLanguage("sr");
 
             menu.populate(files);
-            std::vector<representation::RepresentationInterface*> representations = menu.representations();
+            auto representations = menu.representations();
             TestTransformer test_transformer;
 
             THEN("it uses names in the given language when available") {

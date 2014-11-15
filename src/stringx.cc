@@ -27,8 +27,8 @@ namespace amm {
 
 bool StringX::endsWith(const std::string &delimeter) const
 {
-    const size_t length = string_.length();
-    const size_t delimeter_length = delimeter.length();
+    auto length = string_.length();
+    auto delimeter_length = delimeter.length();
 
     return ((length >= delimeter_length) && (string_.compare(length - delimeter_length, delimeter_length, delimeter) == 0));
 }
@@ -59,30 +59,27 @@ std::string StringX::encode() const
 
 std::string StringX::trim() const
 {
-    const std::string whitespace = " \t\n";
-    const size_t begin = string_.find_first_not_of(whitespace);
+    auto whitespace = " \t\n";
+    auto begin = string_.find_first_not_of(whitespace);
 
     if (begin == std::string::npos) {
         return "";
     }
 
-    const size_t end = string_.find_last_not_of(whitespace);
-    const size_t range = end - begin + 1;
+    auto end = string_.find_last_not_of(whitespace);
+    auto range = end - begin + 1;
 
     return string_.substr(begin, range);
 }
 
 std::vector<std::string> StringX::split(const std::string &delimeter) const
 {
-    std::string raw = string_;
-    size_t delimeter_length = delimeter.length();
+    auto raw = StringX(string_).terminateWith(delimeter);
+    auto start = 0U;
+    auto end = raw.find(delimeter);
+
+    auto delimeter_length = delimeter.length();
     std::vector<std::string> result;
-
-    raw = StringX(raw).terminateWith(delimeter);
-
-    size_t start = 0U;
-    size_t end = raw.find(delimeter);
-
     while (end != std::string::npos && end != 0) {
         result.push_back(raw.substr(start, end - start));
         start = end + delimeter_length;

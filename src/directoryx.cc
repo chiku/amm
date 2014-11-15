@@ -52,7 +52,7 @@ DirectoryX::Entries::SearchResult DirectoryX::Entries::nextName()
 {
     dirent *entry_;
     while((entry_ = readdir(directory_)) != NULL) {
-        std::string full_path = StringX(path_).terminateWith("/") + entry_->d_name;
+        auto full_path = StringX(path_).terminateWith("/") + entry_->d_name;
         current_result_ = SearchResult::Success(entry_->d_name, FileX(full_path).existsAsDirectory());
         return current_result_;
     }

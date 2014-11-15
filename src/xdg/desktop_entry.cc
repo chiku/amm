@@ -74,7 +74,7 @@ bool DesktopEntry::isA(const std::string &type) const
 
 bool DesktopEntry::isAnyOf(const std::vector<std::string> &types) const
 {
-    for (std::vector<std::string>::const_iterator type = types.begin(); type != types.end(); ++type) {
+    for (auto type = types.begin(); type != types.end(); ++type) {
         if (isA(*type)) {
             return true;
         }

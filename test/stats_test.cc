@@ -141,15 +141,15 @@ SCENARIO("Stats summaries", "[stats]") {
             }
 
             THEN("details includes short details and a list of unparsed files") {
-                std::string expected_details = expectedShortdetailsWithValues() + "Unparsed files: daemon\n";
+                auto expected_details = expectedShortdetailsWithValues() + "Unparsed files: daemon\n";
                 CHECK(stats.details("normal") == expected_details);
             }
 
             THEN("long details includes details and lists of suppressed and unclassified files") {
-                std::string expected_details = expectedShortdetailsWithValues() +
-                                                "Unparsed files: daemon\n"
-                                                "Suppressed files: mplayer\n"
-                                                "Unclassified files: htop, NEdit\n";
+                auto expected_details = expectedShortdetailsWithValues() +
+                                        "Unparsed files: daemon\n"
+                                        "Suppressed files: mplayer\n"
+                                        "Unclassified files: htop, NEdit\n";
                 CHECK(stats.details("long") == expected_details);
             }
         }
@@ -159,11 +159,11 @@ SCENARIO("Stats summaries", "[stats]") {
             stats.addUnhandledClassifications(unhandledClassificationSecondSet());
 
             THEN("long details includes the unhandled classifications") {
-                std::string expected_details = expectedShortdetailsWithValues() +
-                                                "Unparsed files: daemon\n"
-                                                "Suppressed files: mplayer\n"
-                                                "Unclassified files: htop, NEdit\n"
-                                                "Unhandled classifications: Archiving, Browser, Calculator, Player, WordProcessor\n";
+                auto expected_details = expectedShortdetailsWithValues() +
+                                        "Unparsed files: daemon\n"
+                                        "Suppressed files: mplayer\n"
+                                        "Unclassified files: htop, NEdit\n"
+                                        "Unhandled classifications: Archiving, Browser, Calculator, Player, WordProcessor\n";
                 CHECK(stats.details("long") == expected_details);
             }
         }

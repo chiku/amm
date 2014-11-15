@@ -36,7 +36,7 @@ IconTheme::IconTheme(const std::vector<std::string> &lines) : internal_name_("")
     xdg_entry.parse();
 
     name_ = xdg_entry.under("Icon Theme", "Name");
-    std::string lower_case_name = name_;
+    auto lower_case_name = name_;
     std::transform(lower_case_name.begin(), lower_case_name.end(), lower_case_name.begin(), ::tolower);
 
     parents_ = StringX(xdg_entry.under("Icon Theme", "Inherits")).split(",");
@@ -44,15 +44,15 @@ IconTheme::IconTheme(const std::vector<std::string> &lines) : internal_name_("")
         parents_.push_back("Hicolor");
     }
 
-    std::vector<std::string> directory_names = StringX(xdg_entry.under("Icon Theme", "Directories")).split(",");
-    for (std::vector<std::string>::const_iterator name = directory_names.begin(); name != directory_names.end(); ++name) {
-        std::string type = xdg_entry.under(*name, "Type");
-        std::string size = xdg_entry.under(*name, "Size");
-        std::string maxsize = xdg_entry.under(*name, "MaxSize");
-        std::string minsize = xdg_entry.under(*name, "MinSize");
-        std::string threshold = xdg_entry.under(*name, "Threshold");
+    auto directory_names = StringX(xdg_entry.under("Icon Theme", "Directories")).split(",");
+    for (auto name = directory_names.begin(); name != directory_names.end(); ++name) {
+        auto type = xdg_entry.under(*name, "Type");
+        auto size = xdg_entry.under(*name, "Size");
+        auto maxsize = xdg_entry.under(*name, "MaxSize");
+        auto minsize = xdg_entry.under(*name, "MinSize");
+        auto threshold = xdg_entry.under(*name, "Threshold");
 
-        IconSubdirectory icon_subdirectory = IconSubdirectory(*name, size)
+        auto icon_subdirectory = IconSubdirectory(*name, size)
             .type(type)
             .maxSize(maxsize)
             .minSize(minsize)

@@ -32,7 +32,7 @@ void Entry::parse()
     std::map< std::string, std::string > entry;
     std::string current_section = "";
 
-    for (std::vector<std::string>::iterator iter = lines_.begin(); iter != lines_.end(); ++iter) {
+    for (auto iter = lines_.begin(); iter != lines_.end(); ++iter) {
         EntryLine line(*iter);
         if (line.isDeclaration()) {
             result_[current_section] = entry;
@@ -47,13 +47,13 @@ void Entry::parse()
 
 std::string Entry::under(const std::string &section_name, const std::string &key_name)
 {
-    std::map<std::string, std::string> section = result_[section_name];
+    auto section = result_[section_name];
     if (language_ == "") {
         return section[key_name];
     }
 
-    std::string language_aware_key_name = key_name + "[" + language_ + "]";
-    std::map<std::string, std::string>::const_iterator language_aware_key_itr = section.find(language_aware_key_name);
+    auto language_aware_key_name = key_name + "[" + language_ + "]";
+    auto language_aware_key_itr = section.find(language_aware_key_name);
 
     if (language_aware_key_itr != section.end()) {
       return language_aware_key_itr->second;

@@ -32,9 +32,9 @@ AmmOptions CommandLineOptionsParser::parse(int argc, char* const* argv)
     allowMultipleEntries();
     AmmOptions amm_options = AmmOptions::Default(home_, language_);
 
-    int option_index = 0;
-    int help_flag = 0;
-    int version_flag = 0;
+    auto option_index = 0;
+    auto help_flag = 0;
+    auto version_flag = 0;
     const char* short_options = "o:i:c:";
     const option long_options[] = {
         {"help",            no_argument,       &help_flag   ,  1 },
@@ -48,9 +48,8 @@ AmmOptions CommandLineOptionsParser::parse(int argc, char* const* argv)
         {0,                 0,                 0,              0 },
     };
 
-    int chosen_option;
-
     amm_options.is_parsed = true;
+    int chosen_option;
 
     while ((chosen_option = getopt_long(argc, argv, short_options, long_options, &option_index)) != -1) {
         if (chosen_option == 0) {
@@ -60,7 +59,7 @@ AmmOptions CommandLineOptionsParser::parse(int argc, char* const* argv)
             if (version_flag == 1) {
                 amm_options.is_version = true;
             }
-            std::string long_option_name = long_options[option_index].name;
+            auto long_option_name = static_cast<std::string>(long_options[option_index].name);
             if (long_option_name == "iconize") {
                 amm_options.is_iconize = true;
                 if (optarg) {

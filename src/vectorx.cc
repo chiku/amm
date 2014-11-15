@@ -30,14 +30,14 @@ namespace amm {
 std::string VectorX::join(const std::string &delimeter) const
 {
     std::stringstream stream;
-    size_t vector_size = vector_.size();
+    auto vector_size = vector_.size();
 
     if (vector_size == 0) {
         return "";
     }
 
     if (vector_size >= 2) {
-        for (std::vector<std::string>::const_iterator iterator = vector_.begin(); iterator != vector_.end()-1; ++iterator) {
+        for (auto iterator = vector_.begin(); iterator != vector_.end()-1; ++iterator) {
             stream << *iterator << delimeter;
         }
     }
@@ -50,7 +50,7 @@ std::vector<std::string> VectorX::terminateEachWith(const std::string &delimiter
 {
     std::vector<std::string> result;
 
-    for (std::vector<std::string>::const_iterator i = vector_.begin(); i != vector_.end(); ++i) {
+    for (auto i = vector_.begin(); i != vector_.end(); ++i) {
         result.push_back(StringX(*i).terminateWith(delimiter));
     }
 
@@ -59,10 +59,10 @@ std::vector<std::string> VectorX::terminateEachWith(const std::string &delimiter
 
 std::vector<std::string> VectorX::unique() const
 {
-    std::vector<std::string> result = vector_;
+    auto result = vector_;
 
     std::sort(result.begin(), result.end());
-    std::vector<std::string>::iterator it = std::unique(result.begin(), result.end());
+    auto it = std::unique(result.begin(), result.end());
     result.resize(std::distance(result.begin(), it));
 
     return result;

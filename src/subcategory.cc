@@ -48,7 +48,7 @@ void Subcategory::addDesktopEntry(const xdg::DesktopEntry &desktop_entry)
 void Subcategory::sortDesktopEntries()
 {
     std::sort(desktop_entries_.begin(), desktop_entries_.end());
-    std::vector<xdg::DesktopEntry>::iterator it = std::unique(desktop_entries_.begin(), desktop_entries_.end());
+    auto it = std::unique(desktop_entries_.begin(), desktop_entries_.end());
     desktop_entries_.resize(std::distance(desktop_entries_.begin(), it));
 }
 
