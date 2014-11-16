@@ -70,25 +70,25 @@ SCENARIO("DirectoryX", "[directoryx]") {
     GIVEN("A directoryx") {
         WHEN("present") {
             THEN("it is valid") {
-                DirectoryX directory("test/fixtures/applications");
+                auto directory = DirectoryX("test/fixtures/applications");
                 CHECK(directory.isValid());
             }
         }
 
         WHEN("not present") {
-            DirectoryX directory("does-not-exist");
+            auto directory = DirectoryX("does-not-exist");
             THEN("it is invalid") {
                 CHECK_FALSE(directory.isValid());
             }
         }
 
         WHEN("it has files under itself") {
-            DirectoryX directory("test/fixtures/applications");
+            auto directory = DirectoryX("test/fixtures/applications");
             auto entries = directory.allEntries();
             WHEN("its contained files are retrieved one at a time") {
                 THEN("the retrieved entry has the name of the file and knows if it is a directory") {
-                    std::vector<std::string> file_names;
-                    std::vector<std::string> directory_names;
+                    auto file_names = std::vector<std::string> {};
+                    auto directory_names = std::vector<std::string> {};
 
                     for (int i = 0; i < 11; i++) {
                         auto result = entries.nextName();
@@ -116,8 +116,8 @@ SCENARIO("DirectoryX", "[directoryx]") {
 
             WHEN("it is iterated for contained files (with prefix, indirection & not-equals)") {
                 THEN("it has the contained file and sub-directory names") {
-                    std::vector<std::string> file_names;
-                    std::vector<std::string> directory_names;
+                    auto file_names = std::vector<std::string> {};
+                    auto directory_names = std::vector<std::string> {};
                     for (auto entry = entries.begin(); entry != entries.end(); ++entry) {
                         (entry->isDirectory() ? directory_names : file_names).push_back(entry->name());
                     }
@@ -129,8 +129,8 @@ SCENARIO("DirectoryX", "[directoryx]") {
 
             WHEN("it is iterated for contained files (with postfix, access to pointer at & equals)") {
                 THEN("it has the contained file and sub-directory names") {
-                    std::vector<std::string> file_names;
-                    std::vector<std::string> directory_names;
+                    auto file_names = std::vector<std::string> {};
+                    auto directory_names = std::vector<std::string> {};
                     for (auto entry = entries.begin(); !(entry == entries.end()); entry++) {
                         (entry->isDirectory() ? directory_names : file_names).push_back(entry->name());
                     }
@@ -143,7 +143,7 @@ SCENARIO("DirectoryX", "[directoryx]") {
 
         WHEN("iterated multiple times") {
             THEN("all iterations have the same results") {
-                DirectoryX directory("test/fixtures/applications");
+                auto directory = DirectoryX("test/fixtures/applications");
                 auto first_set = directory.allEntries();
                 auto second_set = directory.allEntries();
 

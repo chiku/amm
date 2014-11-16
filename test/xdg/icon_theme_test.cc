@@ -78,7 +78,7 @@ std::vector<std::string> joinLists(std::vector<std::string> first, std::vector<s
 SCENARIO("xdg::IconTheme", "[icontheme]") {
     GIVEN("An Icon Theme") {
         WHEN("created") {
-            IconTheme icon_theme(birchIconThemeLines());
+            auto icon_theme = IconTheme(birchIconThemeLines());
 
             THEN("it has a name") {
                 CHECK(icon_theme.name() == "Birch");
@@ -103,7 +103,7 @@ SCENARIO("xdg::IconTheme", "[icontheme]") {
         }
 
         WHEN("registered with its internal name") {
-            IconTheme icon_theme(birchIconThemeLines());
+            auto icon_theme = IconTheme(birchIconThemeLines());
             icon_theme.internalNameIs("birch");
 
             THEN("it can be referred to by its internal name") {
@@ -120,7 +120,7 @@ SCENARIO("xdg::IconTheme", "[icontheme]") {
         }
 
         WHEN("without explicit parents") {
-            IconTheme icon_theme(birchIconThemeLinesWithoutParent());
+            auto icon_theme = IconTheme(birchIconThemeLinesWithoutParent());
 
             THEN("its parent is Hicolor") {
                 std::vector<std::string> parents = icon_theme.parents();
@@ -130,7 +130,7 @@ SCENARIO("xdg::IconTheme", "[icontheme]") {
         }
 
         WHEN("Hicolor") {
-            IconTheme icon_theme(hicolorThemeLines());
+            auto icon_theme = IconTheme(hicolorThemeLines());
 
             THEN("it has no parents") {
                 std::vector<std::string> parents = icon_theme.parents();
@@ -140,11 +140,11 @@ SCENARIO("xdg::IconTheme", "[icontheme]") {
     }
 
     GIVEN("An Icon Theme with sub-directories") {
-        IconTheme icon_theme(joinLists(birchIconThemeLines(), subdirectoryLinesForScalableApps()));
+        auto icon_theme = IconTheme(joinLists(birchIconThemeLines(), subdirectoryLinesForScalableApps()));
         auto directories = icon_theme.directories();
 
         WHEN("the sub-directory has all properties") {
-            IconSubdirectory scalable_apps = directories[3];
+            auto scalable_apps = directories[3];
 
             THEN("the sub-directory has a size") {
                 CHECK(scalable_apps.size() == 48);

@@ -40,7 +40,7 @@ SCENARIO("icon_search::CachingSearch", "[cachingsearch]") {
     auto actual_searcher = new TestSearch;
 
     GIVEN("An icon search that caches results") {
-        CachingSearch caching_searcher(actual_searcher);
+        auto caching_searcher = CachingSearch(actual_searcher);
 
         WHEN("retrieving an unsearched item") {
             THEN("the item is absent from the cache") {

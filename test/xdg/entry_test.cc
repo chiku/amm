@@ -121,7 +121,7 @@ std::vector<std::string> singleSectionWithMissingAssignmentLines()
 
 SCENARIO("xdg::Entry", "[XDGentry]") {
     GIVEN("An XDG file with one section") {
-        xdg::Entry entry(singleSectionEntryLines());
+        auto entry = xdg::Entry(singleSectionEntryLines());
 
         WHEN("when parsed") {
             entry.parse();
@@ -142,7 +142,7 @@ SCENARIO("xdg::Entry", "[XDGentry]") {
     }
 
     GIVEN("An XDG file for an existing language") {
-        xdg::Entry entry(singleSectionEntryLinesWithLanguages(), "bn");
+        auto entry = xdg::Entry(singleSectionEntryLinesWithLanguages(), "bn");
 
         WHEN("when parsed") {
             entry.parse();
@@ -163,7 +163,7 @@ SCENARIO("xdg::Entry", "[XDGentry]") {
     }
 
     GIVEN("An XDG file for a non-existing language") {
-        xdg::Entry entry(singleSectionEntryLinesWithLanguages(), "bad");
+        auto entry = xdg::Entry(singleSectionEntryLinesWithLanguages(), "bad");
 
         WHEN("when parsed") {
             entry.parse();
@@ -184,7 +184,7 @@ SCENARIO("xdg::Entry", "[XDGentry]") {
     }
 
     GIVEN("An XDG file with entries that contain whitespaces") {
-        xdg::Entry entry(singleSectionWithWhiteSpacesLines());
+        auto entry = xdg::Entry(singleSectionWithWhiteSpacesLines());
 
         WHEN("when parsed") {
             entry.parse();
@@ -199,7 +199,7 @@ SCENARIO("xdg::Entry", "[XDGentry]") {
     }
 
     GIVEN("An XDG file with entries that is missing values") {
-        xdg::Entry entry(singleSectionWithMissingAssignmentLines());
+        auto entry = xdg::Entry(singleSectionWithMissingAssignmentLines());
 
         WHEN("when parsed") {
             entry.parse();
@@ -212,7 +212,7 @@ SCENARIO("xdg::Entry", "[XDGentry]") {
     }
 
     GIVEN("An XDG file with multiple section") {
-        xdg::Entry entry(multipleSectionsEntry());
+        auto entry = xdg::Entry(multipleSectionsEntry());
 
         WHEN("when parsed") {
             entry.parse();
@@ -243,7 +243,7 @@ SCENARIO("xdg::Entry", "[XDGentry]") {
     }
 
     GIVEN("An XDG file without a section") {
-        xdg::Entry entry(noDeclarationLines());
+        auto entry = xdg::Entry(noDeclarationLines());
 
         WHEN("when parsed") {
             entry.parse();

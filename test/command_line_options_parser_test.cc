@@ -30,7 +30,7 @@ SCENARIO("Command-line arguments default parse", "[commandlineoptions]") {
     GIVEN("command line options") {
         auto home = std::string { "/home/amm" };
         auto language = std::string { "hn" };
-        CommandLineOptionsParser parser(home, language);
+        auto parser = CommandLineOptionsParser(home, language);
 
         WHEN("parsing default") {
             char *argv[] = { strdup("amm"), nullptr };
@@ -92,7 +92,7 @@ SCENARIO("Command-line arguments parse with flags", "[commandlineoptions]") {
     GIVEN("command line options") {
         auto home = std::string { "/home/amm" };
         auto language = std::string { "hn" };
-        CommandLineOptionsParser parser(home, language);
+        auto parser = CommandLineOptionsParser(home, language);
 
         WHEN("parsing --help") {
             char *argv[] = {strdup("amm"), strdup("--help"), 0};
@@ -140,11 +140,11 @@ SCENARIO("Command-line arguments parse options", "[commandlineoptions]") {
     GIVEN("command line options") {
         auto home = std::string { "/home/amm" };
         auto language = std::string { "hn" };
-        CommandLineOptionsParser parser(home, language);
+        auto parser = CommandLineOptionsParser(home, language);
 
         WHEN("parsing --output-file") {
             char *argv[] = {strdup("amm"), strdup("--output-file"), strdup("menu.out"), 0};
-            AmmOptions options = parser.parse(3, argv);
+            auto options = parser.parse(3, argv);
 
             THEN("its output-file is set to the given value") {
                 CHECK(options.output_file_name == "menu.out");
@@ -153,7 +153,7 @@ SCENARIO("Command-line arguments parse options", "[commandlineoptions]") {
 
         WHEN("parsing -o") {
             char *argv[] = {strdup("amm"), strdup("-o"), strdup("menu.out"), 0};
-            AmmOptions options = parser.parse(3, argv);
+            auto options = parser.parse(3, argv);
 
             THEN("its output-file is set to the given value") {
                 CHECK(options.output_file_name == "menu.out");
@@ -162,7 +162,7 @@ SCENARIO("Command-line arguments parse options", "[commandlineoptions]") {
 
         WHEN("parsing --input-directory") {
             char *argv[] = {strdup("amm"), strdup("--input-directory"), strdup("/usr/share/applications:/usr/local/share/applications"), 0};
-            AmmOptions options = parser.parse(3, argv);
+            auto options = parser.parse(3, argv);
 
             THEN("its input-directories is set to the given values") {
                 std::vector<std::string> input_directory_names = options.input_directory_names;
@@ -179,7 +179,7 @@ SCENARIO("Command-line arguments parse options", "[commandlineoptions]") {
 
         WHEN("parsing -i") {
             char *argv[] = {strdup("amm"), strdup("-i"), strdup("/usr/share/applications:/usr/local/share/applications"), 0};
-            AmmOptions options = parser.parse(3, argv);
+            auto options = parser.parse(3, argv);
 
             THEN("its input-directories is set to the given values") {
                 std::vector<std::string> input_directory_names = options.input_directory_names;
@@ -192,7 +192,7 @@ SCENARIO("Command-line arguments parse options", "[commandlineoptions]") {
 
         WHEN("parsing --category-file") {
             char *argv[] = {strdup("amm"), strdup("--category-file"), strdup("default.amm"), 0};
-            AmmOptions options = parser.parse(3, argv);
+            auto options = parser.parse(3, argv);
 
             THEN("its category-file is set to the given value") {
                 CHECK(options.category_file_name == "default.amm");
@@ -201,7 +201,7 @@ SCENARIO("Command-line arguments parse options", "[commandlineoptions]") {
 
         WHEN("parsing -c") {
             char *argv[] = {strdup("amm"), strdup("-c"), strdup("default.amm"), 0};
-            AmmOptions options = parser.parse(3, argv);
+            auto options = parser.parse(3, argv);
 
             THEN("its category-file is set to the given value") {
                 CHECK(options.category_file_name == "default.amm");
@@ -210,7 +210,7 @@ SCENARIO("Command-line arguments parse options", "[commandlineoptions]") {
 
         WHEN("parsing --summary long") {
             char *argv[] = {strdup("amm"), strdup("--summary"), strdup("long"), 0};
-            AmmOptions options = parser.parse(3, argv);
+            auto options = parser.parse(3, argv);
 
             THEN("its summary is set to long") {
                 CHECK(options.summary_type == "long");
@@ -219,7 +219,7 @@ SCENARIO("Command-line arguments parse options", "[commandlineoptions]") {
 
         WHEN("parsing --language bn") {
             char *argv[] = {strdup("amm"), strdup("--language"), strdup("bn"), 0};
-            AmmOptions options = parser.parse(3, argv);
+            auto options = parser.parse(3, argv);
 
             THEN("its language is set to bn") {
                 CHECK(options.language == "bn");
@@ -233,11 +233,11 @@ SCENARIO("Command-line arguments parse failure", "[commandlineoptions]") {
     GIVEN("command line options") {
         auto home = std::string { "/home/amm" };
         auto language = std::string { "hn" };
-        CommandLineOptionsParser parser(home, language);
+        auto parser = CommandLineOptionsParser(home, language);
 
         WHEN("parsing a bad option") {
             char *argv[] = {strdup("amm"), strdup("--bad-option"), strdup("default.amm"), 0};
-            AmmOptions options = parser.parse(3, argv);
+            auto options = parser.parse(3, argv);
 
             THEN("the parsing fails") {
                 CHECK_FALSE(options.is_parsed);

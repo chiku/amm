@@ -27,7 +27,7 @@ namespace amm {
 
 SCENARIO("StringX", "[stringx]") {
     GIVEN("A stringx with content") {
-        StringX stringx("vlc.desktop");
+        auto stringx = StringX("vlc.desktop");
 
         WHEN("it has a sub-string at the end") {
             THEN("it ends with the substring") {
@@ -45,7 +45,7 @@ SCENARIO("StringX", "[stringx]") {
     }
 
     GIVEN("A stringx without terminating delimeters") {
-        StringX stringx("AudioVideo;GTK");
+        auto stringx = StringX("AudioVideo;GTK");
 
         WHEN("terminated with a delimeter") {
             auto result = stringx.terminateWith(";");
@@ -85,7 +85,7 @@ SCENARIO("StringX", "[stringx]") {
     }
 
     GIVEN("An empty stringx") {
-        StringX stringx("");
+        auto stringx = StringX("");
 
         WHEN("terminated with a delimeter") {
             auto result = stringx.terminateWith(";");
@@ -103,7 +103,7 @@ SCENARIO("StringX", "[stringx]") {
     }
 
     GIVEN("A stringx with XML tags") {
-        StringX stringx("Icon=<\'foo\' & \"bar\">");
+        auto stringx = StringX("Icon=<\'foo\' & \"bar\">");
 
         WHEN("XML encoded") {
             auto result = stringx.encode();
@@ -114,7 +114,7 @@ SCENARIO("StringX", "[stringx]") {
     }
 
     GIVEN("A stringx with whitespaces at extremes") {
-        StringX stringx(" \taccessories-text-editor \t\n");
+        auto stringx = StringX(" \taccessories-text-editor \t\n");
 
         WHEN("trimmed") {
             auto result = stringx.trim();

@@ -29,7 +29,7 @@ namespace amm {
 SCENARIO("FileX", "[filex]") {
     GIVEN("A filex") {
         WHEN("pointing to a file that exists") {
-            FileX filex("test/fixtures/applications/vlc.desktop");
+            auto filex = FileX("test/fixtures/applications/vlc.desktop");
 
             THEN("it exists") {
                 CHECK(filex.exists());
@@ -40,12 +40,12 @@ SCENARIO("FileX", "[filex]") {
             }
 
             THEN("it succeeds in reading its contents") {
-                std::vector<std::string> lines;
+                auto lines = std::vector<std::string> {};
                 CHECK(filex.readLines(&lines));
             }
 
             THEN("it reads the content of the file") {
-                std::vector<std::string> lines;
+                auto lines = std::vector<std::string> {};
                 filex.readLines(&lines);
                 REQUIRE(lines.size() == 11);
                 CHECK(lines[0] == "[Desktop Entry]");
@@ -62,7 +62,7 @@ SCENARIO("FileX", "[filex]") {
             }
 
             THEN("it over-writes the older content") {
-                std::vector<std::string> lines;
+                auto lines = std::vector<std::string> {};
                 filex.readLines(&lines);
                 filex.readLines(&lines);
                 CHECK(lines.size() == 11);
@@ -87,7 +87,7 @@ SCENARIO("FileX", "[filex]") {
 
                 CHECK_FALSE(FileX(file_name).exists());
 
-                std::vector<std::string> read_lines;
+                auto read_lines = std::vector<std::string> {};
                 CHECK(FileX(renamed_file_name).readLines(&read_lines));
                 REQUIRE(read_lines.size() == 2);
                 CHECK(read_lines[0] == "first");
@@ -131,7 +131,7 @@ SCENARIO("FileX", "[filex]") {
 
         WHEN("pointing to a file that doesn't exist") {
             auto file_name = std::string { "test/fixtures/applications/does-not-exist.desktop" };
-            FileX filex(file_name);
+            auto filex = FileX(file_name);
             remove(file_name.c_str());
             remove((file_name + ".backup_extension").c_str());
 
@@ -144,12 +144,12 @@ SCENARIO("FileX", "[filex]") {
             }
 
             THEN("it fails to read its contents") {
-                std::vector<std::string> lines;
+                auto lines = std::vector<std::string> {};
                 CHECK_FALSE(filex.readLines(&lines));
             }
 
             THEN("its lines are empty") {
-                std::vector<std::string> lines;
+                auto lines = std::vector<std::string> {};
                 filex.readLines(&lines);
                 CHECK(lines.empty());
             }
@@ -165,8 +165,8 @@ SCENARIO("FileX", "[filex]") {
                 auto lines = std::vector<std::string> { "first", "second" };
                 CHECK(filex.writeLines(lines));
 
-                FileX read_file(file_name);
-                std::vector<std::string> read_lines;
+                auto read_file = FileX(file_name);
+                auto read_lines = std::vector<std::string> {};
                 CHECK(read_file.readLines(&read_lines));
                 REQUIRE(read_lines.size() == 2);
                 CHECK(read_lines[0] == "first");

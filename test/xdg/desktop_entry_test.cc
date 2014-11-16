@@ -28,7 +28,7 @@ namespace xdg {
 
 SCENARIO("Populate DesktopEntry", "[desktopfile]") {
     GIVEN("A desktop-file") {
-        DesktopEntry entry;
+        auto entry = DesktopEntry();
 
         WHEN("created") {
             auto lines = std::vector<std::string> {
@@ -97,7 +97,7 @@ SCENARIO("Populate DesktopEntry", "[desktopfile]") {
 
 SCENARIO("Language-aware DesktopEntry", "[focus]") {
     GIVEN("A desktop-file") {
-        DesktopEntry entry;
+        auto entry = DesktopEntry();
         entry.hasLanguage("sr");
 
         WHEN("created") {
@@ -126,7 +126,7 @@ SCENARIO("Language-aware DesktopEntry", "[focus]") {
 
 
 SCENARIO("DesktopEntry comparisons", "[desktopfile]") {
-    DesktopEntry entry;
+    auto entry = DesktopEntry();
     DesktopEntry other_entry;
 
     GIVEN("A desktop-file") {
@@ -211,7 +211,7 @@ SCENARIO("DesktopEntry comparisons", "[desktopfile]") {
 
 
 SCENARIO("DesktopEntry validity", "[desktopfile]") {
-    DesktopEntry entry;
+    auto entry = DesktopEntry();
 
     GIVEN("A desktop-file") {
         WHEN("it has a name, an icon and an executable") {
@@ -266,7 +266,7 @@ SCENARIO("DesktopEntry validity", "[desktopfile]") {
 }
 
 SCENARIO("DesktopEntry classifications", "[desktopfile]") {
-    DesktopEntry entry;
+    auto entry = DesktopEntry();
 
     GIVEN("A desktop-file") {
         WHEN("it has one of the categories as AudioVideo") {

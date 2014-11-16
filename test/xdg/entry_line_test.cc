@@ -29,7 +29,7 @@ namespace xdg {
 SCENARIO("EntryLine for Comments", "[entryline]") {
     GIVEN("A line in a desktop-file") {
         WHEN("starting with a '#'") {
-            EntryLine line("# Comment line");
+            auto line = EntryLine("# Comment line");
 
             THEN("it is not a declaration") { CHECK_FALSE(line.isDeclaration()); }
             THEN("it has no declarations") { CHECK(line.declaration() == ""); }
@@ -43,7 +43,7 @@ SCENARIO("EntryLine for Comments", "[entryline]") {
 SCENARIO("EntryLine for Declarations", "[entryline]") {
     GIVEN("A line in a desktop-file") {
         WHEN("starting with a '[' and ending with ']'") {
-            EntryLine line("[Desktop Entry]");
+            auto line = EntryLine("[Desktop Entry]");
 
             THEN("it is a declaration") { CHECK(line.isDeclaration()); }
             THEN("the inner content is the declaration") { CHECK(line.declaration() == "Desktop Entry"); }
@@ -53,12 +53,12 @@ SCENARIO("EntryLine for Declarations", "[entryline]") {
         }
 
         WHEN("it has spaces around after a declaration") {
-            EntryLine line(" [Desktop Entry] ");
+            auto line = EntryLine(" [Desktop Entry] ");
             THEN("the spaces are ignored") { CHECK(line.declaration() == "Desktop Entry"); }
         }
 
         WHEN("starting with a '[' but not ending with ']'") {
-            EntryLine line("[Desktop Entry");
+            auto line = EntryLine("[Desktop Entry");
             THEN("it is not a declaration") { CHECK_FALSE(line.isDeclaration()); }
         }
     }
@@ -67,7 +67,7 @@ SCENARIO("EntryLine for Declarations", "[entryline]") {
 SCENARIO("EntryLine for Assignments", "[entryline]") {
     GIVEN("A line in a desktop-file") {
         WHEN("it has an '=' in the middle") {
-            EntryLine line("Name=VLC");
+            auto line = EntryLine("Name=VLC");
 
             THEN("it is an assignment") { CHECK(line.isAssignment()); }
             THEN("it has a key") { CHECK(line.key() == "Name"); }
@@ -78,7 +78,7 @@ SCENARIO("EntryLine for Assignments", "[entryline]") {
         }
 
         WHEN("it has spaces surrounding the tokens") {
-            EntryLine line("\t Name = VLC \n\n");
+            auto line = EntryLine("\t Name = VLC \n\n");
             THEN("the spaces are ignored") {
                 CHECK(line.key() == "Name");
                 CHECK(line.value() == "VLC");

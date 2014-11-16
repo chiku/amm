@@ -24,7 +24,7 @@ namespace amm {
 
 SCENARIO("Amm options", "[ammoptions]") {
     GIVEN("Amm options") {
-        AmmOptions options;
+        auto options = AmmOptions();
 
         WHEN("summary type is short") {
             THEN("it is valid") {

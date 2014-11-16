@@ -30,7 +30,7 @@ SCENARIO("SystemEnvironment", "[systemenvironment]") {
     GIVEN("HOME is not set") {
         unsetenv("HOME");
 
-        SystemEnvironment environment;
+        auto environment = SystemEnvironment();
 
         WHEN("validated") {
             THEN("it is invalid") {
@@ -42,7 +42,7 @@ SCENARIO("SystemEnvironment", "[systemenvironment]") {
     GIVEN("HOME is set") {
         setenv("HOME", "/home/amm", 1);
 
-        SystemEnvironment environment;
+        auto environment = SystemEnvironment();
 
         WHEN("validated") {
             THEN("it is valid") {
@@ -54,7 +54,7 @@ SCENARIO("SystemEnvironment", "[systemenvironment]") {
             setenv("XDG_DATA_HOME", "/data/home", 1);
             setenv("XDG_DATA_DIRS", "/data/dir1:/data/dir2/", 1);
 
-            SystemEnvironment environment;
+            auto environment = SystemEnvironment();
 
             WHEN("XDG data home is asked") {
                 THEN("it is the directory pointed to by XDG_DATA_HOME") {
@@ -86,7 +86,7 @@ SCENARIO("SystemEnvironment", "[systemenvironment]") {
             unsetenv("XDG_DATA_HOME");
             unsetenv("XDG_DATA_DIRS");
 
-            SystemEnvironment environment;
+            auto environment = SystemEnvironment();
 
             WHEN("directories for 'applications' subdirectories is asked") {
 

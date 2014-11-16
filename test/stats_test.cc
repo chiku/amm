@@ -26,7 +26,7 @@
 namespace amm {
 
 static Stats populatedStats() {
-    Stats stats;
+    auto stats = Stats();
     stats.addClassifiedFile("VLC");
     stats.addClassifiedFile("Mousepad");
     stats.addClassifiedFile("Firefox");
@@ -57,7 +57,7 @@ static std::string expectedShortdetailsWithValues() {
 
 SCENARIO("Stats totals", "[stats]") {
     GIVEN("A stat") {
-        Stats stats;
+        auto stats = Stats();
 
         WHEN("created") {
             THEN("it has no total files")        { CHECK(stats.totalFiles() == 0); }
@@ -124,7 +124,7 @@ SCENARIO("Stats totals", "[stats]") {
 
 SCENARIO("Stats summaries", "[stats]") {
     GIVEN("A stat") {
-        Stats stats = populatedStats();
+        auto stats = populatedStats();
 
         WHEN("different types of files are added") {
             THEN("short details includes counts") {

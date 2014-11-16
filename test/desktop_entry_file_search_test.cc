@@ -47,7 +47,7 @@ static void assertFilesArePresentInList(std::vector<std::string> file_names) {
 SCENARIO("DesktopEntryFileSearch custom directories", "[filesearch]") {
     GIVEN("A file search service with one directory") {
         auto directory_names = std::vector<std::string> { "test/fixtures/applications/" };
-        DesktopEntryFileSearch searcher;
+        auto searcher = DesktopEntryFileSearch();
         searcher.registerDirectories(directory_names);
 
         WHEN("resolved") {
@@ -61,7 +61,7 @@ SCENARIO("DesktopEntryFileSearch custom directories", "[filesearch]") {
 
     GIVEN("A file search service with repeated directory") {
         auto directory_names = std::vector<std::string> { "test/fixtures/applications/", "test/fixtures/applications" };
-        DesktopEntryFileSearch searcher;
+        auto searcher = DesktopEntryFileSearch();
         searcher.registerDirectories(directory_names);
 
         WHEN("resolved") {
@@ -75,7 +75,7 @@ SCENARIO("DesktopEntryFileSearch custom directories", "[filesearch]") {
 
     GIVEN("A file search service with one existing directory and one missing directory") {
         auto directory_names = std::vector<std::string> { "test/fixtures/applications", "test/does-not-exist/applications" };
-        DesktopEntryFileSearch searcher;
+        auto searcher = DesktopEntryFileSearch();
         searcher.registerDirectories(directory_names);
 
         WHEN("resolved") {
@@ -101,7 +101,7 @@ SCENARIO("DesktopEntryFileSearch default directories", "[filesearch]") {
         setenv("XDG_DATA_DIRS", "test/fixtures:test/does-not-exist", 1);
 
         GIVEN("A default file search service") {
-            DesktopEntryFileSearch searcher;
+            auto searcher = DesktopEntryFileSearch();
             searcher.registerDefaultDirectories();
 
             WHEN("resolved") {
@@ -112,7 +112,7 @@ SCENARIO("DesktopEntryFileSearch default directories", "[filesearch]") {
                 }
 
                 THEN("it doesn't track the absent directory") {
-                    REQUIRE(searcher.badPaths().empty());
+                    CHECK(searcher.badPaths().empty());
                 }
             }
         }
