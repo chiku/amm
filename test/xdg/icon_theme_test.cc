@@ -85,10 +85,7 @@ SCENARIO("xdg::IconTheme", "[icontheme]") {
             }
 
             THEN("it has a list of parents") {
-                auto parents = icon_theme.parents();
-                REQUIRE(parents.size() == 2);
-                CHECK(parents[0] == "wood");
-                CHECK(parents[1] == "default");
+                CHECK(icon_theme.parents() == (std::vector<std::string> { "wood", "default" }));
             }
 
             THEN("it has a list of directories") {
@@ -123,9 +120,7 @@ SCENARIO("xdg::IconTheme", "[icontheme]") {
             auto icon_theme = IconTheme(birchIconThemeLinesWithoutParent());
 
             THEN("its parent is Hicolor") {
-                std::vector<std::string> parents = icon_theme.parents();
-                REQUIRE(parents.size() == 1);
-                CHECK(parents[0] == "Hicolor");
+                CHECK(icon_theme.parents() == (std::vector<std::string> { "Hicolor" }));
             }
         }
 
@@ -133,8 +128,7 @@ SCENARIO("xdg::IconTheme", "[icontheme]") {
             auto icon_theme = IconTheme(hicolorThemeLines());
 
             THEN("it has no parents") {
-                std::vector<std::string> parents = icon_theme.parents();
-                CHECK(parents.empty());
+                CHECK(icon_theme.parents().empty());
             }
         }
     }

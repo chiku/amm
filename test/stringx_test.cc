@@ -57,15 +57,13 @@ SCENARIO("StringX", "[stringx]") {
         WHEN("split by the delimeter") {
             auto result = stringx.split(";");
             THEN("the last token is included") {
-                REQUIRE(result.size() == 2);
-                CHECK(result[0] == "AudioVideo");
-                CHECK(result[1] == "GTK");
+                CHECK(result == (std::vector<std::string> { "AudioVideo", "GTK" }));
             }
         }
     }
 
     GIVEN("A stringx with a terminating delimeters") {
-        StringX stringx("AudioVideo;GTK;");
+        auto stringx = StringX("AudioVideo;GTK;");
 
         WHEN("terminated with the delimeter") {
             auto result = stringx.terminateWith(";");
@@ -77,9 +75,7 @@ SCENARIO("StringX", "[stringx]") {
         WHEN("split by the delimeter") {
             auto result = stringx.split(";");
             THEN("the original string becomes a list of tokens") {
-                REQUIRE(result.size() == 2);
-                CHECK(result[0] == "AudioVideo");
-                CHECK(result[1] == "GTK");
+                CHECK(result == (std::vector<std::string> { "AudioVideo", "GTK" }));
             }
         }
     }

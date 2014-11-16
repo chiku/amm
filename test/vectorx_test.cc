@@ -69,10 +69,7 @@ SCENARIO("VectorX", "[vectorx]") {
         WHEN("terminated with a delimeter") {
             auto result = vectorx.terminateEachWith("/");
             THEN("it adds the delimeter without duplicating it") {
-                REQUIRE(result.size() == 3);
-                CHECK(result[0] == "foo/");
-                CHECK(result[1] == "bar/");
-                CHECK(result[2] == "baz/");
+                CHECK(result == (std::vector<std::string> {"foo/", "bar/", "baz/"}));
             }
         }
     }
@@ -84,9 +81,7 @@ SCENARIO("VectorX", "[vectorx]") {
         WHEN("unique") {
             auto result = vectorx.unique();
             THEN("it de-duplicates") {
-                REQUIRE(result.size() == 2);
-                CHECK(result[0] == "bar");
-                CHECK(result[1] == "foo");
+                CHECK(result == (std::vector<std::string> {"bar", "foo"}));
             }
         }
     }

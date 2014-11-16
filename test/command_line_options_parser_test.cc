@@ -165,11 +165,10 @@ SCENARIO("Command-line arguments parse options", "[commandlineoptions]") {
             auto options = parser.parse(3, argv);
 
             THEN("its input-directories is set to the given values") {
-                std::vector<std::string> input_directory_names = options.input_directory_names;
-
-                REQUIRE(input_directory_names.size() == 2);
-                CHECK(input_directory_names[0] == "/usr/share/applications");
-                CHECK(input_directory_names[1] == "/usr/local/share/applications");
+                CHECK(options.input_directory_names == (std::vector<std::string> {
+                    "/usr/share/applications",
+                    "/usr/local/share/applications"
+                }));
             }
 
             THEN("its marks that default directory are overridden") {
@@ -182,11 +181,10 @@ SCENARIO("Command-line arguments parse options", "[commandlineoptions]") {
             auto options = parser.parse(3, argv);
 
             THEN("its input-directories is set to the given values") {
-                std::vector<std::string> input_directory_names = options.input_directory_names;
-
-                REQUIRE(input_directory_names.size() == 2);
-                CHECK(input_directory_names[0] == "/usr/share/applications");
-                CHECK(input_directory_names[1] == "/usr/local/share/applications");
+                CHECK(options.input_directory_names == (std::vector<std::string> {
+                    "/usr/share/applications",
+                    "/usr/local/share/applications"
+                }));
             }
         }
 

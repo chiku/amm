@@ -47,18 +47,19 @@ SCENARIO("FileX", "[filex]") {
             THEN("it reads the content of the file") {
                 auto lines = std::vector<std::string> {};
                 filex.readLines(&lines);
-                REQUIRE(lines.size() == 11);
-                CHECK(lines[0] == "[Desktop Entry]");
-                CHECK(lines[1] == "Version=1.0");
-                CHECK(lines[2] == "Name=VLC media player");
-                CHECK(lines[3] == "GenericName=Media player");
-                CHECK(lines[4] == "Comment=Read, capture, broadcast your multimedia streams");
-                CHECK(lines[5] == "Exec=/usr/bin/vlc --started-from-file %U");
-                CHECK(lines[6] == "TryExec=/usr/bin/vlc");
-                CHECK(lines[7] == "Icon=vlc");
-                CHECK(lines[8] == "Terminal=false");
-                CHECK(lines[9] == "Type=Application");
-                CHECK(lines[10] == "Categories=AudioVideo;Player;Recorder;");
+                CHECK(lines == (std::vector<std::string> {
+                    "[Desktop Entry]",
+                    "Version=1.0",
+                    "Name=VLC media player",
+                    "GenericName=Media player",
+                    "Comment=Read, capture, broadcast your multimedia streams",
+                    "Exec=/usr/bin/vlc --started-from-file %U",
+                    "TryExec=/usr/bin/vlc",
+                    "Icon=vlc",
+                    "Terminal=false",
+                    "Type=Application",
+                    "Categories=AudioVideo;Player;Recorder;",
+                }));
             }
 
             THEN("it over-writes the older content") {
@@ -89,9 +90,7 @@ SCENARIO("FileX", "[filex]") {
 
                 auto read_lines = std::vector<std::string> {};
                 CHECK(FileX(renamed_file_name).readLines(&read_lines));
-                REQUIRE(read_lines.size() == 2);
-                CHECK(read_lines[0] == "first");
-                CHECK(read_lines[1] == "second");
+                CHECK(read_lines == (std::vector<std::string> { "first", "second" }));
 
                 remove(file_name.c_str());
                 remove(renamed_file_name.c_str());
@@ -157,8 +156,7 @@ SCENARIO("FileX", "[filex]") {
             THEN("it doesn't over-write the older contents") {
                 auto lines = std::vector<std::string> { "existing line" };
                 filex.readLines(&lines);
-                REQUIRE(lines.size() == 1);
-                CHECK(lines[0] == "existing line");
+                CHECK(lines == (std::vector<std::string> { "existing line" } ));
             }
 
             THEN("it writes lines to the file") {
@@ -168,9 +166,7 @@ SCENARIO("FileX", "[filex]") {
                 auto read_file = FileX(file_name);
                 auto read_lines = std::vector<std::string> {};
                 CHECK(read_file.readLines(&read_lines));
-                REQUIRE(read_lines.size() == 2);
-                CHECK(read_lines[0] == "first");
-                CHECK(read_lines[1] == "second");
+                CHECK(lines == (std::vector<std::string> { "first", "second" } ));
                 remove(file_name.c_str());
             }
         }

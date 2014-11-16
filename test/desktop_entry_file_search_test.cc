@@ -26,21 +26,18 @@
 
 namespace amm {
 
-static bool presentIn(std::string item, std::vector<std::string> list) {
-    return std::find(list.begin(), list.end(), item) != list.end();
-}
-
 static void assertFilesArePresentInList(std::vector<std::string> file_names) {
-    REQUIRE(file_names.size() == 8);
-
-    CHECK(presentIn("test/fixtures/applications/missing.desktop", file_names));
-    CHECK(presentIn("test/fixtures/applications/mousepad.desktop", file_names));
-    CHECK(presentIn("test/fixtures/applications/unclassified.desktop", file_names));
-    CHECK(presentIn("test/fixtures/applications/vlc.desktop", file_names));
-    CHECK(presentIn("test/fixtures/applications/suppressed.desktop", file_names));
-    CHECK(presentIn("test/fixtures/applications/suppressedinvalid.desktop", file_names));
-    CHECK(presentIn("test/fixtures/applications/nested/xfburn.desktop", file_names));
-    CHECK(presentIn("test/fixtures/applications/nested/deepnested/whaawmp.desktop", file_names));
+    std::sort(file_names.begin(), file_names.end());
+    CHECK(file_names == (std::vector<std::string> {
+        "test/fixtures/applications/missing.desktop",
+        "test/fixtures/applications/mousepad.desktop",
+        "test/fixtures/applications/nested/deepnested/whaawmp.desktop",
+        "test/fixtures/applications/nested/xfburn.desktop",
+        "test/fixtures/applications/suppressed.desktop",
+        "test/fixtures/applications/suppressedinvalid.desktop",
+        "test/fixtures/applications/unclassified.desktop",
+        "test/fixtures/applications/vlc.desktop",
+    }));
 }
 
 
@@ -86,9 +83,7 @@ SCENARIO("DesktopEntryFileSearch custom directories", "[filesearch]") {
             }
 
             THEN("it tracks the missing directory") {
-                std::vector<std::string> bad_paths = searcher.badPaths();
-                REQUIRE(bad_paths.size() == 1);
-                CHECK(bad_paths[0] == "test/does-not-exist/applications/");
+                CHECK(searcher.badPaths() == (std::vector<std::string> {"test/does-not-exist/applications/"}));
             }
         }
     }

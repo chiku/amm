@@ -54,12 +54,7 @@ SCENARIO("Populate DesktopEntry", "[desktopfile]") {
             }
 
             THEN("it has categories") {
-                auto categories = entry.categories();
-                REQUIRE(categories.size() == 4);
-                CHECK(categories[0] == "Application");
-                CHECK(categories[1] == "GTK");
-                CHECK(categories[2] == "TextEditor");
-                CHECK(categories[3] == "Utility");
+                CHECK(entry.categories() == (std::vector<std::string> {  "Application", "GTK", "TextEditor", "Utility" }));
             }
 
             THEN("it has a comment") {

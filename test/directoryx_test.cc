@@ -29,41 +29,44 @@ namespace amm {
 void assertFileNamesAreCorrect(std::vector<std::string> names)
 {
     std::sort(names.begin(), names.end());
-    REQUIRE(names.size() == 7);
-    CHECK(names[0] == "desktop.vlc");
-    CHECK(names[1] == "missing.desktop");
-    CHECK(names[2] == "mousepad.desktop");
-    CHECK(names[3] == "suppressed.desktop");
-    CHECK(names[4] == "suppressedinvalid.desktop");
-    CHECK(names[5] == "unclassified.desktop");
-    CHECK(names[6] == "vlc.desktop");
+    CHECK(names == (std::vector<std::string> {
+        "desktop.vlc",
+        "missing.desktop",
+        "mousepad.desktop",
+        "suppressed.desktop",
+        "suppressedinvalid.desktop",
+        "unclassified.desktop",
+        "vlc.desktop",
+    }));
 }
 
 void assertDirectoryNamesAreCorrect(std::vector<std::string> names)
 {
     std::sort(names.begin(), names.end());
-    REQUIRE(names.size() == 4);
-    CHECK(names[0] == ".");
-    CHECK(names[1] == "..");
-    CHECK(names[2] == "empty");
-    CHECK(names[3] == "nested");
+    CHECK(names == (std::vector<std::string> {
+        ".",
+        "..",
+        "empty",
+        "nested",
+    }));
 }
 
 void assertNamesAreCorrect(std::vector<std::string> names)
 {
     std::sort(names.begin(), names.end());
-    REQUIRE(names.size() == 11);
-    CHECK(names[0] == ".");
-    CHECK(names[1] == "..");
-    CHECK(names[2] == "desktop.vlc");
-    CHECK(names[3] == "empty");
-    CHECK(names[4] == "missing.desktop");
-    CHECK(names[5] == "mousepad.desktop");
-    CHECK(names[6] == "nested");
-    CHECK(names[7] == "suppressed.desktop");
-    CHECK(names[8] == "suppressedinvalid.desktop");
-    CHECK(names[9] == "unclassified.desktop");
-    CHECK(names[10] == "vlc.desktop");
+    CHECK(names == (std::vector<std::string> {
+        ".",
+        "..",
+        "desktop.vlc",
+        "empty",
+        "missing.desktop",
+        "mousepad.desktop",
+        "nested",
+        "suppressed.desktop",
+        "suppressedinvalid.desktop",
+        "unclassified.desktop",
+        "vlc.desktop",
+    }));
 }
 
 SCENARIO("DirectoryX", "[directoryx]") {

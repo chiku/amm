@@ -64,20 +64,17 @@ SCENARIO("SystemEnvironment", "[systemenvironment]") {
 
             WHEN("XDG data directories is asked") {
                 THEN("it is a list of directories pointed to by XDG_DATA_DIRS") {
-                    auto directories = environment.xdgDataDirectories();
-                    REQUIRE(directories.size() == 2);
-                    CHECK(directories[0] == "/data/dir1");
-                    CHECK(directories[1] == "/data/dir2/");
+                    CHECK(environment.xdgDataDirectories() == (std::vector<std::string> {"/data/dir1", "/data/dir2/"}));
                 }
             }
 
             WHEN("directories for 'applications' subdirectories is asked") {
                 THEN("it is a list of directories pointed to by XDG_DATA_HOME/applications, XDG_DATA_DIRS/applications") {
-                    auto directories = environment.applicationDirectories();
-                    REQUIRE(directories.size() == 3);
-                    CHECK(directories[0] == "/data/home/applications");
-                    CHECK(directories[1] == "/data/dir1/applications");
-                    CHECK(directories[2] == "/data/dir2/applications");
+                    CHECK(environment.applicationDirectories() == (std::vector<std::string> {
+                        "/data/home/applications",
+                        "/data/dir1/applications",
+                        "/data/dir2/applications",
+                    }));
                 }
             }
         }
@@ -91,24 +88,22 @@ SCENARIO("SystemEnvironment", "[systemenvironment]") {
             WHEN("directories for 'applications' subdirectories is asked") {
 
                 THEN("it is a list of directories pointed to by $HOME/.local/share/applications, /usr/local/share/applications and /usr/share/applications") {
-                    auto directories = environment.applicationDirectories();
-                    REQUIRE(directories.size() == 3);
-
-                    CHECK(directories[0] == "/home/amm/.local/share/applications");
-                    CHECK(directories[1] == "/usr/local/share/applications");
-                    CHECK(directories[2] == "/usr/share/applications");
+                    CHECK(environment.applicationDirectories() == (std::vector<std::string> {
+                        "/home/amm/.local/share/applications",
+                        "/usr/local/share/applications",
+                        "/usr/share/applications",
+                    }));
                 }
             }
 
             WHEN("directories for icon themes is asked") {
                 THEN("it is a list of directories pointed to by $HOME/.icons, /usr/local/share/icons, /usr/share/icons and /usr/share/pixmaps") {
-                    auto directories = environment.iconThemeDirectories();
-                    REQUIRE(directories.size() == 4);
-
-                    CHECK(directories[0] == "/home/amm/.icons");
-                    CHECK(directories[1] == "/usr/local/share/icons");
-                    CHECK(directories[2] == "/usr/share/icons");
-                    CHECK(directories[3] == "/usr/share/pixmaps");
+                    CHECK(environment.iconThemeDirectories() == (std::vector<std::string> {
+                        "/home/amm/.icons",
+                        "/usr/local/share/icons",
+                        "/usr/share/icons",
+                        "/usr/share/pixmaps",
+                    }));
                 }
             }
         }

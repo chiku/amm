@@ -96,9 +96,7 @@ SCENARIO("Menu custom categories", "[menu]") {
                 auto subcategories = menu.subcategories();
 
                 REQUIRE(subcategories.size() == 1);
-                auto classification_names = subcategories[0].classificationNames();
-                REQUIRE(classification_names.size() == 1);
-                CHECK(classification_names[0] == "Utility");
+                CHECK(subcategories[0].classificationNames() == (std::vector<std::string> {"Utility"}));
             }
         }
 
@@ -107,9 +105,7 @@ SCENARIO("Menu custom categories", "[menu]") {
             menu.loadCustomCategories(lines);
 
             THEN("it ignores the lines beginning with '#'") {
-                auto subcategories = menu.subcategories();
-
-                CHECK(subcategories.empty());
+                CHECK(menu.subcategories().empty());
             }
         }
 
@@ -118,9 +114,7 @@ SCENARIO("Menu custom categories", "[menu]") {
             menu.loadCustomCategories(lines);
 
             THEN("it ignores the line") {
-                auto subcategories = menu.subcategories();
-
-                CHECK(subcategories.empty());
+                CHECK(menu.subcategories().empty());
             }
         }
 
@@ -134,11 +128,7 @@ SCENARIO("Menu custom categories", "[menu]") {
 
                 REQUIRE(subcategories.size() == 1);
                 CHECK(subcategories[0].displayName() == "Games");
-
-                auto classification_names = subcategories[0].classificationNames();
-                REQUIRE(classification_names.size() == 2);
-                CHECK(classification_names[0] == "Game");
-                CHECK(classification_names[1] == "Fun");
+                CHECK(subcategories[0].classificationNames() == (std::vector<std::string> {"Game", "Fun"}));
             }
         }
 
@@ -150,12 +140,7 @@ SCENARIO("Menu custom categories", "[menu]") {
                 auto subcategories = menu.subcategories();
 
                 REQUIRE(subcategories.size() == 1);
-
-                auto classification_names = subcategories[0].classificationNames();
-                REQUIRE(classification_names.size() == 3);
-                CHECK(classification_names[0] == "Game");
-                CHECK(classification_names[1] == "Fun");
-                CHECK(classification_names[2] == "Frolic");
+                CHECK(subcategories[0].classificationNames() == (std::vector<std::string> {"Game", "Fun", "Frolic"}));
             }
         }
 
@@ -164,9 +149,7 @@ SCENARIO("Menu custom categories", "[menu]") {
             menu.loadCustomCategories(lines);
 
             THEN("it ignores the line with missing classification names") {
-                auto subcategories = menu.subcategories();
-
-                CHECK(subcategories.empty());
+                CHECK(menu.subcategories().empty());
             }
         }
     }
@@ -196,10 +179,7 @@ SCENARIO("Menu statistics", "[menu]") {
             }
 
             THEN("it has the categories that weren't classified") {
-                std::vector<std::string> unhandled_classifications = summary.unhandledClassifications();
-
-                REQUIRE(unhandled_classifications.size() == 1);
-                CHECK(unhandled_classifications[0] == "GTK");
+                CHECK(summary.unhandledClassifications() == (std::vector<std::string> {"GTK"}));
             }
         }
 
@@ -219,10 +199,7 @@ SCENARIO("Menu statistics", "[menu]") {
             auto summary = menu.summary();
 
             THEN("it has a list of the unparsed files") {
-                std::vector<std::string> unparsed_files = summary.unparsedFiles();
-
-                REQUIRE(unparsed_files.size() == 1);
-                CHECK(unparsed_files[0] == kapplicationFixturesDirectory + "missing.desktop");
+                CHECK(summary.unparsedFiles() == (std::vector<std::string> {kapplicationFixturesDirectory + "missing.desktop"}));
             }
         }
 
@@ -236,10 +213,7 @@ SCENARIO("Menu statistics", "[menu]") {
             auto summary = menu.summary();
 
             THEN("the missing entries don't include suppressed files") {
-                std::vector<std::string> unparsed_files = summary.unparsedFiles();
-
-                REQUIRE(unparsed_files.size() == 1);
-                CHECK(unparsed_files[0] == kapplicationFixturesDirectory + "missing.desktop");
+                CHECK(summary.unparsedFiles() == (std::vector<std::string> {kapplicationFixturesDirectory + "missing.desktop"}));
             }
         }
     }
