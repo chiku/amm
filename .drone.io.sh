@@ -53,7 +53,7 @@ artifact() {
 
 puppytize() {
   cd "$install_base_dir"
-  echo "${amm_package_base_dir}|amm|${amm_version}-i686||Utility|${amm_size}||${amm_package_base_dir}.pet||Create JWM menu|Slackware|14.0||" > "${amm_package_base_dir}/pet.specs"
+  echo "${amm_package_base_dir}|amm|${amm_version}-i686|||${amm_size}||${amm_package_base_dir}.pet||Create JWM menu|Slackware|14.0||" > "${amm_package_base_dir}/pet.specs"
   tar -cvzf amm.pet "${amm_package_base_dir}"
   checksum=$(md5sum amm.pet | cut -d' ' -f1)
   echo -n "$checksum" >> amm.pet
