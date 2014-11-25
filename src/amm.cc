@@ -54,6 +54,10 @@ void Amm::validateEnvironment() const
 void Amm::loadCommandLineOption(int argc, char **argv)
 {
     options_ = CommandLineOptionsParser(environment_.home(), environment_.language()).parse(argc, argv);
+    auto deprecations = options_.deprecations;
+    if (!deprecations.empty()) {
+        std::cerr << VectorX(deprecations).join("\n") << std::endl;
+    }
     if (!options_.is_parsed) {
         std::cerr << messages::optionError();
         exit(2);
@@ -61,10 +65,6 @@ void Amm::loadCommandLineOption(int argc, char **argv)
     if (!options_.hasValidSummaryType()) {
         std::cerr << messages::badSummaryType(options_.summary_type);
         exit(2);
-    }
-    auto deprecations = options_.deprecations;
-    if (!deprecations.empty()) {
-        std::cerr << VectorX(deprecations).join("\n") << std::endl;
     }
     if (options_.is_help) {
         std::cout << messages::help();

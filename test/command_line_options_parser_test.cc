@@ -88,7 +88,7 @@ SCENARIO("Command-line arguments default parse", "[commandlineoptions]") {
     }
 }
 
-SCENARIO("Command-line arguments parse with flags", "[commandlineoptions]") {
+SCENARIO("Command-line arguments parse with options", "[commandlineoptions]") {
     GIVEN("command line options") {
         auto home = std::string { "/home/amm" };
         auto language = std::string { "hn" };
@@ -121,8 +121,8 @@ SCENARIO("Command-line arguments parse with flags", "[commandlineoptions]") {
             }
         }
 
-        WHEN("parsing --iconize=Faenza") {
-            char *argv[] = {strdup("amm"), strdup("--iconize=Faenza"), 0};
+        WHEN("parsing --iconize=[ICON]") {
+            char* argv[] = {strdup("amm"), strdup("--iconize=Faenza"), 0};
             auto options = parser.parse(2, argv);
 
             THEN("its iconize flag is on") {
@@ -133,17 +133,27 @@ SCENARIO("Command-line arguments parse with flags", "[commandlineoptions]") {
                 CHECK(options.icon_theme_name == "Faenza");
             }
         }
-    }
-}
 
-SCENARIO("Command-line arguments parse options", "[commandlineoptions]") {
-    GIVEN("command line options") {
-        auto home = std::string { "/home/amm" };
-        auto language = std::string { "hn" };
-        auto parser = CommandLineOptionsParser(home, language);
+        WHEN("parsing --verbose") {
+            char* argv[] = {strdup("amm"), strdup("--verbose"), 0};
+            auto options = parser.parse(2, argv);
 
-        WHEN("parsing --output-file") {
-            char *argv[] = {strdup("amm"), strdup("--output-file"), strdup("menu.out"), 0};
+            THEN("its summary is set to long") {
+                CHECK(options.summary_type == "long");
+            }
+        }
+
+        WHEN("parsing -v") {
+            char* argv[] = {strdup("amm"), strdup("-v"), 0};
+            auto options = parser.parse(2, argv);
+
+            THEN("its summary is set to long") {
+                CHECK(options.summary_type == "long");
+            }
+        }
+
+        WHEN("parsing --output-file [FILE]") {
+            char* argv[] = {strdup("amm"), strdup("--output-file"), strdup("menu.out"), 0};
             auto options = parser.parse(3, argv);
 
             THEN("its output-file is set to the given value") {
@@ -151,8 +161,8 @@ SCENARIO("Command-line arguments parse options", "[commandlineoptions]") {
             }
         }
 
-        WHEN("parsing -o") {
-            char *argv[] = {strdup("amm"), strdup("-o"), strdup("menu.out"), 0};
+        WHEN("parsing -o [FILE]") {
+            char* argv[] = {strdup("amm"), strdup("-o"), strdup("menu.out"), 0};
             auto options = parser.parse(3, argv);
 
             THEN("its output-file is set to the given value") {
@@ -160,8 +170,8 @@ SCENARIO("Command-line arguments parse options", "[commandlineoptions]") {
             }
         }
 
-        WHEN("parsing --input-directory") {
-            char *argv[] = {strdup("amm"), strdup("--input-directory"), strdup("/usr/share/applications:/usr/local/share/applications"), 0};
+        WHEN("parsing --input-directory [DIRECTORY]") {
+            char* argv[] = {strdup("amm"), strdup("--input-directory"), strdup("/usr/share/applications:/usr/local/share/applications"), 0};
             auto options = parser.parse(3, argv);
 
             THEN("its input-directories is set to the given values") {
@@ -176,8 +186,8 @@ SCENARIO("Command-line arguments parse options", "[commandlineoptions]") {
             }
         }
 
-        WHEN("parsing -i") {
-            char *argv[] = {strdup("amm"), strdup("-i"), strdup("/usr/share/applications:/usr/local/share/applications"), 0};
+        WHEN("parsing -i [DIRECTORY]") {
+            char* argv[] = {strdup("amm"), strdup("-i"), strdup("/usr/share/applications:/usr/local/share/applications"), 0};
             auto options = parser.parse(3, argv);
 
             THEN("its input-directories is set to the given values") {
@@ -188,8 +198,8 @@ SCENARIO("Command-line arguments parse options", "[commandlineoptions]") {
             }
         }
 
-        WHEN("parsing --category-file") {
-            char *argv[] = {strdup("amm"), strdup("--category-file"), strdup("default.amm"), 0};
+        WHEN("parsing --category-file [FILE]") {
+            char* argv[] = {strdup("amm"), strdup("--category-file"), strdup("default.amm"), 0};
             auto options = parser.parse(3, argv);
 
             THEN("its category-file is set to the given value") {
@@ -197,8 +207,8 @@ SCENARIO("Command-line arguments parse options", "[commandlineoptions]") {
             }
         }
 
-        WHEN("parsing -c") {
-            char *argv[] = {strdup("amm"), strdup("-c"), strdup("default.amm"), 0};
+        WHEN("parsing -c [FILE]") {
+            char* argv[] = {strdup("amm"), strdup("-c"), strdup("default.amm"), 0};
             auto options = parser.parse(3, argv);
 
             THEN("its category-file is set to the given value") {
@@ -206,17 +216,22 @@ SCENARIO("Command-line arguments parse options", "[commandlineoptions]") {
             }
         }
 
-        WHEN("parsing --summary long") {
-            char *argv[] = {strdup("amm"), strdup("--summary"), strdup("long"), 0};
+        WHEN("parsing --summary [SUMMARY-TYPE]") {
+            char* argv[] = {strdup("amm"), strdup("--summary"), strdup("long"), 0};
             auto options = parser.parse(3, argv);
 
             THEN("its summary is set to long") {
                 CHECK(options.summary_type == "long");
             }
+
+            THEN("it has deprecations") {
+                REQUIRE_FALSE(options.deprecations.empty());
+                CHECK(options.deprecations[0] == "--summary [SUMMARY TYPE] is deprecated. Use -v for verbose output instead.");
+            }
         }
 
-        WHEN("parsing --language bn") {
-            char *argv[] = {strdup("amm"), strdup("--language"), strdup("bn"), 0};
+        WHEN("parsing --language [LANGUAGE]") {
+            char* argv[] = {strdup("amm"), strdup("--language"), strdup("bn"), 0};
             auto options = parser.parse(3, argv);
 
             THEN("its language is set to bn") {
