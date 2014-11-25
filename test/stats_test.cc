@@ -47,13 +47,13 @@ static std::vector<std::string> unhandledClassificationSecondSet() {
 
 static std::string expectedEmptydetails() {
     return "Total desktop files: 0 [0 Parsed, 0 Unparsed, 0 Suppressed]\n"
-           "Unclassified files: 0\n";
+           "Unclassified files: 0";
 }
 
 static std::string expectedNormalDetails() {
     return "Total desktop files: 7 [5 Parsed, 1 Unparsed, 1 Suppressed]\n"
            "Unclassified files: 2\n"
-           "Unparsed files: daemon\n";
+           "Unparsed files: daemon";
 }
 
 SCENARIO("Stats totals", "[stats]") {
@@ -131,8 +131,8 @@ SCENARIO("Stats summaries", "[stats]") {
 
             THEN("long details includes normal details and lists of suppressed and unclassified files") {
                 auto expected_details = expectedNormalDetails() +
-                                        "Suppressed files: mplayer\n"
-                                        "Unclassified files: htop, NEdit\n";
+                                        "\nSuppressed files: mplayer"
+                                        "\nUnclassified files: htop, NEdit";
                 CHECK(stats.details("long") == expected_details);
             }
         }
@@ -143,9 +143,9 @@ SCENARIO("Stats summaries", "[stats]") {
 
             THEN("long details includes the unhandled classifications") {
                 auto expected_details = expectedNormalDetails() +
-                                        "Suppressed files: mplayer\n"
-                                        "Unclassified files: htop, NEdit\n"
-                                        "Unhandled classifications: Archiving, Browser, Calculator, Player, WordProcessor\n";
+                                        "\nSuppressed files: mplayer"
+                                        "\nUnclassified files: htop, NEdit"
+                                        "\nUnhandled classifications: Archiving, Browser, Calculator, Player, WordProcessor";
                 CHECK(stats.details("long") == expected_details);
             }
         }
